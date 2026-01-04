@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
               await User.findByIdAndUpdate(decoded.id, { refreshToken: "" }, { new: true });
           }
         } catch (error) {
-            console.error(" refresh token expired:", error);
+            console.error("refresh token expired:", error);
         }
         const response = NextResponse.json({ message: "Logout successful" }, { status: 200 });
         response.cookies.delete("refreshToken");
