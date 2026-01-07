@@ -9,7 +9,7 @@ const productUpdateSchema = z.object({
     id: z.string(),
     name: z.string().optional(),
     description: z.string().optional(),
-    image: z.string().optional(),
+    image: z.any().optional(),
     imagePublicId: z.string().optional(),
     newprice: z.coerce.number()
         .positive("Price must be greater than zero")
@@ -43,7 +43,10 @@ export async function PATCH(req: Request) {
         const newFile = body.get("image") as File;
         if (newFile && newFile.size > 0) {
             
-            await imagekit.deleteFile(existingProduct.imagePublicId).catch(() => null);
+          const imageDelete =  await imagekit.deleteFile(existingProduct.imagePublicId).catch(() => null);
+          if (!imageDelete) {
+            return NextResponse.json({ message: "Image delete failed" }, { status: 500 });
+          }
 
             const buffer = Buffer.from(await newFile.arrayBuffer());
             const ImageUploadResult = await imagekit.upload({

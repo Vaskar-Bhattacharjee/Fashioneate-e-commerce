@@ -17,10 +17,10 @@ const productSchema = new mongoose.Schema({
     comparePrice: {
         type: Number
     },
-    image: [{
+    image: {
         type: String,
         required: true,
-    }],
+    },
     imagePublicId: {
       type: String,
       required: true
