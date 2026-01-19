@@ -1,4 +1,4 @@
-# 🥦 Veggis - E-Commerce Backend
+#  Fashioneate - E-Commerce Backend
 
 This is the backend for **Veggis**, a full-stack e-commerce project I'm building with Next.js and MongoDB. My main focus here was setting up a clean administrative workflow and making sure the data handling for products and orders is solid.
 
