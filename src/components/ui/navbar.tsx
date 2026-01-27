@@ -17,7 +17,7 @@ export const Navbar = () => {
 
 
     return (
-        <Container>
+        <Container className="">
             <DesktopNavbar />
             <MobileNavbar />
         </Container>
@@ -37,7 +37,7 @@ export const DesktopNavbar = () => {
 
     return (
         <nav 
-        className={cn("fixed transition-all duration-200 ease-out top-0 inset-x-0  my-0 bg-white z-50 hidden lg:flex h-20 items-center justify-center gap-28 px-2  ")}>
+        className={cn("fixed transition-all duration-200 ease-out top-0 inset-x-0  my-0 bg-white z-50 hidden lg:flex h-20 items-center justify-center gap-28 px-2 border border-b border-neutral-200 ")}>
             
             <Logo />
 

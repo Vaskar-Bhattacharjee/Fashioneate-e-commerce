@@ -2,11 +2,11 @@ import { dbConnect } from "@/src/lib/dbConnect";
 import Product from "@/src/model/product.model";
 import { NextResponse } from "next/server";
 
-export async function GET( _request: Request, { params }: { params:  Promise<{id: string}>  }) {
+export async function GET( _request: Request, { params }: { params:  Promise<{_id: string}>  }) {
     try {
         await dbConnect();
-        const { id } = await params;
-        const product = await Product.findById(id);
+        const { _id } = await params;
+        const product = await Product.findById(_id);
         if(!product){
             return NextResponse.json({ message: "Product not found" }, { status: 404 });
         }

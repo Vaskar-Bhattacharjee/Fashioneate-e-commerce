@@ -11,68 +11,70 @@ import {
 } from "@/src/SVG illustrations/page";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dropdown } from "@/src/components/ui/dropdown";
+import { Fallback_Products } from "@/src/lib/data";
+import axios from "axios";
 
-const Fallback_Product = [
-  {
-    id: 1,
-    category: "Women's Fashion",
-    productName: "Minimalist Silk Blazer",
-    description:
-      "A tailored silhouette crafted from 100% mulberry silk. This blazer features structured shoulders and a hidden button closure for a sleek, modern finish. Perfect for transitional seasonal layering.",
-    price: 450,
-    img: "https://images.pexels.com/photos/7622259/pexels-photo-7622259.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  },
-  {
-    id: 2,
-    category: "Men's Collection",
-    productName: "Classic Wool Overcoat",
-    description:
-      "Timeless outerwear designed for durability and warmth. Made from heavy-weight Italian wool with a deep navy hue and traditional notched lapels.",
-    price: 890,
-    img: "https://images.pexels.com/photos/9849633/pexels-photo-9849633.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  },
-  {
-    id: 3,
-    category: "Accessories",
-    productName: "Leather Tote Bag",
-    description:
-      "Handcrafted pebble-grain leather bag featuring gold-toned hardware and a spacious interior lined with premium suede. The ultimate companion for city life and travel.",
-    price: 1200,
-    img: "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  },
-  {
-    id: 4,
-    category: "Women's Fashion",
-    productName: "Satin Evening Gown",
-    description:
-      "Elegant floor-length gown with a draped neckline and open back. The fluid satin fabric catches the light beautifully for any formal occasion.",
-    price: 650,
-    img: "https://images.pexels.com/photos/2733337/pexels-photo-2733337.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  },
-];
 interface gridLayout {
   layout: "grid" | "list" | "barTwo" | "barThree";
 }
-
+interface ProductProps {
+  _id: string;
+  name: string;
+  description: string;
+  image: string;
+  newprice: number;
+  comparePrice: number;
+  category: string;
+  newArrival: boolean;
+  quantity: number;
+  unit: string;
+  status: string;
+  isFeatured: boolean;
+}
 export default function ShopPage() {
   const [layout, setLayout] = useState<gridLayout["layout"]>("grid");
   const [category, setCategory] = useState("All");
   const [sortBy, setSortBy] = useState("");
+  const [products, setProducts] = useState<ProductProps[]>();
+  const [loading, setLoading] = useState(true);
   console.log("category", category);
   console.log("sortBy", sortBy);
 
   
+useEffect(() => {
+    const fetchAllProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get("/api/product/get-all-products");
+        
+        // If we get data and it's an array with items, use it
+        if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+          setProducts(response.data);
+        } else {
+          setProducts(Fallback_Products as ProductProps[]);
+        }
+      } catch (error) {
+        console.warn("Backend failed, using fallback collection.");
+        setProducts(Fallback_Products as ProductProps[]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const displayedProducts = [...Fallback_Product]
+    fetchAllProducts();
+  }, []);
+
+
+  const displayedProducts = [...(products || [])]
     .filter((p)=> category === "All" ? true : p.category === category)
     .sort((a, b) => {
       if (sortBy === "Price: High to Low") {
-        return b.price - a.price;
+        return b.newprice - a.newprice;
       }
       if (sortBy === "Price: Low to High") {
-        return a.price - b.price;
+        return a.newprice - b.newprice;
       }
       return 0;
     });
@@ -171,12 +173,14 @@ export default function ShopPage() {
         >
           {displayedProducts.map((product) => (
             <CardLayoutOne
-              key={product.id}
-              src={product.img}
+              key={product._id}
+              _id={product._id}
+              src={product.image}
               category={product.category}
-              productName={product.productName}
+              productName={product.name}
               description={product.description}
-              price={product.price}
+              price={product.newprice}
+
             />
           ))}
         </motion.div>
@@ -190,12 +194,13 @@ export default function ShopPage() {
         >
           {displayedProducts.map((product) => (
             <CardLayoutTwo
-              key={product.id}
-              src={product.img}
+              key={product._id}
+              _id={product._id}
+              src={product.image}
               category={product.category}
-              productName={product.productName}
+              productName={product.name}
               description={product.description}
-              price={product.price}
+              price={product.newprice}
             />
           ))}
         </motion.div>
@@ -209,12 +214,13 @@ export default function ShopPage() {
         >
           {displayedProducts.map((product) => (
             <CardLayoutThree
-              key={product.id}
-              src={product.img}
+              key={product._id}
+              _id={product._id}
+              src={product.image}
               category={product.category}
-              productName={product.productName}
+              productName={product.name}
               description={product.description}
-              price={product.price}
+              price={product.newprice}
             />
           ))}
         </motion.div>
@@ -228,12 +234,13 @@ export default function ShopPage() {
         >
           {displayedProducts.map((product) => (
             <CardLayoutFour
-              key={product.id}
-              src={product.img}
+              key={product._id}
+              _id={product._id}
+              src={product.image}
               category={product.category}
-              productName={product.productName}
+              productName={product.name}
               description={product.description}
-              price={product.price}
+              price={product.newprice}
             />
           ))}
         </motion.div>
@@ -243,12 +250,14 @@ export default function ShopPage() {
 }
 
 export const CardLayoutOne = ({
+  _id,
   category,
   productName,
   description,
   price,
   src,
 }: {
+  _id: string;
   category: string;
   productName: string;
   description: string;
@@ -257,8 +266,8 @@ export const CardLayoutOne = ({
 }) => {
   return (
     <Link
-      href={"#"}
-      className=" md:w-65 md:h-105 mt-7 md:flex flex-col  border border-neutral-200 rounded-md overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300"
+      href={`/product/${_id}`}
+      className=" md:w-65 md:h-105 mt-7 md:flex flex-col border border-neutral-200 rounded-md overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300"
     >
       <div className="w-full h-60 relative">
         <Image src={src} alt="shop" fill className="object-cover" />
@@ -284,12 +293,14 @@ export const CardLayoutOne = ({
   );
 };
 export const CardLayoutTwo = ({
+  _id,
   category,
   productName,
   description,
   price,
   src,
 }: {
+  _id: string
   category: string;
   productName: string;
   description: string;
@@ -298,7 +309,7 @@ export const CardLayoutTwo = ({
 }) => {
   return (
     <Link
-      href={"#"}
+      href={`/product/${_id}`}
       className=" lg:w-100 lg:h-105 mt-7 flex flex-col border border-neutral-200 rounded-md overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300"
     >
       <div className="w-full h-60 relative">
@@ -326,12 +337,14 @@ export const CardLayoutTwo = ({
 };
 
 export const CardLayoutThree = ({
+  _id,
   category,
   productName,
   description,
   price,
   src,
 }: {
+  _id: string
   category: string;
   productName: string;
   description: string;
@@ -340,7 +353,7 @@ export const CardLayoutThree = ({
 }) => {
   return (
     <Link
-      href={"#"}
+      href={`/product/${_id}`}
       className="lg:w-80 lg:h-105 mt-7 flex flex-col border border-neutral-200 rounded-md overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300"
     >
       <div className="w-full h-60 relative">
@@ -368,12 +381,14 @@ export const CardLayoutThree = ({
 };
 
 export const CardLayoutFour = ({
+  _id,
   category,
   productName,
   description,
   price,
   src,
 }: {
+  _id: string;
   category: string;
   productName: string;
   description: string;
@@ -382,7 +397,7 @@ export const CardLayoutFour = ({
 }) => {
   return (
     <Link
-      href={"#"}
+      href={`/product/${_id}`}
       className="w-full h-35 md:h-40 mt-7 flex items-center justify-between md:gap-10 border border-neutral-200 rounded-md overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300"
     >
       <div className="w-40 md:w-60 h-full relative">

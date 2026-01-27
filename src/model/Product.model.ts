@@ -43,6 +43,11 @@ const productSchema = new mongoose.Schema({
       enum: [ "piece", "dozen"],
       default: "piece"
     },
+    size: {
+      type: String,
+      enum: ["S", "M", "L", "xl", "2xl", "3xl"],
+      default: "M"
+    },
     status: {
       type: String,
       enum: ["active", "inactive", "out-of-stock"],
