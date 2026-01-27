@@ -28,7 +28,7 @@ interface ProductProps {
 }
 
 export default function Product() {
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(1)
     const [product, setProduct] = useState<ProductProps>()
     const [loading, setLoading] = useState(true);
     const params = useParams();

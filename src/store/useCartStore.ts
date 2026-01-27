@@ -13,6 +13,9 @@ interface CartItem {
 
 interface CartState {
   cart: CartItem[];
+  isOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
@@ -22,7 +25,9 @@ export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
       cart: [], 
-
+      isOpen: false,             // 1. The variable (The Light)
+            openCart: () => set({ isOpen: true }),   // 2. Function to turn it on
+            closeCart: () => set({ isOpen: false }),
 
       addToCart: (newItem) => 
         set((state) => {
