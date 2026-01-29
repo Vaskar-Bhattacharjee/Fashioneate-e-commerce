@@ -3,6 +3,7 @@ import { useCartStore } from "@/src/store/useCartStore";
 import Image from "next/image";
 import { IconX, IconTrash } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 export const CartDrawer = () => {
   const cart = useCartStore((state) => state.cart);
@@ -11,6 +12,7 @@ export const CartDrawer = () => {
   const closeCart = useCartStore((state) => state.closeCart);
 
   const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  
 
   return (
     <AnimatePresence>
@@ -51,16 +53,19 @@ export const CartDrawer = () => {
               ) : (
                 <div className="space-y-4">
                   {cart.map((item) => (
-                    <div
-                      key={item._id + item.selectedSize}
+                    <motion.div 
+                      key={item._id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
                       className="flex gap-4 items-start border-b border-neutral-200 pb-4"
-                    >
+                    > 
                       <div className="relative h-20 w-20 shrink-0 rounded-md overflow-hidden">
                         <Image src={item.image} fill className="object-cover" alt={item.name} />
                       </div>
 
                       <div className="flex-1">
-                        <h4 className="font-semibold text-neutral-700">{item.name}</h4>
+                        <Link href={`/product/${item._id}`} className="font-semibold text-neutral-700">{item.name}</Link>
 
                         
                         <p className="text-sm font-medium text-neutral-500">Size: {item.selectedSize}</p>
@@ -73,26 +78,26 @@ export const CartDrawer = () => {
                       <button onClick={() => removeFromCart(item._id)} className="ml-2">
                         <IconTrash size={22} className="text-neutral-700 hover:text-black cursor-pointer" />
                       </button>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               )}
             </div>
 
-            <div className="p-6 border-t">
+            <div className="p-6 border-t border-neutral-300">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-sm text-neutral-600">Subtotal</span>
-                <span className="font-semibold">${totalPrice.toFixed(2)}</span>
+                <span className="text-lg font-semibold font-inter text-neutral-600">Subtotal</span>
+                <span className="font-bold text-neutral-600 text-xl">${totalPrice.toFixed(2)}</span>
               </div>
 
               <div className="flex gap-3">
                 <button
                   onClick={closeCart}
-                  className="flex-1 py-3 border rounded-md text-sm font-medium text-neutral-700"
+                  className="flex-1 py-3 border tracking-wider border-neutral-200 hover:border-neutral-400 rounded-md text-sm font-medium bg-transparent text-neutral-700 cursor-pointer"
                 >
                   Continue Shopping
                 </button>
-                <button className="flex-1 py-3 bg-neutral-900 text-white rounded-md text-sm font-medium">
+                <button className="flex-1 py-3 bg-neutral-900 text-white rounded-md text-sm font-medium cursor-pointer">
                   Checkout
                 </button>
               </div>

@@ -32,15 +32,26 @@ export async function POST(req: Request) {
         user.refreshToken = refreshToken;
         await user.save();
         const response = NextResponse.json(
+            
+            
             { 
                 message: "Login successful",
                 accessToken, 
-                user: { email: user.email, role: user.role } 
+                user: { email: user.email, role: user.role },
+                
+                 
             }, 
             { status: 200 }
         );
 
-       
+       response.cookies.set("accessToken", accessToken, {
+        httpOnly: true, // Crucial for security
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 15 * 60, 
+        path: "/", 
+    });
+    console.log("response", response);
         response.cookies.set("refreshToken", refreshToken, {
             httpOnly: true,
             sameSite: "lax", 

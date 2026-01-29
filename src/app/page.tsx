@@ -1,6 +1,5 @@
 import { FAQs } from "../components/FAQs";
 import { FeaturesFirst } from "../components/Features-first";
-import { Footer } from "../components/Footer/footer";
 import { NewArrivals } from "../components/New-Arrivals";
 import { Hero } from "../components/ui/hero";
 
@@ -11,7 +10,7 @@ export default function Home() {
       <FeaturesFirst />
       <NewArrivals />
       <FAQs />
-      <Footer />
+      
     </div>
   );
 }

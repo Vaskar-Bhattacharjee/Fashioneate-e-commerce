@@ -27,6 +27,7 @@ html.dark {
   --color-emerald-500: var(--color-emerald-500);
   --color-base: var(--foreground);
   --font-quicksand: var(--font-quicksand);
+  --font-inter: var(--font-inter);
   --font-cormorantGaramond: var(--font-cormorant-garamond);
   --shadow-input: var(--shadow-input);
 }

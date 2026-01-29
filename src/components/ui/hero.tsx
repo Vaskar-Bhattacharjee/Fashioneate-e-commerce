@@ -27,7 +27,7 @@ export const Hero = () => {
                 transition={{ duration: 0.5 }}
                 className=" flex flex-col col-span-2 items-start justify-center ml-23 z-10">
                     <Heading className="text-neutral-200 text-7xl tracking-wide"> Welcome to Fashioneate</Heading>
-                    <SubHeading className="text-neutral-200 font-sans font-light"> Discover the latest fashion trends. Shop now and elevate your style. Discover the latest fashion trends. Shop now and elevate your style. </SubHeading>
+                    <SubHeading className="text-neutral-200"> Discover the latest fashion trends. Shop now and elevate your style. Discover the latest fashion trends. Shop now and elevate your style. </SubHeading>
 
                     <div className="relative w-85 p-px group  z-10 overflow-hidden h-10 rounded-full cursor-pointer lg:mt-5">
                         <div className="text-white bg-neutral-800/97 z-20 flex items-center justify-center gap-3 h-full rounded-full tracking-wide uppercase font-mono"> Find Your Best OutFit From Us <span><IconArrowRight className="size-3 group-hover:size-4 transition-all" /> </span> </div>

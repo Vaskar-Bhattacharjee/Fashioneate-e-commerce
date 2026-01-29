@@ -26,7 +26,7 @@ export const NewArrivals = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.7 }}
-                        className="mt-4 text-center max-w-2xl"
+                        className="mt-4 max-w-2xl"
                         ><SubHeading >Explore our latest collection of fashion-forward pieces that have just arrived. From trendy apparel to stylish accessories, discover the perfect additions to elevate your wardrobe.</SubHeading></motion.div>
                         
                       </div> 
