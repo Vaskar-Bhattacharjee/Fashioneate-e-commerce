@@ -158,9 +158,9 @@ export const NewArrivalsCard = ({
 }) => {
   return (
     <Link href={`/product/${_id}`}>
-      <motion.div className="group w-full border border-neutral-200 rounded-2xl flex flex-col gap-5 items-start justify-start overflow-hidden cursor-pointer pt-[1.5px] pl-[1.5px] hover:p-0 bg-white bg-[radial-gradient(circle_at_top_left,var(--color-blue-400)_0%,transparent_50%)]/100 transition-all duration-300">
-        <div className="w-full h-80 relative rounded-tl-[15px] rounded-tr-2xl overflow-hidden bg-neutral-100 border border-neutral-100">
-          <Image src={img} alt={alt} fill className="object-cover " />
+      <motion.div className="group w-full border border-neutral-200 rounded-2xl flex flex-col gap-5 items-start justify-start overflow-hidden cursor-pointer p-[1.5px]  bg-white bg-[radial-gradient(circle_at_top_left,theme(colors.blue.400)_0%,transparent_50%)] transition-all duration-300">
+        <div className="w-full h-80 relative rounded-tl-[14.6px] rounded-tr-[14.6px] overflow-hidden bg-neutral-100 border border-neutral-100 ">
+          <Image src={img} alt={alt} fill className="object-cover group-hover:scale-110 transition-all ease-in-out duration-300" />
         </div>
 
         <div className="relative flex flex-col items-start gap-1 w-full pb-6 [--pattern-fg:var(--color-neutral-700)]/5">
@@ -183,7 +183,7 @@ export const NewArrivalsCard = ({
               <p className="text-sm font-semibold tracking-tight text-neutral-600">
                 Add to Cart
               </p>
-              <IconShoppingBagCheck className="bg-transparent text-neutral-900 group-hover:translate-x-1 size-4 transition-all duration-300" />
+              <IconShoppingBagCheck className="bg-transparent text-neutral-900" />
             </div>
           </div>
         </div>

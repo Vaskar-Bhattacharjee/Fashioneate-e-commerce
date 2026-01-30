@@ -14,6 +14,7 @@ interface CartItem {
 interface CartState {
   cart: CartItem[];
   isOpen: boolean;
+  updateQuantity: (args: { id: string; quantity: number }) => void;
   openCart: () => void;
   closeCart: () => void;
   addToCart: (item: CartItem) => void;
@@ -28,6 +29,13 @@ export const useCartStore = create<CartState>()(
       isOpen: false,             // 1. The variable (The Light)
             openCart: () => set({ isOpen: true }),   // 2. Function to turn it on
             closeCart: () => set({ isOpen: false }),
+
+      updateQuantity: ({ id, quantity }: { id: string; quantity: number }) =>
+        set((state) => ({
+          cart: state.cart.map((item) =>
+            item._id === id ? { ...item, quantity: quantity } : item
+          ),
+        })),
 
       addToCart: (newItem) => 
         set((state) => {

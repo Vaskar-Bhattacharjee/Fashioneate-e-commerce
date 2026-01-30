@@ -132,7 +132,6 @@ export const MobileNavbar = ({userRole}: {userRole?: string | null}) => {
 
       <div className="flex items-center justify-center gap-6">
         <div className="flex gap-3 items-center justify-between">
-            {/* MOBILE ICON logic */}
             {canAccessDashboard && (
                 <Link href="/admin/dashboard">
                     <IconLayoutDashboard className="text-neutral-600 size-6" />
@@ -185,7 +184,6 @@ export const MobileNavbar = ({userRole}: {userRole?: string | null}) => {
   );
 };
 
-// Input component remains unchanged...
 export const Input = ({ className, placeholder, removeIcon }: { className?: string; placeholder?: string; removeIcon?: boolean; }) => {
   return (
     <div className={cn("flex gap-0 md:gap-3 w-34 md:w-64 h-8 md:h-10 px-2.5 py-1 justify-center items-center shadow-input dark:shadow-input-dark rounded-lg bg-neutral-50", className)}>
