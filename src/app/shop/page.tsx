@@ -2,7 +2,7 @@
 import { Container } from "@/src/components/ui/container";
 import { Heading } from "@/src/components/ui/header";
 import { cn } from "@/src/lib/utils";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   BarView,
   BarViewThree,
@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { Dropdown } from "@/src/components/ui/dropdown";
 import { Fallback_Products } from "@/src/lib/data";
 import axios from "axios";
+import { IconFileDollarFilled, IconFilter, IconMoodKidFilled, IconSeedlingFilled, IconUserFilled, IconWomanFilled } from "@tabler/icons-react";
+import { div } from "framer-motion/client";
 
 interface gridLayout {
   layout: "grid" | "list" | "barTwo" | "barThree";
@@ -33,6 +35,7 @@ interface ProductProps {
   status: string;
   isFeatured: boolean;
 }
+
 export default function ShopPage() {
   const [layout, setLayout] = useState<gridLayout["layout"]>("grid");
   const [category, setCategory] = useState("All");
@@ -55,8 +58,8 @@ useEffect(() => {
         } else {
           setProducts(Fallback_Products as ProductProps[]);
         }
-      } catch (error) {
-        console.warn("Backend failed, using fallback collection.");
+      } catch (error: unknown) {
+        console.warn("Backend failed, using fallback collection.", error);
         setProducts(Fallback_Products as ProductProps[]);
       } finally {
         setLoading(false);
@@ -146,17 +149,29 @@ useEffect(() => {
           </div>
           <div className="flex flex-col md:flex-row items-start md:items-center justify-center gap-2 md:gap-4">
 
-            <Dropdown 
-            sortname="Category:" 
-            onSelect={(val) => setCategory(val)}           
-            items={["All", "Women's Fashion", "Men's Collection", "Accessories", "Wedding Collection"]}
-            />
+<Dropdown 
+  sortname="Category:" 
+  onSelect={(val) => setCategory(val)}           
+  items={[
+    { label: "All", icon: <IconFilter className="size-4" /> },
+    { label: "Men's Fashion", icon: <IconUserFilled className="size-4" /> },
+    { label: "Women's Fashion", icon: <IconWomanFilled className="size-4" /> },
+    { label: "Kid's Fashion", icon: <IconMoodKidFilled className="size-4" /> },
+    { label: "Wedding Collection", icon: <IconSeedlingFilled className="size-4" /> },
+  ]}
+/>
 
             <Dropdown 
             sortname="Sort by:" 
             onSelect={(val) => setSortBy(val)}
-            items={[ "Price: Low to High", "Price: High to Low"]}
-            />
+            items={[ 
+                { label: "Price: Low to High",
+                  icon: <IconFileDollarFilled className="size-4"/>
+                 }, 
+                { label: "Price: High to Low",
+                  icon: <IconFileDollarFilled  className="size-4"/>
+                 } 
+              ]}            />
 
           </div>
 
@@ -169,20 +184,30 @@ useEffect(() => {
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-4 gap-4"
+          className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-auto"
         >
-          {displayedProducts.map((product) => (
-            <CardLayoutOne
-              key={product._id}
-              _id={product._id}
-              src={product.image}
-              category={product.category}
-              productName={product.name}
-              description={product.description}
-              price={product.newprice}
+          <AnimatePresence mode="popLayout">
+            {displayedProducts.map((product) => (
+              <motion.div
+                layout
+                key={product._id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ type: "spring", damping: 20, stiffness: 120 }}
 
-            />
-          ))}
+              >
+                <CardLayoutOne
+                  _id={product._id}
+                  src={product.image}
+                  category={product.category}
+                  productName={product.name}
+                  description={product.description}
+                  price={product.newprice}
+                />
+              </motion.div>
+            ))} {/* <--- This was missing */}
+          </AnimatePresence>
         </motion.div>
       )}
       {layout === "barTwo" && (
@@ -192,7 +217,16 @@ useEffect(() => {
           transition={{ delay: 0.2 }}
           className="flex justify-center items-center gap-4 flex-wrap"
         >
+          <AnimatePresence mode="popLayout">
           {displayedProducts.map((product) => (
+            <motion.div
+              layout
+              key={product._id}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ type: "spring", damping: 20, stiffness: 120 }}
+            >
             <CardLayoutTwo
               key={product._id}
               _id={product._id}
@@ -202,7 +236,10 @@ useEffect(() => {
               description={product.description}
               price={product.newprice}
             />
+            </motion.div>
           ))}
+          
+          </AnimatePresence>
         </motion.div>
       )}
       {layout === "barThree" && (
@@ -212,7 +249,16 @@ useEffect(() => {
           transition={{ delay: 0.2 }}
           className="grid grid-cols-3 gap-4 pl-0 lg:pl-20"
         >
+          <AnimatePresence mode="popLayout">
           {displayedProducts.map((product) => (
+            <motion.div 
+            layout
+            key={product._id}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{opacity:0, scale:0.8}}
+            transition={{stiffness:120, damping:20, type:"spring"}}
+            >
             <CardLayoutThree
               key={product._id}
               _id={product._id}
@@ -222,7 +268,10 @@ useEffect(() => {
               description={product.description}
               price={product.newprice}
             />
+            </motion.div>
           ))}
+          
+        </AnimatePresence>
         </motion.div>
       )}
       {layout === "list" && (
@@ -232,7 +281,16 @@ useEffect(() => {
           transition={{ delay: 0.2 }}
           className="flex flex-col items-center justify-center gap-0 md:gap-4"
         >
+          <AnimatePresence mode="popLayout">
           {displayedProducts.map((product) => (
+            <motion.div 
+            layout
+            key={product._id}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{opacity:0, scale:0.8}}
+            transition={{stiffness:120, damping:20, type:"spring"}}
+            >
             <CardLayoutFour
               key={product._id}
               _id={product._id}
@@ -242,7 +300,10 @@ useEffect(() => {
               description={product.description}
               price={product.newprice}
             />
+            </motion.div>
           ))}
+
+        </AnimatePresence>
         </motion.div>
       )}
     </Container>

@@ -75,9 +75,9 @@ export default function Product() {
         price: product.newprice,
         image: product.image,
         quantity: count,
-        selectedSize: selectedSize, // Now uses the dynamic state
+        selectedSize: selectedSize,
       });
-    }, 800);
+    }, 500);
   };
 
   useEffect(() => {

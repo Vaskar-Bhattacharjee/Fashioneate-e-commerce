@@ -147,7 +147,9 @@ export const CartDrawer = () => {
 };
 
 export const Quantity = ({ itemId }: { itemId: string }) => {
-  const [count, setCount] = useState(1);
+  const cart = useCartStore((state) => state.cart.find((item) => item._id === itemId));
+  const cartQuantity = cart?.quantity || 1;
+  const [count, setCount] = useState(cartQuantity);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const increament = ({ itemId }: { itemId: string }) => {
     if (count < 10) {
