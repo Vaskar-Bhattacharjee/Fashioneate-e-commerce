@@ -7,7 +7,8 @@ import {
   IconSearch,
   IconShoppingBag,
   IconX,
-  IconLayoutDashboard, 
+  IconLayoutDashboard,
+  IconStarHalfFilled, 
 } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -102,7 +103,7 @@ export const DesktopNavbar = ({userRole}: {userRole?: string | null}) => {
           </Link>
         )}
 
-        <IconJewishStar className="text-neutral-800 cursor-pointer" />
+        <IconStarHalfFilled className="text-neutral-800 cursor-pointer" />
         
         <div className="relative cursor-pointer" id="shopping-cart-target" onClick={openCart}>
           <IconShoppingBag className="text-neutral-800" />

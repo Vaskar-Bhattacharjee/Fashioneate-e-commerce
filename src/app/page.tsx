@@ -2,6 +2,7 @@ import { FAQs } from "../components/FAQs";
 import { FeaturesFirst } from "../components/Features-first";
 import { NewArrivals } from "../components/New-Arrivals";
 import { Hero } from "../components/ui/hero";
+import { WhyUs } from "../components/whyUs";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <Hero />
       <FeaturesFirst />
       <NewArrivals />
+      <WhyUs />
       <FAQs />
       
     </div>

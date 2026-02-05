@@ -33,6 +33,12 @@ const productSchema = new mongoose.Schema({
       type: Boolean,
       default: false
     },
+    newArrivalFeatured: {
+      type: Boolean,
+      default: false,
+      min: 3,
+      max: 3
+    },
     quantity: {
       type: Number,
       required: true,
