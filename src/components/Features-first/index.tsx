@@ -3,8 +3,8 @@ import { Categories } from "./categories";
 
 export const FeaturesFirst = () => {
     return (
-        <Container>
-            <div className="w-full min-h-96 pt-32 flex flex-col items-center justify-center">
+        <Container className="">
+            <div className="w-full min-h-96  flex flex-col items-center justify-center">
                 
                 <Categories />
             </div>

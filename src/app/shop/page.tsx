@@ -16,7 +16,6 @@ import { Dropdown } from "@/src/components/ui/dropdown";
 import { Fallback_Products } from "@/src/lib/data";
 import axios from "axios";
 import { IconFileDollarFilled, IconFilter, IconMoodKidFilled, IconSeedlingFilled, IconUserFilled, IconWomanFilled } from "@tabler/icons-react";
-import { div } from "framer-motion/client";
 
 interface gridLayout {
   layout: "grid" | "list" | "barTwo" | "barThree";
@@ -52,7 +51,6 @@ useEffect(() => {
         setLoading(true);
         const response = await axios.get("/api/product/get-all-products");
         
-        // If we get data and it's an array with items, use it
         if (response.data && Array.isArray(response.data) && response.data.length > 0) {
           setProducts(response.data);
         } else {

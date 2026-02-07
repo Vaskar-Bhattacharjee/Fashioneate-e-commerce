@@ -9,7 +9,7 @@ export const Heading = ({ children, className }: { children: React.ReactNode, cl
 }
 export const SubHeading = ({ children, className }: { children: React.ReactNode, className?: string }) => {
     return (
-       <h2 className={cn("px-4 md:px-0 text-[15px] md:text-[18px] font-inter text-center md:text-left  text-neutral-600  py-4 font-normal w-90 md:w-150 tracking-tight  ", className)}>
+       <h2 className={cn("px-4 md:px-0 text-[15px] md:text-[20px] font-inter text-center md:text-left  text-neutral-600  py-4 font-normal w-90 md:w-150 tracking-tight  ", className)}>
         {children}
        </h2>
     );

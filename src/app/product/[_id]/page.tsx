@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Fallback_Products } from "@/src/lib/data";
 import { useParams } from "next/navigation";
 import { useCartStore } from "@/src/store/useCartStore";
+import { set } from "mongoose";
 
 // Interface remains the same
 interface ProductProps {
@@ -31,6 +32,7 @@ interface ProductProps {
 export default function Product() {
   const [count, setCount] = useState(1);
   const [product, setProduct] = useState<ProductProps>();
+  const [sizes, setSizes] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [available, setAvailable] = useState(5);
   const [selectedSize, setSelectedSize] = useState("M"); // Lifted state from Sizes component
@@ -40,11 +42,15 @@ export default function Product() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const [isFlying, setIsFlying] = useState(false);
-  const [flightPath, setFlightPath] = useState({ startX: 0, startY: 0, endX: 0, endY: 0 });
+  const [flightPath, setFlightPath] = useState({
+    startX: 0,
+    startY: 0,
+    endX: 0,
+    endY: 0,
+  });
 
   const addToCart = useCartStore((state) => state.addToCart);
 
-  // FIXED: Wrapped everything inside the handler function
   const handleAddToCart = () => {
     if (!product || !buttonRef.current) return;
 
@@ -83,11 +89,18 @@ export default function Product() {
   useEffect(() => {
     const findProduct = () => {
       setLoading(true);
-      const found = Fallback_Products.find((p) => String(p._id) === String(_id));
+      const found = Fallback_Products.find(
+        (p) => String(p._id) === String(_id),
+      );
       if (found) {
-        console.log(found)
+        console.log(found);
         setProduct(found as ProductProps);
         setAvailable(found.quantity || 5);
+      }
+      const sizes = found?.size;
+      if (Array.isArray(sizes)) {
+        setSizes(sizes);
+        setSelectedSize(sizes[0]);
       }
       setLoading(false);
     };
@@ -104,7 +117,9 @@ export default function Product() {
   return (
     <Container className="pt-10 md:pt-55 w-6xl mx-auto">
       {loading ? (
-        <div className="text-neutral-950 text-7xl font-cormorantGaramond">Loading...</div>
+        <div className="text-neutral-950 text-7xl font-cormorantGaramond">
+          Loading...
+        </div>
       ) : product ? (
         <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-8 md:gap-20">
           <motion.div
@@ -113,7 +128,12 @@ export default function Product() {
             transition={{ duration: 0.4 }}
             className="relative w-full md:w-120 h-120 rounded-lg overflow-hidden"
           >
-            <Image fill className="object-cover" src={product.image} alt={product.name} />
+            <Image
+              fill
+              className="object-cover"
+              src={product.image}
+              alt={product.name}
+            />
           </motion.div>
 
           <motion.div
@@ -124,21 +144,39 @@ export default function Product() {
           >
             <Heading className="pb-2">{product.name}</Heading>
             <div className="flex items-center gap-2">
-              <h2 className="text-[2.5rem] text-neutral-800 font-bold">${product.newprice}</h2>
-              <p className="text-sm text-neutral-500 font-semibold mt-3">(Tax Included)</p>
+              <h2 className="text-[2.5rem] text-neutral-800 font-bold">
+                ${product.newprice}
+              </h2>
+              <p className="text-sm text-neutral-500 font-semibold mt-3">
+                (Tax Included)
+              </p>
             </div>
 
             <div className="mt-6">
               {/* Passed state down to the component */}
-              <Sizes selectedSize={selectedSize} setSelectedSize={setSelectedSize} />
+              <Sizes
+                selectedSize={selectedSize}
+                setSelectedSize={setSelectedSize}
+                sizes={sizes}
+              />
             </div>
 
             <div className="flex justify-between h-12 px-4 w-full md:w-48 items-center shadow-input rounded-lg mt-8">
               <h2 className="text-neutral-700 font-semibold">Quantity:</h2>
               <div className="flex items-center gap-3">
-                <button onClick={decreament} className="text-xl cursor-pointer text-neutral-600 shadow-input px-1 rounded-sm ">-</button>
+                <button
+                  onClick={decreament}
+                  className="text-xl cursor-pointer text-neutral-600 shadow-input px-1 rounded-sm "
+                >
+                  -
+                </button>
                 <p className="font-bold text-neutral-600">{count}</p>
-                <button onClick={increament} className="text-xl cursor-pointer text-neutral-600 shadow-input px-1 rounded-sm">+</button>
+                <button
+                  onClick={increament}
+                  className="text-xl cursor-pointer text-neutral-600 shadow-input px-1 rounded-sm"
+                >
+                  +
+                </button>
               </div>
             </div>
 
@@ -196,14 +234,16 @@ export default function Product() {
 }
 
 // Sub-component now receives props from parent
-export const Sizes = ({ 
-  selectedSize, 
-  setSelectedSize 
-}: { 
-  selectedSize: string; 
-  setSelectedSize: (val: string) => void 
+export const Sizes = ({
+  selectedSize,
+  setSelectedSize,
+  sizes,
+}: {
+  selectedSize: string;
+  setSelectedSize: (val: string) => void;
+  sizes: string[];
 }) => {
-  const sizes = ["S", "M", "L", "XL", "2XL", "3XL"];
+ 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
@@ -217,7 +257,9 @@ export const Sizes = ({
             onClick={() => setSelectedSize(size)}
             className={cn(
               "relative h-12 w-12 rounded-lg border flex items-center justify-center transition-all",
-              selectedSize === size ? "bg-black text-white" : "bg-transparent border-neutral-200 text-black hover:border-neutral-400"
+              selectedSize === size
+                ? "bg-black text-white"
+                : "bg-transparent border-neutral-200 text-black hover:border-neutral-400",
             )}
           >
             {size}

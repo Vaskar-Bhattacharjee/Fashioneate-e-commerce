@@ -8,6 +8,15 @@ import Image from "next/image";
 
 export const Hero = () => {
   return (
+    <section className="relative w-screen h-[90vh] overflow-hidden">
+      
+      <div className="pointer-events-none absolute mask-r-from-50% mask-l-from-50%   inset-0 z-0 grid h-[300vh] -translate-y-200 gap-15 -rotate-45 w-full    select-none grid-cols-2 md:grid-cols-4 ">
+        <div className="relative w-full   border border-dashed  border-neutral-200" ></div>
+        <div className="relative w-full   border border-dashed  border-neutral-200"></div>
+        <div className="relative w-full   border border-dashed  border-neutral-200" ></div>
+        <div className="relative w-full   border border-dashed  border-neutral-200"></div>
+
+      </div>
     <Container>
       <div className="w-full h-[98vh] flex items-center justify-between  pl-16 pr-28    ">
         <motion.div
@@ -37,14 +46,14 @@ export const Hero = () => {
                 <IconArrowRight className="size-3  transition-all" />{" "}
               </motion.span>{" "}
             </div>
-            <div className="absolute inset-0 -z-10 scale-[12] bg-[conic-gradient(at_center,transparent,var(--color-orange-500),10%,transparent_5%)] animate-[spin_6s_linear_infinite] "></div>
+            <div className="absolute inset-0 -z-10 scale-[12] bg-[conic-gradient(at_center,transparent,var(--color-emerald-500),10%,transparent_5%)] animate-[spin_6s_linear_infinite] "></div>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Heading className="text-neutral-800 text-7xl tracking-wide">
+            <Heading className="text-neutral-800  md:text-7xl tracking-tight">
               {" "}
               Welcome to Fashioneate
             </Heading>
@@ -60,8 +69,7 @@ export const Hero = () => {
               impedit fugiat laborum sequi consectetur exercitationem unde
               aspernatur autem dicta alias voluptate aut quasi illum possimus
               fugit praesentium, eligendi molestias, architecto quae veniam
-              tempore veritatis velit! Expedita dolorum ratione reprehenderit
-              fugiat.
+
             </SubHeading>
           </motion.div>
           <motion.div 
@@ -97,7 +105,7 @@ export const Hero = () => {
             whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
             whileHover={{ scale: 1.02, rotateY: 5 }}
             transition={{ duration: 0.6 }}
-            className="w-120 h-120 rounded-md overflow-hidden relative"
+            className="w-120 h-120 rounded-md overflow-hidden relative animate pulse"
             style={{ perspective: "1000px" }}
           >
             <Image
@@ -116,5 +124,6 @@ export const Hero = () => {
         </div>
       </div>
     </Container>
+    </section>
   );
 };
