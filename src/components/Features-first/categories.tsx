@@ -43,7 +43,7 @@ const categoryData = [
 export const Categories = () => {
     const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   return (
-    <section className=" bg-white">
+    <section className=" bg-transparent">
       <Container className=" flex flex-col items-center justify-center md:w-6xl">
         <Heading className="py-0">Top Categories</Heading>
         <SubHeading className="font-inter md:text-center text-neutral-500">Find all your favourite items here</SubHeading>
@@ -59,7 +59,7 @@ export const Categories = () => {
               key={item.name}
               onMouseEnter={()=> setHoverIndex(index)}
               onMouseLeave={()=> setHoverIndex(null)}
-              className="relative  flex justify-between items-center border border-neutral-200 rounded-[16px] pt-6 pl-5 w-120 h-60 mx-auto py-10  gap-4  [--pattern-fg:var(--color-gray-950)]/5"
+              className="relative  flex justify-between items-center border border-neutral-200 bg-white rounded-[16px] pt-6 pl-5 w-120 h-60 mx-auto py-10  gap-4  [--pattern-fg:var(--color-gray-950)]/5"
             >
              <AnimatePresence >
              {hoverIndex === index && 

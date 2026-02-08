@@ -84,41 +84,58 @@ export const NewArrivals = () => {
             </motion.div>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-8 w-5xl h-150">
-            <div className="md:row-span-2">
+          <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="mt-12 grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-x-4 gap-y-7 w-5xl h-150">
+            <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6 }}
+            className="md:row-span-2">
               <NewArrivalsItemCard
                 imgSrc={displayedProducts[0].image}
                 productName={displayedProducts[0].name}
                 price={displayedProducts[0].newprice}
                 id = {displayedProducts[0]._id}
               />
-            </div>
+            </motion.div>
 
-            <div className="md:row-span-1">
+            <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6 }}            
+            className="md:row-span-1">
               <NewArrivalsItemCard
                 imgSrc={displayedProducts[1].image}
                 productName={displayedProducts[1].name}
                 price={displayedProducts[1].newprice}
                 id = {displayedProducts[1]._id}
               />
-            </div>
+            </motion.div>
 
-            <div className="md:row-span-1">
+            <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.8 }}            
+            className="md:row-span-1">
               <NewArrivalsItemCard
                 imgSrc={displayedProducts[2].image}
                 productName={displayedProducts[2].name}
                 price={displayedProducts[2].newprice}
                 id = {displayedProducts[2]._id}
               />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
           <div className="mt-12 flex items-center justify-center">
             <Link href="/new-arrivals">
-              <div className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md hover:bg-neutral-700">
-                See More{" "}
-                <span>
-                  <IconArrowRight className="size-4" />{" "}
+              <div className="flex items-center justify-between gap-2 w-35 group hover:bg-neutral-900 hover:shadow-lg transition-all duration-300 px-3 py-2 border border-neutral-900 rounded-full text-neutral-900">
+                <span className="bg-neutral-900 group-hover:bg-neutral-100 size-8 rounded-full flex items-center justify-center">
+                  <IconArrowRight className="size-7 text-neutral-100 group-hover:text-neutral-900" />{" "}
                 </span>
+                <p className="text-neutral-900  group-hover:text-white font-inter font-semibold">See More</p>
+
               </div>
             </Link>
           </div>

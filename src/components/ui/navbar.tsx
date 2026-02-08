@@ -8,7 +8,8 @@ import {
   IconShoppingBag,
   IconX,
   IconLayoutDashboard,
-  IconStarHalfFilled, 
+  IconStarHalfFilled,
+  IconAdjustmentsFilled, 
 } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -96,10 +97,10 @@ export const DesktopNavbar = ({userRole}: {userRole?: string | null}) => {
         {canAccessDashboard && (
           <Link 
             href="/admin/dashboard" 
-            className="flex items-center gap-1 px-3 py-1.5 bg-neutral-100 hover:bg-neutral-200 rounded-md transition-colors"
+            className="flex items-center gap-1 px-3 py-1.5 bg-neutral-100 hover:bg-neutral-200 border border-neutral-200 rounded-md transition-colors"
           >
-            <IconLayoutDashboard className="text-neutral-800 size-5" />
-            <span className="text-sm font-semibold text-neutral-800">Dashboard</span>
+            <IconAdjustmentsFilled className="text-neutral-800 size-5" />
+            <span className="text-sm font-semibold text-neutral-600 font-inter">Dashboard</span>
           </Link>
         )}
 

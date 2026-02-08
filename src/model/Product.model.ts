@@ -50,9 +50,9 @@ const productSchema = new mongoose.Schema({
       default: "piece"
     },
     size: {
-      type: String,
+      type: [String],
       enum: ["S", "M", "L", "xl", "2xl", "3xl"],
-      default: "M"
+      default: ["M"]
     },
     status: {
       type: String,

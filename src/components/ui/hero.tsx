@@ -5,20 +5,16 @@ import { Heading, SubHeading } from "./header";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { cn } from "@/src/lib/utils";
 
 export const Hero = () => {
   return (
-    <section className="relative w-screen h-[90vh] overflow-hidden">
+    <section className="relative w-screen h-[90vh] ">
       
-      <div className="pointer-events-none absolute mask-r-from-50% mask-l-from-50%   inset-0 z-0 grid h-[300vh] -translate-y-200 gap-15 -rotate-45 w-full    select-none grid-cols-2 md:grid-cols-4 ">
-        <div className="relative w-full   border border-dashed  border-neutral-200" ></div>
-        <div className="relative w-full   border border-dashed  border-neutral-200"></div>
-        <div className="relative w-full   border border-dashed  border-neutral-200" ></div>
-        <div className="relative w-full   border border-dashed  border-neutral-200"></div>
 
-      </div>
     <Container>
       <div className="w-full h-[98vh] flex items-center justify-between  pl-16 pr-28    ">
+        <Gridline />
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -53,7 +49,7 @@ export const Hero = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Heading className="text-neutral-800  md:text-7xl tracking-tight">
+            <Heading className="text-neutral-700  md:text-7xl tracking-tight">
               {" "}
               Welcome to Fashioneate
             </Heading>
@@ -99,8 +95,14 @@ export const Hero = () => {
           </motion.div>
         </motion.div>
         {/* ---------------------------------------------- */}
-        <div className="relative flex flex-col  gap-1 items-center justify-center">
-          <motion.div
+        <div className="relative flex flex-col  gap-1 items-center justify-center [--pattern-fg:var(--color-neutral-900)]/10">
+          <div className={cn("w-120 h-120 rounded-md overflow-hidden relative border-2 border-dashed  border-neutral-200",
+            "bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed"
+          )}></div>
+          <div className={cn("w-120 h-120 rounded-md overflow-hidden absolute translate-x-5 translate-y-5",
+            "hover:translate-0 transition-all duration-400 ease-in-out"
+          )}>
+                        <motion.div
             initial={{ opacity: 0, scale: 0.9, rotateY: -15 }}
             whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
             whileHover={{ scale: 1.02, rotateY: 5 }}
@@ -121,9 +123,22 @@ export const Hero = () => {
               className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"
             />
           </motion.div>
+          </div>
         </div>
       </div>
     </Container>
     </section>
   );
 };
+
+export const Gridline = () => {
+  return (
+          <div className="pointer-events-none absolute mask-r-from-80% mask-l-from-80%   inset-0 z-0 grid h-[350vh] -translate-y-200 gap-15 -rotate-45 w-full    select-none grid-cols-2 md:grid-cols-4 ">
+        <div className="relative w-full   border border-dashed  border-neutral-300" ></div>
+        <div className="relative w-full   border border-dashed  border-neutral-300"></div>
+        <div className="relative w-full   border border-dashed  border-neutral-300" ></div>
+        <div className="relative w-full   border border-dashed  border-neutral-300"></div>
+
+      </div>
+  )
+}

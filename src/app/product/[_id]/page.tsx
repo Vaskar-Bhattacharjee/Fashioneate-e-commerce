@@ -9,9 +9,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Fallback_Products } from "@/src/lib/data";
 import { useParams } from "next/navigation";
 import { useCartStore } from "@/src/store/useCartStore";
-import { set } from "mongoose";
-
-// Interface remains the same
 interface ProductProps {
   _id: string;
   name: string;
@@ -54,7 +51,6 @@ export default function Product() {
   const handleAddToCart = () => {
     if (!product || !buttonRef.current) return;
 
-    // A. GET POSITIONS
     const btnRect = buttonRef.current.getBoundingClientRect();
     const startX = btnRect.left + btnRect.width / 2 - 20;
     const startY = btnRect.top;
@@ -68,12 +64,9 @@ export default function Product() {
       endX = targetRect.left;
       endY = targetRect.top;
     }
-
-    // B. TRIGGER ANIMATION
     setFlightPath({ startX, startY, endX, endY });
     setIsFlying(true);
 
-    // C. ACTUAL ZUSTAND UPDATE (Delayed to match animation)
     setTimeout(() => {
       addToCart({
         _id: product._id,
@@ -153,7 +146,6 @@ export default function Product() {
             </div>
 
             <div className="mt-6">
-              {/* Passed state down to the component */}
               <Sizes
                 selectedSize={selectedSize}
                 setSelectedSize={setSelectedSize}
@@ -189,7 +181,7 @@ export default function Product() {
 
             <div className="flex gap-4 pt-8">
               <button
-                ref={buttonRef} // ATTACHED REF
+                ref={buttonRef} 
                 onClick={handleAddToCart}
                 className="h-11 w-44 text-white bg-neutral-800 font-semibold rounded-lg hover:bg-neutral-900 transition cursor-pointer"
               >
@@ -204,8 +196,6 @@ export default function Product() {
       ) : (
         <div>Product not found</div>
       )}
-
-      {/* FLYING ANIMATION PORTAL */}
       <AnimatePresence>
         {isFlying && (
           <motion.div
@@ -233,7 +223,6 @@ export default function Product() {
   );
 }
 
-// Sub-component now receives props from parent
 export const Sizes = ({
   selectedSize,
   setSelectedSize,
