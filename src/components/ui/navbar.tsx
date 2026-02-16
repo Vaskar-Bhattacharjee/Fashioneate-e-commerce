@@ -73,7 +73,7 @@ export const DesktopNavbar = ({userRole}: {userRole?: string | null}) => {
   const canAccessDashboard = userRole === "admin" || userRole === "moderator";
 
   return (
-    <nav className={cn("fixed transition-all duration-200 ease-out top-0 inset-x-0 my-0 bg-white z-50 hidden lg:flex h-20 items-center justify-center gap-28 px-2 border border-b border-neutral-200")}>
+    <nav className={cn("fixed transition-all duration-200 ease-out top-0 inset-x-0 my-0 bg-transparent z-50 hidden lg:flex h-20 items-center justify-center gap-28 px-2 border border-b border-neutral-300")}>
       <Logo />
 
       <div>

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Quicksand, Cormorant_Garamond, Roboto, Inter } from "next/font/google";
 import "./globals.css";
-import  {Navbar}  from "@/src/components/ui/navbar";
+import { Navbar } from "@/src/components/ui/navbar";
 import { ThemeProvider } from "../components/ui/theme-provider";
 import { Footer } from "../components/Footer/footer";
+import { Toaster } from "../../components/ui/sonner";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -22,10 +23,11 @@ const roboto = Roboto({
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-})
+});
 export const metadata: Metadata = {
   title: "Fashioneate",
-  description: "Your Ultimate Fashion Destination - Trendy Styles for Every Occasion",
+  description:
+    "Your Ultimate Fashion Destination - Trendy Styles for Every Occasion",
 };
 
 export default function RootLayout({
@@ -38,14 +40,19 @@ export default function RootLayout({
       <body
         className={`${quicksand.variable} ${cormorantGaramond.variable} ${roboto.variable} ${inter.variable} antialiased`}
       >
-      <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-      <Navbar />
-      
-      <main>
-        {children}
-      </main>
-      <Footer />
-      </ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+        >
+          <Navbar />
+
+          <main>
+            {children}
+            <Toaster position="top-right" />
+          </main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

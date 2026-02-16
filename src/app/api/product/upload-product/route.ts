@@ -1,6 +1,7 @@
 import { dbConnect } from "@/src/lib/dbConnect";
 import imagekit from "@/src/lib/imagekit";
 import Product from "@/src/model/product.model";
+import { log } from "console";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -25,6 +26,7 @@ export async function POST(req: Request) {
     try {
         await dbConnect()
         const formData = await req.formData();
+         formData.forEach((value, key) => console.log(`${key}:`, value))
         const file = formData.get("image") as File;
         if (!file) {
             return NextResponse.json({ message: "No image provided" }, { status: 400 });
