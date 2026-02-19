@@ -7,7 +7,7 @@ export async function GET( _request: Request, { params }: { params:  Promise<{_i
         await dbConnect();
         const { _id } = await params;
         const product = await Product.findById(_id);
-        if(!product){
+        if(product === null){
             return NextResponse.json({ message: "Product not found" }, { status: 404 });
         }
         return NextResponse.json({ product }, { status: 200 }); 

@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Fallback_Products } from "@/src/lib/data";
 import { useParams } from "next/navigation";
 import { useCartStore } from "@/src/store/useCartStore";
+import axios from "axios";
 interface ProductProps {
   _id: string;
   name: string;
@@ -36,6 +37,9 @@ export default function Product() {
 
   const params = useParams();
   const _id = params._id;
+  const _id2 = _id?.toString() || ""; 
+  console.log("_id :", _id2);
+  
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const [isFlying, setIsFlying] = useState(false);
@@ -80,22 +84,28 @@ export default function Product() {
   };
 
   useEffect(() => {
-    const findProduct = () => {
-      setLoading(true);
-      const found = Fallback_Products.find(
-        (p) => String(p._id) === String(_id),
-      );
-      if (found) {
-        console.log(found);
-        setProduct(found as ProductProps);
-        setAvailable(found.quantity || 5);
+    const findProduct = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`/api/product/get-product/${_id2}`);
+        const productData = response.data.product;
+        if (productData && productData._id) {
+          setProduct(productData as ProductProps);
+          setAvailable(productData.quantity || 5);
+          console.log("Available quantity:", productData.quantity);
+          const sizes = productData.size;
+          console.log("Sizes data:", sizes);
+          if (Array.isArray(sizes)) {
+            setSizes(sizes);
+            setSelectedSize(sizes[0]);
+          }
+        }
+      } catch (error) {
+        console.warn("Failed to fetch product details:", error);
+        setProduct(Fallback_Products[0] as ProductProps);
+      } finally {
+        setLoading(false);
       }
-      const sizes = found?.size;
-      if (Array.isArray(sizes)) {
-        setSizes(sizes);
-        setSelectedSize(sizes[0]);
-      }
-      setLoading(false);
     };
     if (_id) findProduct();
   }, [_id]);
@@ -114,16 +124,16 @@ export default function Product() {
           Loading...
         </div>
       ) : product ? (
-        <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-8 md:gap-20">
+        <div className="flex flex-col md:flex-row justify-center items-center md:items-center gap-8 md:gap-20">
           <motion.div
             initial={{ opacity: 0, scale: 0.3 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
-            className="relative w-full md:w-120 h-120 rounded-lg overflow-hidden"
+            className="relative w-full md:w-130 h-130 rounded-lg overflow-hidden"
           >
             <Image
               fill
-              className="object-cover"
+              className="object-cover object-center"
               src={product.image}
               alt={product.name}
             />
@@ -183,11 +193,11 @@ export default function Product() {
               <button
                 ref={buttonRef} 
                 onClick={handleAddToCart}
-                className="h-11 w-44 text-white bg-neutral-800 font-semibold rounded-lg hover:bg-neutral-900 transition cursor-pointer"
+                className="h-11 w-44 font-inter text-white bg-neutral-800 font-semibold rounded-lg hover:bg-neutral-900 transition cursor-pointer"
               >
                 Add to Cart
               </button>
-              <button className="h-11 w-44 text-neutral-800 border border-neutral-200 rounded-lg hover:bg-neutral-100 transition cursor-pointer">
+              <button className="h-11 w-44 font-inter text-neutral-800 border border-neutral-300 rounded-lg hover:bg-neutral-100 transition cursor-pointer">
                 Buy Now
               </button>
             </div>

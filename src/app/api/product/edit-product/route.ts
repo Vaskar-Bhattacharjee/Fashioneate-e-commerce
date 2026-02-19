@@ -6,7 +6,6 @@ import { z } from "zod";
 
 
 const productUpdateSchema = z.object({
-    id: z.string(),
     name: z.string().optional(),
     description: z.string().optional(),
     image: z.any().optional(),
@@ -22,9 +21,10 @@ const productUpdateSchema = z.object({
     isFeatured: z.coerce.boolean().optional(),
 });
 
-export async function PATCH(req: Request) {
+export async function PATCH(req: Request,{ params }: { params: { id: string } }) {
     try {
         await dbConnect();
+        const id = params.id;
         const body = await req.formData(); 
         const data = Object.fromEntries(body.entries());       
         const validation = productUpdateSchema.safeParse(data);
@@ -35,7 +35,7 @@ export async function PATCH(req: Request) {
                 errors: validation.error 
             }, { status: 400 });
         }
-        const { id, ...updateData } = validation.data;
+        const updateData     = validation.data;
         const existingProduct = await Product.findById(id);
         if (!existingProduct) {
             return NextResponse.json({ message: "Product not found" }, { status: 404 });

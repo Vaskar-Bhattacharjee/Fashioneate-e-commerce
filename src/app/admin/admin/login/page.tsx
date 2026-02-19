@@ -47,7 +47,7 @@ const Login = () => {
             className={cn(
               "absolute inset-0 pointer-events-none ",
               "bg-size-[40px_40px]",
-              "bg-[linear-gradient(to_right,#EDEDED_1px,transparent_1px),linear-gradient(to_bottom,#EDEDED_1px,transparent_1px)]",
+              "bg-[linear-gradient(to_right,#d2d1d1_1px,transparent_1px),linear-gradient(to_bottom,#d2d1d1_1px,transparent_1px)]",
               "mask-l-from-70% mask-r-from-70% mask-t-from-70% mask-b-from-70% ",
             )}
           />

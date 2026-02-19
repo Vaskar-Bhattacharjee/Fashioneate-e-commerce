@@ -32,7 +32,7 @@ export const Dropdown = ({
               
             }}
             
-            className="flex items-center justify-center gap-2 cursor-pointer border border-neutral-200 hover:bg-neutral-100 rounded-lg px-6 ">
+            className="flex items-center justify-center gap-2 cursor-pointer border border-neutral-300 bg-neutral-50 hover:bg-neutral-100 rounded-lg px-6 ">
               <IconFilter className="text-neutral-800 size-4" />
               <p className="text-neutral-600 text-[16px] font-bold">
                 {display ? display : `${sortname}`} 

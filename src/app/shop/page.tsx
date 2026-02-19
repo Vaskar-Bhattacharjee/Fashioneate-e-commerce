@@ -15,7 +15,14 @@ import { useEffect, useState } from "react";
 import { Dropdown } from "@/src/components/ui/dropdown";
 import { Fallback_Products } from "@/src/lib/data";
 import axios from "axios";
-import { IconFileDollarFilled, IconFilter, IconMoodKidFilled, IconSeedlingFilled, IconUserFilled, IconWomanFilled } from "@tabler/icons-react";
+import {
+  IconFileDollarFilled,
+  IconFilter,
+  IconMoodKidFilled,
+  IconSeedlingFilled,
+  IconUserFilled,
+  IconWomanFilled,
+} from "@tabler/icons-react";
 
 interface gridLayout {
   layout: "grid" | "list" | "barTwo" | "barThree";
@@ -44,15 +51,19 @@ export default function ShopPage() {
   console.log("category", category);
   console.log("sortBy", sortBy);
 
-  
-useEffect(() => {
+  useEffect(() => {
     const fetchAllProducts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("/api/product/get-all-products");
-        
-        if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+        const response = await axios.get("/api/product/get-all-product");
+
+        if (
+          response.data &&
+          Array.isArray(response.data) &&
+          response.data.length > 0
+        ) {
           setProducts(response.data);
+          console.log("Fetched products from backend:", response.data);
         } else {
           setProducts(Fallback_Products as ProductProps[]);
         }
@@ -67,9 +78,8 @@ useEffect(() => {
     fetchAllProducts();
   }, []);
 
-
   const displayedProducts = [...(products || [])]
-    .filter((p)=> category === "All" ? true : p.category === category)
+    .filter((p) => (category === "All" ? true : p.category === category))
     .sort((a, b) => {
       if (sortBy === "Price: High to Low") {
         return b.newprice - a.newprice;
@@ -79,8 +89,6 @@ useEffect(() => {
       }
       return 0;
     });
-  
-  
 
   return (
     <Container className="min-h-screen pt-4 md:pt-20 lg:pt-28 w-full px-3  lg:w-6xl flex flex-col items-start justify-start bg-transparent">
@@ -91,7 +99,9 @@ useEffect(() => {
 
         <div className="w-full flex items-center justify-between">
           <div className="flex flex-col items-start justify-center gap-2 md:gap-3">
-            <p className="text-neutral-600 text-[14px] md:text-[16px] font-bold">View:</p>
+            <p className="text-neutral-600 text-[14px] md:text-[16px] font-bold">
+              View:
+            </p>
 
             <div className="flex items-start justify-center gap-1">
               <GridView
@@ -143,38 +153,47 @@ useEffect(() => {
                 )}
               />
             </div>
-
           </div>
           <div className="flex flex-col md:flex-row items-start md:items-center justify-center gap-2 md:gap-4">
+            <Dropdown
+              sortname="Category:"
+              onSelect={(val) => setCategory(val)}
+              items={[
+                { label: "All", icon: <IconFilter className="size-4" /> },
+                {
+                  label: "Men's Fashion",
+                  icon: <IconUserFilled className="size-4" />,
+                },
+                {
+                  label: "Women's Fashion",
+                  icon: <IconWomanFilled className="size-4" />,
+                },
+                {
+                  label: "Kid's Fashion",
+                  icon: <IconMoodKidFilled className="size-4" />,
+                },
+                {
+                  label: "Wedding Collection",
+                  icon: <IconSeedlingFilled className="size-4" />,
+                },
+              ]}
+            />
 
-<Dropdown 
-  sortname="Category:" 
-  onSelect={(val) => setCategory(val)}           
-  items={[
-    { label: "All", icon: <IconFilter className="size-4" /> },
-    { label: "Men's Fashion", icon: <IconUserFilled className="size-4" /> },
-    { label: "Women's Fashion", icon: <IconWomanFilled className="size-4" /> },
-    { label: "Kid's Fashion", icon: <IconMoodKidFilled className="size-4" /> },
-    { label: "Wedding Collection", icon: <IconSeedlingFilled className="size-4" /> },
-  ]}
-/>
-
-            <Dropdown 
-            sortname="Sort by:" 
-            onSelect={(val) => setSortBy(val)}
-            items={[ 
-                { label: "Price: Low to High",
-                  icon: <IconFileDollarFilled className="size-4"/>
-                 }, 
-                { label: "Price: High to Low",
-                  icon: <IconFileDollarFilled  className="size-4"/>
-                 } 
-              ]}            />
-
+            <Dropdown
+              sortname="Sort by:"
+              onSelect={(val) => setSortBy(val)}
+              items={[
+                {
+                  label: "Price: Low to High",
+                  icon: <IconFileDollarFilled className="size-4" />,
+                },
+                {
+                  label: "Price: High to Low",
+                  icon: <IconFileDollarFilled className="size-4" />,
+                },
+              ]}
+            />
           </div>
-
-
-
         </div>
       </div>
       {layout === "grid" && (
@@ -193,7 +212,6 @@ useEffect(() => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ type: "spring", damping: 20, stiffness: 120 }}
-
               >
                 <CardLayoutOne
                   _id={product._id}
@@ -204,7 +222,8 @@ useEffect(() => {
                   price={product.newprice}
                 />
               </motion.div>
-            ))} {/* <--- This was missing */}
+            ))}{" "}
+            {/* <--- This was missing */}
           </AnimatePresence>
         </motion.div>
       )}
@@ -216,27 +235,26 @@ useEffect(() => {
           className="flex justify-center items-center gap-4 flex-wrap"
         >
           <AnimatePresence mode="popLayout">
-          {displayedProducts.map((product) => (
-            <motion.div
-              layout
-              key={product._id}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ type: "spring", damping: 20, stiffness: 120 }}
-            >
-            <CardLayoutTwo
-              key={product._id}
-              _id={product._id}
-              src={product.image}
-              category={product.category}
-              productName={product.name}
-              description={product.description}
-              price={product.newprice}
-            />
-            </motion.div>
-          ))}
-          
+            {displayedProducts.map((product) => (
+              <motion.div
+                layout
+                key={product._id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ type: "spring", damping: 20, stiffness: 120 }}
+              >
+                <CardLayoutTwo
+                  key={product._id}
+                  _id={product._id}
+                  src={product.image}
+                  category={product.category}
+                  productName={product.name}
+                  description={product.description}
+                  price={product.newprice}
+                />
+              </motion.div>
+            ))}
           </AnimatePresence>
         </motion.div>
       )}
@@ -248,28 +266,27 @@ useEffect(() => {
           className="grid grid-cols-3 gap-4 pl-0 lg:pl-20"
         >
           <AnimatePresence mode="popLayout">
-          {displayedProducts.map((product) => (
-            <motion.div 
-            layout
-            key={product._id}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{opacity:0, scale:0.8}}
-            transition={{stiffness:120, damping:20, type:"spring"}}
-            >
-            <CardLayoutThree
-              key={product._id}
-              _id={product._id}
-              src={product.image}
-              category={product.category}
-              productName={product.name}
-              description={product.description}
-              price={product.newprice}
-            />
-            </motion.div>
-          ))}
-          
-        </AnimatePresence>
+            {displayedProducts.map((product) => (
+              <motion.div
+                layout
+                key={product._id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ stiffness: 120, damping: 20, type: "spring" }}
+              >
+                <CardLayoutThree
+                  key={product._id}
+                  _id={product._id}
+                  src={product.image}
+                  category={product.category}
+                  productName={product.name}
+                  description={product.description}
+                  price={product.newprice}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </motion.div>
       )}
       {layout === "list" && (
@@ -280,28 +297,27 @@ useEffect(() => {
           className="flex flex-col items-center justify-center gap-0 md:gap-4"
         >
           <AnimatePresence mode="popLayout">
-          {displayedProducts.map((product) => (
-            <motion.div 
-            layout
-            key={product._id}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{opacity:0, scale:0.8}}
-            transition={{stiffness:120, damping:20, type:"spring"}}
-            >
-            <CardLayoutFour
-              key={product._id}
-              _id={product._id}
-              src={product.image}
-              category={product.category}
-              productName={product.name}
-              description={product.description}
-              price={product.newprice}
-            />
-            </motion.div>
-          ))}
-
-        </AnimatePresence>
+            {displayedProducts.map((product) => (
+              <motion.div
+                layout
+                key={product._id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ stiffness: 120, damping: 20, type: "spring" }}
+              >
+                <CardLayoutFour
+                  key={product._id}
+                  _id={product._id}
+                  src={product.image}
+                  category={product.category}
+                  productName={product.name}
+                  description={product.description}
+                  price={product.newprice}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </motion.div>
       )}
     </Container>
@@ -359,7 +375,7 @@ export const CardLayoutTwo = ({
   price,
   src,
 }: {
-  _id: string
+  _id: string;
   category: string;
   productName: string;
   description: string;
@@ -403,7 +419,7 @@ export const CardLayoutThree = ({
   price,
   src,
 }: {
-  _id: string
+  _id: string;
   category: string;
   productName: string;
   description: string;
@@ -476,7 +492,9 @@ export const CardLayoutFour = ({
             {description}
           </p>
 
-          <p className="text-[18px] md:text-[22px] font-bold md:font-semibold text-neutral-800">${price}</p>
+          <p className="text-[18px] md:text-[22px] font-bold md:font-semibold text-neutral-800">
+            ${price}
+          </p>
         </div>
       </div>
     </Link>

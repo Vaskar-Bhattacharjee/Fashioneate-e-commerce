@@ -23,7 +23,18 @@ export async function POST(req: NextRequest) {
       process.env.JWT_ACCESS_SECRET!,
       { expiresIn: "15m" }
     );
-    return NextResponse.json({ accessToken }, { status: 200 });
+    const response = NextResponse.json(
+      { message: "Token refreshed", user: { email: user.email, role: user.role } }, 
+      { status: 200 }
+    );
+    response.cookies.set("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      maxAge: 15 * 60,
+      path: "/",
+    });
+    return response;
 
   } catch (error) {
     console.error("REFRESH ERROR:", error);

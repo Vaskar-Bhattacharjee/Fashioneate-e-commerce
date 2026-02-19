@@ -2,14 +2,11 @@
 import Link from "next/link";
 import { Container } from "../ui/container";
 import { Heading, SubHeading } from "../ui/header";
-import {
-  NewArrivalsItemCard,
-} from "./new-arrivals";
+import { NewArrivalsItemCard } from "./new-arrivals";
 import { motion } from "framer-motion";
 import { IconArrowRight } from "@tabler/icons-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Fallback_Products } from "@/src/lib/data";
 
 interface ProductProps {
   _id: string;
@@ -24,6 +21,7 @@ interface ProductProps {
   unit: string;
   status: string;
   isFeatured: boolean;
+  newArrivalFeatured: boolean;
 }
 
 export const NewArrivals = () => {
@@ -33,10 +31,10 @@ export const NewArrivals = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("/api/product/get-all-products");
+        const response = await axios.get("/api/product/get-all-product");
+        console.log("Fetched products: ", response.data);
         setProducts(response.data);
       } catch (error) {
-        setProducts(Fallback_Products as ProductProps[]);
         console.error("Error fetching products:", error);
         console.log("products: ", products);
       } finally {
@@ -45,13 +43,23 @@ export const NewArrivals = () => {
     };
     fetchProducts();
   }, []);
-  const displayedProducts = products.filter(
-    (p) => p.newArrival === true && p.isFeatured === true,
+  const displayedProducts = [...products].filter(
+    (p) =>
+      p.newArrival === true &&
+      p.isFeatured === true &&
+      p.newArrivalFeatured === true,
   );
   if (loading) {
     return (
       <div className="h-96 flex items-center justify-center">
         Loading latest fashion...
+      </div>
+    );
+  }
+  if (displayedProducts.length === 0) {
+    return (
+      <div className="h-96 flex items-center justify-center">
+        No new arrivals at the moment. Please check back later.
       </div>
     );
   }
@@ -85,48 +93,56 @@ export const NewArrivals = () => {
           </div>
 
           <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="mt-12 grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-x-4 gap-y-7 w-5xl h-150">
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="mt-12 grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-x-4 gap-y-7 w-5xl h-150"
+          >
             <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6 }}
-            className="md:row-span-2">
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 }}
+              className="md:row-span-2"
+            >
               <NewArrivalsItemCard
                 imgSrc={displayedProducts[0].image}
                 productName={displayedProducts[0].name}
                 price={displayedProducts[0].newprice}
-                id = {displayedProducts[0]._id}
+                id={displayedProducts[0]._id}
               />
             </motion.div>
 
-            <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6 }}            
-            className="md:row-span-1">
-              <NewArrivalsItemCard
-                imgSrc={displayedProducts[1].image}
-                productName={displayedProducts[1].name}
-                price={displayedProducts[1].newprice}
-                id = {displayedProducts[1]._id}
-              />
-            </motion.div>
+            {displayedProducts[1] && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+                className="md:row-span-1"
+              >
+                <NewArrivalsItemCard
+                  imgSrc={displayedProducts[1].image}
+                  productName={displayedProducts[1].name}
+                  price={displayedProducts[1].newprice}
+                  id={displayedProducts[1]._id}
+                />
+              </motion.div>
+            )}
 
-            <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8 }}            
-            className="md:row-span-1">
-              <NewArrivalsItemCard
-                imgSrc={displayedProducts[2].image}
-                productName={displayedProducts[2].name}
-                price={displayedProducts[2].newprice}
-                id = {displayedProducts[2]._id}
-              />
-            </motion.div>
+            {displayedProducts[2] && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
+                className="md:row-span-1"
+              >
+                <NewArrivalsItemCard
+                  imgSrc={displayedProducts[2].image}
+                  productName={displayedProducts[2].name}
+                  price={displayedProducts[2].newprice}
+                  id={displayedProducts[2]._id}
+                />
+              </motion.div>
+            )}
           </motion.div>
           <div className="mt-12 flex items-center justify-center">
             <Link href="/new-arrivals">
@@ -134,8 +150,9 @@ export const NewArrivals = () => {
                 <span className="bg-neutral-900 group-hover:bg-neutral-100 size-8 rounded-full flex items-center justify-center">
                   <IconArrowRight className="size-7 text-neutral-100 group-hover:text-neutral-900" />{" "}
                 </span>
-                <p className="text-neutral-900  group-hover:text-white font-inter font-semibold">See More</p>
-
+                <p className="text-neutral-900  group-hover:text-white font-inter font-semibold">
+                  See More
+                </p>
               </div>
             </Link>
           </div>

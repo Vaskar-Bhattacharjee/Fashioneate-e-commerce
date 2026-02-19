@@ -10,65 +10,66 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCartStore } from "@/src/store/useCartStore";
+import axios from "axios";
 
 interface CartItem {
-  img: string;
+  image: string;
   alt: string;
   category: string;
   _id: string;
-  title: string;
-  price: number;
+  name: string;
+  newprice: number;
 }
-const Fallback_newArrivals = [
-  {
-    _id: "1",
-    img: "https://images.pexels.com/photos/7622259/pexels-photo-7622259.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    alt: "Women's Fashion",
-    category: "Women",
-    title: "Minimalist Silk Blazer",
-    price: 450,
-  },
-  {
-    _id: "2",
-    img: "https://images.pexels.com/photos/9849633/pexels-photo-9849633.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    alt: "Men's Collection",
-    category: "Men",
-    title: "Classic Wool Overcoat",
-    price: 890,
-  },
-  {
-    _id: "3",
-    img: "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    alt: "Accessories",
-    category: "Accessories",
-    title: "Leather Tote Bag",
-    price: 1200,
-  },
-];
+
+interface Product {
+  _id: string;
+  image: string;
+  alt: string;
+  name: string;
+  newprice: number;
+  category: string;
+}
 
 const NewArrivals = () => {
   const [category, setCategory] = useState("All");
   const [sortBy, setSortBy] = useState("");
   const [isHovered, setIsHovered] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const addToCart = useCartStore((state) => state.addToCart);
   const handleToCart = (item: CartItem) => {
     addToCart({
       _id: item._id,
-      name: item.title,
-      price: item.price,
-      image: item.img,
+      name: item.name,
+      price: item.newprice,
+      image: item.image,
       quantity: 1,
       selectedSize: "M",
     });
   };
-  const displayedProducts = [...Fallback_newArrivals]
+  useEffect(() => {
+    const fetchNewArrivals = async () => {
+      try {
+        const res = await axios.get("api/product/new-arrivals");
+        setProducts(res.data)
+            
+      } catch (error) {
+        console.error("Error fetching new arrivals:", error);
+      }
+    }
+
+    fetchNewArrivals();
+
+
+
+  },[]);
+  const displayedProducts = [...products ]
     .filter((p) => (category === "All" ? true : p.category === category))
     .sort((a, b) => {
-      if (sortBy === "Price: High to Low") return b.price - a.price;
-      if (sortBy === "Price: Low to High") return a.price - b.price;
+      if (sortBy === "Price: High to Low") return b.newprice - a.newprice;
+      if (sortBy === "Price: Low to High") return a.newprice - b.newprice;
       return 0;
     });
 
@@ -100,12 +101,20 @@ const NewArrivals = () => {
                 >
                   <Dropdown
                     sortname="Sort By"
-                    items={["Price: High to Low", "Price: Low to High"]}
+                    items={[
+                      { label: "Price: High to Low" },
+                      { label: "Price: Low to High" }
+                    ]}
                     onSelect={setSortBy}
                   />
                   <Dropdown
                     sortname="Category"
-                    items={["All", "Women", "Men"]}
+                    items={[
+                      { label: "All" },
+                      { label: "Women's Fashion"  },
+                      { label: "Men's Fashion" },
+                      { label: "Kid's Fashion" }
+                    ]}
                     onSelect={setCategory}
                   />
                 </motion.div>
@@ -141,18 +150,18 @@ export default NewArrivals;
 
 export const NewArrivalsCard = ({
   _id,
-  img,
+  image,
   alt,
-  title,
-  price,
+  name,
+  newprice,
   category,
   onAddToCart,
 }: {
   _id: string;
-  img: string;
+  image: string;
   alt: string;
-  title: string;
-  price: number;
+  name: string;
+  newprice: number;
   category: string;
   onAddToCart: () => void;
 }) => {
@@ -160,18 +169,18 @@ export const NewArrivalsCard = ({
     <Link href={`/product/${_id}`}>
       <motion.div className="group w-full border border-neutral-200 rounded-2xl flex flex-col gap-5 items-start justify-start overflow-hidden cursor-pointer p-[1.5px]  bg-white bg-[radial-gradient(circle_at_top_left,theme(colors.blue.400)_0%,transparent_50%)] transition-all duration-300">
         <div className="w-full h-80 relative rounded-tl-[14.6px] rounded-tr-[14.6px] overflow-hidden bg-neutral-100 border border-neutral-100 ">
-          <Image src={img} alt={alt} fill className="object-cover group-hover:scale-110 transition-all ease-in-out duration-300" />
+          <Image src={image} alt={alt || "shop"} fill className="object-cover group-hover:scale-110 transition-all ease-in-out duration-300" />
         </div>
 
         <div className="relative flex flex-col items-start gap-1 w-full pb-6 [--pattern-fg:var(--color-neutral-700)]/5">
           <Pattern />
           <h3 className="text-neutral-500 font-semibold pl-5">{category}</h3>
           <h3 className="text-xl font-bold text-neutral-800 group-hover:text-neutral-900 transition-colors pl-5">
-            {title}
+            {name}
           </h3>
           <div className="flex pt-2 justify-between items-center w-full px-5">
             <span className="text-lg font-semibold tracking-tight text-neutral-600 ">
-              $ {price.toLocaleString()}
+              $ {newprice}
             </span>
             <div
               onClick={(e) => {
