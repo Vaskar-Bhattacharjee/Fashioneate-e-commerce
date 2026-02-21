@@ -45,7 +45,7 @@
 }
 
 html.dark {
-  --background: ###171717;
+  --background: #171717;
   --foreground: #ededed;
   --shadow-input: 0px 2px 3px -1px rgba(255,255,255,0.3),
                   0px 1px 0px 0px rgba(255,255,255,0.15),

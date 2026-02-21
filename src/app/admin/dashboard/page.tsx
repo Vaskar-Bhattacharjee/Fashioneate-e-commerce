@@ -52,10 +52,10 @@ const Dashboard = () => {
       </aside>
 
       <main className="flex-1 flex flex-col">
-        <header className="h-16 border-b border-neutral-300 bg-transparent flex items-center px-6 justify-between sticky top-20 z-10">
+        <header className="h-16 border-b border-neutral-300 bg-transparent flex items-center px-6 justify-between  top-20 z-10">
           <button
             onClick={() => setOpen(!isOpen)}
-            className="p-2 hover:bg-neutral-100 rounded-lg transition-colors border border-neutral-200"
+            className="p-2 hover:bg-neutral-100 rounded-lg transition-colors border border-neutral-200 cursor-pointer"
           >
             <IconLayoutSidebarFilled
               className={cn(
