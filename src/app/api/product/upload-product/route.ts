@@ -1,7 +1,6 @@
 import { dbConnect } from "@/src/lib/dbConnect";
 import imagekit from "@/src/lib/imagekit";
 import Product from "@/src/model/product.model";
-import { log } from "console";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -31,6 +30,11 @@ export async function POST(req: Request) {
         if (!file) {
             return NextResponse.json({ message: "No image provided" }, { status: 400 });
         }
+        const quantity = Number(formData.get("quantity")) || 0;
+        if (quantity === 0) {
+            formData.set("status", "out of stock");
+        }
+
         const dataToValidate = {
             name: formData.get("name"),
             description: formData.get("description"),

@@ -9,7 +9,7 @@ const productUpdateSchema = z.object({
     name: z.string().optional(),
     description: z.string().optional(),
     image: z.any().optional(),
-    imagePublicId: z.string().optional(),
+    imagePublicId:z.string().optional(),
     newprice: z.coerce.number()
         .positive("Price must be greater than zero")
         .optional(),
@@ -21,11 +21,24 @@ const productUpdateSchema = z.object({
     isFeatured: z.coerce.boolean().optional(),
 });
 
-export async function PATCH(req: Request,{ params }: { params: { id: string } }) {
+export async function PATCH(
+    req: Request,
+    { params }: { params: Promise<{ id: string }> }
+    ) {
     try {
         await dbConnect();
-        const id = params.id;
+        const {id} = await params;
         const body = await req.formData(); 
+         const quantity = Number(body.get("quantity")) || 0;
+         const manualStatus = body.get("status");
+        if (quantity === 0) {
+            body.set("status", "out of stock");
+        }else if (manualStatus === "inactive") {
+            body.set("status", "inactive");
+        }
+         else {
+            body.set("status", "active");
+        }
         const data = Object.fromEntries(body.entries());       
         const validation = productUpdateSchema.safeParse(data);
 
@@ -35,6 +48,7 @@ export async function PATCH(req: Request,{ params }: { params: { id: string } })
                 errors: validation.error 
             }, { status: 400 });
         }
+       
         const updateData     = validation.data;
         const existingProduct = await Product.findById(id);
         if (!existingProduct) {

@@ -2,33 +2,30 @@ import { dbConnect } from "@/src/lib/dbConnect";
 import {checkout} from "@/src/model/checkout.model";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function PATCH(request: Request, { params }: { params: { id: string } }) {
     try {
-        await dbConnect();
-        const { searchParams } = new URL(request.url);
-        const status = searchParams.get("status");
-        const page = parseInt(searchParams.get("page") || "1");
-        const limit = 20;
+    await dbConnect();
+    const { status } = await request.json();
+    const { id } = params;
 
-        const query = status ? { status } : {};
-
-        const orders = await checkout.find(query)
-            .skip((page - 1) * limit)
-            .limit(limit)
-            .sort({ createdAt: -1 });
-
-            return NextResponse.json({
-                success: true,
-                message: "For Admin successfully order list fetched",
-                orders,
-                totalOrders: await checkout.countDocuments(query)
-            }, { status: 200 });
-            
-           
-            
-
+    if (!status) {
+        return NextResponse.json({ message: "Status is required" }, { status: 400 });
+    }
+    const updatedOrder = await checkout.findByIdAndUpdate(
+        id,
+        { $set: { status } },
+        { new: true, runValidators: true }
+    );
+    if (!updatedOrder) {
+        return NextResponse.json({ message: "Order not found" }, { status: 404 });
+    }
+    return NextResponse.json({
+            success: true,
+            message: `Order status updated to ${status}`,
+            updatedOrder
+        }, { status: 200 });
     } catch (error) {
-        console.log("finding an error while getting products", error);
-        return NextResponse.json({ message: "Finding an error while getting products" }, { status: 500 });
+    console.log("Error updating order:", error);
+    return NextResponse.json({ message: "Error updating order" }, { status: 500 });
     }
 }

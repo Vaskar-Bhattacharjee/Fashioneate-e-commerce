@@ -105,7 +105,7 @@ export const CartDrawer = () => {
 
                       <button
                         onClick={() => removeFromCart(item._id)}
-                        className="ml-2"
+                        className="ml-2 cursor-pointer"
                       >
                         <IconTrash
                           size={22}

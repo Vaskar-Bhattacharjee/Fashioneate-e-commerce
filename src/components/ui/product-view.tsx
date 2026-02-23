@@ -1,7 +1,6 @@
 "use client";
 
 import { ProductSchema } from "@/src/app/schema/product/product";
-import { Fallback_Products } from "@/src/lib/data";
 import { cn } from "@/src/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
@@ -50,17 +49,23 @@ export const ProductsView = () => {
   const [status, setStatus] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [price, setPrice] = useState<string>("");
-  
+  const [refreshKey, setRefreshKey] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [formMode, setFormMode] = useState<FormMode>("create");
-  const [selectedProduct, setSelectedProduct] = useState<ProductProps | null>(null);
-  
+  const [selectedProduct, setSelectedProduct] = useState<ProductProps | null>(
+    null,
+  );
+
   const [appliedFilters, setAppliedFilters] = useState({
     status: "",
     category: "",
     price: "",
   });
 
+  const onSuccess = () => {
+    handleCloseModal();
+    setRefreshKey((prevKey) => prevKey + 1);
+    };
   const handleClear = () => {
     setStatus("");
     setCategory("");
@@ -126,9 +131,7 @@ export const ProductsView = () => {
             mode={formMode}
             product={selectedProduct}
             onClose={handleCloseModal}
-            onSuccess={() => {
-              handleCloseModal();
-            }}
+            onSuccess={onSuccess}
           />
         )}
       </AnimatePresence>
@@ -144,7 +147,7 @@ export const ProductsView = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             className={cn(
               "w-full pl-10 pr-4 py-2 rounded-lg border border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-400 transition-all",
-              "placeholder:text-neutral-400 placeholder:font-inter text-neutral-600 font-inter text-lg"
+              "placeholder:text-neutral-400 placeholder:font-inter text-neutral-600 font-inter text-lg",
             )}
           />
         </div>
@@ -153,13 +156,13 @@ export const ProductsView = () => {
             onClick={() => setFilter(!filter)}
             className={cn(
               "flex items-center gap-2 px-4 py-2 border border-neutral-300 rounded-lg hover:border-neutral-400 text-neutral-700 cursor-pointer transition-colors font-inter",
-              filter && "bg-green-500/20 text-green-800"
+              filter && "bg-green-500/20 text-green-800",
             )}
           >
             <IconFilter size={18} />
             <span className="font-inter">Filters</span>
           </button>
-          
+
           {/* FILTER DROPDOWN - FULLY RESTORED FROM YOUR CODE */}
           {filter && (
             <div className="absolute top-12 right-0 w-94 bg-white border border-neutral-200 rounded-xl shadow-2xl p-4 z-50 animate-in fade-in zoom-in-95 duration-200">
@@ -225,16 +228,16 @@ export const ProductsView = () => {
         </div>
       </div>
 
-      <ProductList 
-        searchQuery={searchQuery} 
+      <ProductList
+        searchQuery={searchQuery}
         appliedFilters={appliedFilters}
         onEdit={handleEdit}
+        refreshKey={refreshKey}
+        onRefresh={() => setRefreshKey((prev) => prev + 1)}
       />
     </div>
   );
 };
-
-// FILTER SORT COMPONENT - FULLY RESTORED FROM YOUR CODE
 export const FilterSort = ({
   filterName,
   filterItem,
@@ -258,7 +261,7 @@ export const FilterSort = ({
           "w-full flex justify-between items-center border rounded-md px-4 py-1 cursor-pointer transition-all",
           sortOption
             ? "border-green-500/50 bg-green-50/30"
-            : "border-neutral-300 hover:border-neutral-400"
+            : "border-neutral-300 hover:border-neutral-400",
         )}
       >
         <div className="flex items-center gap-2">
@@ -266,7 +269,7 @@ export const FilterSort = ({
           <p
             className={cn(
               "font-inter font-semibold text-sm pb-1",
-              sortOption ? "text-neutral-900" : "text-neutral-500"
+              sortOption ? "text-neutral-900" : "text-neutral-500",
             )}
           >
             {sortOption ? sortOption : filterName}
@@ -300,7 +303,7 @@ export const FilterSort = ({
                     "text-sm font-inter font-semibold transition-colors",
                     sortOption === option
                       ? "text-green-600"
-                      : "text-neutral-600 hover:text-neutral-900"
+                      : "text-neutral-600 hover:text-neutral-900",
                   )}
                 >
                   {option}
@@ -314,10 +317,6 @@ export const FilterSort = ({
   );
 };
 
-// ==========================================
-// UNIFIED PRODUCT FORM COMPONENT
-// ==========================================
-
 interface ProductFormModalProps {
   mode: FormMode;
   product: ProductProps | null;
@@ -325,15 +324,20 @@ interface ProductFormModalProps {
   onSuccess: () => void;
 }
 
-const ProductFormModal = ({ mode, product, onClose, onSuccess }: ProductFormModalProps) => {
+const ProductFormModal = ({
+  mode,
+  product,
+  onClose,
+  onSuccess,
+}: ProductFormModalProps) => {
   const [preview, setPreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isEditMode = mode === "edit";
   const title = isEditMode ? "Edit Product" : "Upload New Product";
   const submitButtonText = isEditMode ? "Update Product" : "Upload Product";
-  const apiEndpoint = isEditMode 
-    ? `/api/product/edit-product/${product?._id}` 
+  const apiEndpoint = isEditMode
+    ? `/api/product/edit-product/${product?._id}`
     : "/api/product/upload-product";
   const httpMethod = isEditMode ? "patch" : "post";
 
@@ -385,15 +389,15 @@ const ProductFormModal = ({ mode, product, onClose, onSuccess }: ProductFormModa
       form.clearErrors("image");
     }
   };
-console.log("Form Errors:", form.formState.errors);
+  console.log("Form Errors:", form.formState.errors);
   async function onSubmit(data: z.infer<typeof ProductSchema>) {
     try {
       setIsSubmitting(true);
       const formData = new FormData();
       if (isEditMode && product?._id) {
-      formData.append("id", product._id);
-    }
-      
+        formData.append("id", product._id);
+      }
+
       formData.append("name", data.name);
       formData.append("description", data.description);
       formData.append("category", data.category);
@@ -422,12 +426,16 @@ console.log("Form Errors:", form.formState.errors);
       }
 
       toast.success(
-        isEditMode ? "Product updated successfully" : "Product created successfully"
+        isEditMode
+          ? "Product updated successfully"
+          : "Product created successfully",
       );
       onSuccess();
     } catch (error) {
       console.error("Error:", error);
-      toast.error(isEditMode ? "Error updating product" : "Error creating product");
+      toast.error(
+        isEditMode ? "Error updating product" : "Error creating product",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -454,8 +462,8 @@ console.log("Form Errors:", form.formState.errors);
               {title}
             </h2>
             <p className="text-neutral-500 text-sm font-inter">
-              {isEditMode 
-                ? `Editing: ${product?.name}` 
+              {isEditMode
+                ? `Editing: ${product?.name}`
                 : "Add a new product to your catalog"}
             </p>
           </div>
@@ -476,13 +484,19 @@ console.log("Form Errors:", form.formState.errors);
               register={form.register}
               errors={form.formState.errors}
             />
-            <Input
-              label="Category"
-              name="category"
-              type="text"
-              register={form.register}
-              errors={form.formState.errors}
-            />
+            <div className="mb-4">
+              <label className="block font-semibold text-sm font-inter text-neutral-600 mb-1">
+                Category
+              </label>
+              <select
+                {...form.register("category")}
+className="w-full bg-white hover:bg-neutral-50 border border-neutral-200 text-neutral-800 font-inter rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-neutral-800 transition-all"              >
+                <option value="men fashion" >Men&apos;s Fashion</option>
+                <option value="women fashion" >Women&apos;s Fashion</option>
+                <option value="kids fashion" >Kid&apos;s Fashion</option>
+                <option value="wedding collection" >Wedding Collection</option>
+              </select>
+            </div>
           </div>
 
           <div className="mb-4">
@@ -527,7 +541,7 @@ console.log("Form Errors:", form.formState.errors);
                 "relative flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-xl cursor-pointer transition-all overflow-hidden",
                 form.formState.errors.image
                   ? "border-red-300 bg-red-50"
-                  : "border-neutral-200 hover:border-neutral-400 hover:bg-neutral-50"
+                  : "border-neutral-200 hover:border-neutral-400 hover:bg-neutral-50",
               )}
             >
               {preview ? (
@@ -616,8 +630,11 @@ console.log("Form Errors:", form.formState.errors);
                 Status
               </label>
               <div className="space-y-2">
-                {["active", "inactive", "out-of-stock"].map((statusOption) => (
-                  <label key={statusOption} className="flex items-center gap-2 cursor-pointer">
+                {["active", "inactive"].map((statusOption) => (
+                  <label
+                    key={statusOption}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
                     <input
                       type="radio"
                       value={statusOption}
@@ -685,20 +702,20 @@ console.log("Form Errors:", form.formState.errors);
   );
 };
 
-// ==========================================
-// PRODUCT LIST COMPONENT
-// ==========================================
-
 interface ProductListProps {
   searchQuery: string;
   appliedFilters: { status: string; category: string; price: string };
   onEdit: (product: ProductProps) => void;
+  refreshKey: number;
+  onRefresh: () => void;
 }
 
 export const ProductList = ({
   searchQuery,
   appliedFilters,
   onEdit,
+  refreshKey,
+  onRefresh,
 }: ProductListProps) => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<ProductProps[]>([]);
@@ -708,36 +725,45 @@ export const ProductList = ({
       try {
         setLoading(true);
         const response = await axios.get("/api/product/get-all-product");
-        if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+        if (
+          response.data &&
+          Array.isArray(response.data) &&
+          response.data.length > 0
+        ) {
           setProducts(response.data);
+          
         } else {
-          setProducts(Fallback_Products as ProductProps[]);
+          toast.error("No products found.");
         }
       } catch (error) {
         console.warn("Backend failed, using fallback collection.", error);
-        setProducts(Fallback_Products as ProductProps[]);
       } finally {
         setLoading(false);
       }
     };
     fetchAllProducts();
-  }, []);
+  }, [refreshKey]);
 
   const filteredProducts = products
     .filter((product) => {
-      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch = product.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
       const matchesStatus = appliedFilters.status
         ? product.status.toLowerCase() === appliedFilters.status.toLowerCase()
         : true;
       const matchesCategory =
         appliedFilters.category && appliedFilters.category !== "All"
-          ? product.category.toLowerCase() === appliedFilters.category.toLowerCase()
+          ? product.category.toLowerCase() ===
+            appliedFilters.category.toLowerCase()
           : true;
       return matchesSearch && matchesStatus && matchesCategory;
     })
     .sort((a, b) => {
-      if (appliedFilters.price === "Low to High") return a.newprice - b.newprice;
-      if (appliedFilters.price === "High to Low") return b.newprice - a.newprice;
+      if (appliedFilters.price === "Low to High")
+        return a.newprice - b.newprice;
+      if (appliedFilters.price === "High to Low")
+        return b.newprice - a.newprice;
       return 0;
     });
 
@@ -745,6 +771,7 @@ export const ProductList = ({
     try {
       await axios.delete(`/api/product/delete-product/${id}`);
       setProducts((prev) => prev.filter((product) => product._id !== id));
+      onRefresh();
       toast.success("Product deleted successfully");
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -794,6 +821,7 @@ export const ProductList = ({
                         <span className="font-medium text-neutral-800 font-inter block">
                           {product.name}
                         </span>
+
                         <span className="text-xs text-neutral-500 font-inter">
                           {product.category}
                         </span>
@@ -822,14 +850,14 @@ export const ProductList = ({
                     <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button
                         onClick={() => onEdit(product)}
-                        className="p-2 hover:bg-neutral-100 rounded-lg text-neutral-600 hover:text-neutral-900 transition-colors"
+                        className="p-2 hover:bg-neutral-100 rounded-lg text-neutral-600 cursor-pointer hover:text-neutral-900 transition-colors"
                         title="Edit"
                       >
                         <IconPencil size={18} />
                       </button>
                       <button
                         onClick={() => deleteProduct(product._id)}
-                        className="p-2 hover:bg-red-50 rounded-lg text-neutral-400 hover:text-red-600 transition-colors"
+                        className="p-2 hover:bg-red-50 rounded-lg text-neutral-400 cursor-pointer hover:text-red-600 transition-colors"
                         title="Delete"
                       >
                         <IconTrash size={18} />
@@ -840,7 +868,10 @@ export const ProductList = ({
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="px-6 py-12 text-center text-neutral-400">
+                <td
+                  colSpan={5}
+                  className="px-6 py-12 text-center text-neutral-400"
+                >
                   No products found matching &quot;{searchQuery}&quot;
                 </td>
               </tr>
@@ -852,22 +883,23 @@ export const ProductList = ({
   );
 };
 
-// ==========================================
-// REUSABLE COMPONENTS
-// ==========================================
-
 const StatusBadge = ({ status }: { status: string }) => {
   const styles = {
     active: "bg-green-100 text-green-700 border-green-200",
-    inactive: "bg-neutral-100 text-neutral-600 border-neutral-200",
-    "out-of-stock": "bg-red-100 text-red-700 border-red-200",
-    "Low Stock": "bg-yellow-100 text-yellow-700 border-yellow-200",
+    inactive: "bg-yellow-100 text-neutral-600 border-yellow-500",
+    "out of stock": "bg-red-100 text-red-700 border-red-200",
   };
   const activeStyle =
-    styles[status as keyof typeof styles] || "bg-neutral-100 text-neutral-600 border-neutral-200";
+    styles[status as keyof typeof styles] ||
+    "bg-neutral-100 text-neutral-600 border-neutral-200";
 
   return (
-    <span className={cn("px-2.5 py-1 rounded-full text-xs font-medium border", activeStyle)}>
+    <span
+      className={cn(
+        "px-2.5 py-1 rounded-full text-xs font-medium border",
+        activeStyle,
+      )}
+    >
       {status.replace("-", " ")}
     </span>
   );
@@ -884,7 +916,7 @@ export const Input = ({
   name: string;
   type?: string;
   register: UseFormRegister<any>;
-  errors: FieldErrors;
+  errors: FieldErrors<any>;
 }) => {
   return (
     <div className="mb-4">

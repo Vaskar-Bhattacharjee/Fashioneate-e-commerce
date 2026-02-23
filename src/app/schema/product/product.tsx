@@ -9,7 +9,7 @@ export const ProductSchema = z.object({
   newArrival: z.boolean().optional(),
     image: z
     .any()
-    .refine((file) => file instanceof File, "Image is not uploaded"),
+    .optional(),
   newArrivalFeatured: z.boolean().optional(),
   quantity: z.coerce.number().min(0, "Quantity cannot be negative"),
   unit: z.string().min(1, "Unit is required"),

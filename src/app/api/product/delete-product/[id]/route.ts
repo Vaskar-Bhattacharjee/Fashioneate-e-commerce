@@ -3,7 +3,6 @@ import Product from "@/src/model/product.model";
 import { NextResponse } from "next/server";
 import imagekit from "@/src/lib/imagekit";
 
-
 export async function DELETE(
     _request: Request, 
     { params }: { params: Promise<{ id: string }> }
@@ -11,8 +10,14 @@ export async function DELETE(
     try {
         await dbConnect();
         const { id } = await params;
+
+        console.log("Received ID for deletion:", id);
+        if (!id || !id.trim()) {
+            return NextResponse.json({ message: "Invalid ID" }, { status: 400 });
+        }
+
         const existingProduct = await Product.findById(id);
-        if (!existingProduct) {
+        if (existingProduct === null) {
             return NextResponse.json({ message: "Product not found" }, { status: 404 });
         }
 

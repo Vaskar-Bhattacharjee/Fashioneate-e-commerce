@@ -13,7 +13,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Dropdown } from "@/src/components/ui/dropdown";
-import { Fallback_Products } from "@/src/lib/data";
 import axios from "axios";
 import {
   IconFileDollarFilled,
@@ -65,11 +64,10 @@ export default function ShopPage() {
           setProducts(response.data);
           console.log("Fetched products from backend:", response.data);
         } else {
-          setProducts(Fallback_Products as ProductProps[]);
-        }
+          console.warn("No products found in response:", response.data);
+          }
       } catch (error: unknown) {
         console.warn("Backend failed, using fallback collection.", error);
-        setProducts(Fallback_Products as ProductProps[]);
       } finally {
         setLoading(false);
       }
@@ -89,6 +87,9 @@ export default function ShopPage() {
       }
       return 0;
     });
+    if (displayedProducts.length === 0) {
+      console.warn("No products to display after filtering and sorting.");
+    }
 
   return (
     <Container className="min-h-screen pt-4 md:pt-20 lg:pt-28 w-full px-3  lg:w-6xl flex flex-col items-start justify-start bg-transparent">

@@ -100,7 +100,7 @@ export const Categories = () => {
               layout
               layoutId={`card-${activeCategory.name}-${id}`}
               ref={ref}
-              className="w-full max-w-[27rem] h-150 bg-white rounded-[24px] overflow-hidden shadow-2xl relative"
+              className="w-full max-w-108 h-150 bg-white rounded-[24px] overflow-hidden shadow-2xl relative"
 
             >
               {/* Close Button */}

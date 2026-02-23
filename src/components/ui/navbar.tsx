@@ -2,7 +2,6 @@
 import { Container } from "@/src/components/ui/container";
 import { cn } from "../../lib/utils";
 import {
-  IconJewishStar,
   IconMenu2,
   IconSearch,
   IconShoppingBag,
@@ -16,8 +15,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useCartStore } from "@/src/store/useCartStore";
 import { CartDrawer } from "./cart-drawer";
-// Import axios if you use it, or use standard fetch
-import axios from "axios"; 
+import api from "@/src/lib/api"; 
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -36,19 +34,14 @@ export const Navbar = () => {
 
     const fetchUserRole = async () => {
       try {
-        const res = await axios.get("/api/auth", { withCredentials: true });
-        const role = res.data?.role ?? res.data?.user?.role ?? null;
-        if (mounted) setUserRole(role);
+        const res = await api.get("/api/auth", { withCredentials: true });
+        if (mounted) setUserRole(res.data?.role ?? res.data?.user?.role ?? null);
       } catch (err: unknown) {
-        console.log("error while getting user role",err);
+        console.log("error while getting user role", err);
       }
     };
-
     fetchUserRole();
-
-  
   }, []);
-
   return (
     <Container>
       <DesktopNavbar userRole={userRole} />
@@ -97,10 +90,10 @@ export const DesktopNavbar = ({userRole}: {userRole?: string | null}) => {
         {canAccessDashboard && (
           <Link 
             href="/admin/dashboard" 
-            className="flex items-center gap-1 px-3 py-1.5 bg-neutral-100 hover:bg-neutral-200 border border-neutral-200 rounded-md transition-colors"
+            className="flex items-center gap-1 px-4 py-2 bg-neutral-900 hover:bg-neutral-800 hover:shadow-none rounded-lg shadow-md transition-colors"
           >
-            <IconAdjustmentsFilled className="text-neutral-800 size-5" />
-            <span className="text-sm font-semibold text-neutral-600 font-inter">Dashboard</span>
+            <IconAdjustmentsFilled className="text-neutral-300 size-5" />
+            <span className="text-sm font-semibold text-neutral-100 font-inter">Dashboard</span>
           </Link>
         )}
 

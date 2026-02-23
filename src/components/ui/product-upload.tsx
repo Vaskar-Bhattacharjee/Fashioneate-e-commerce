@@ -41,11 +41,11 @@ export default function ProductsView() {
     comparePrice: "",
     image: "",
     imagePublicId: "",
-    category: "",
+    category: "men fashion",
     quantity: "",
     unit: "piece",
     status: "active",
-    size: ["M"], // Default as per your schema
+    size: ["M"], 
     newArrival: false,
     isFeatured: false,
   });
@@ -131,7 +131,6 @@ export default function ProductsView() {
             {/* Modal Form */}
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
               
-              {/* Image & Basic Info */}
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-semibold text-neutral-700 mb-1.5">
@@ -218,19 +217,18 @@ export default function ProductsView() {
                     className="w-full border border-neutral-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-neutral-900 outline-none"
                   />
                 </div>
-                 <div>
-                  <label className="block text-sm font-semibold text-neutral-700 mb-1.5">
-                    Category *
-                  </label>
-                  <input
+                <select
                     name="category"
-                    required
                     value={formData.category}
                     onChange={handleChange}
-                    className="w-full border border-neutral-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-neutral-900 outline-none"
-                    placeholder="e.g. Dresses"
-                  />
-                </div>
+                    className="w-full border border-neutral-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-neutral-900 outline-none bg-white"
+                  >
+                    <option value="women fashion" > Women&apos;s Fashion</option>
+                    <option value="men fashion" > Men&apos;s Fashion</option>
+                    <option value="kid fashion" > Kid&apos;s Fashion</option>
+                    <option value="wedding collection" > Wedding Collection</option>
+
+                  </select>
               </div>
 
               {/* Inventory Grid */}
@@ -274,7 +272,6 @@ export default function ProductsView() {
                   >
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
-                    <option value="out-of-stock">Out of Stock</option>
                   </select>
                 </div>
               </div>
