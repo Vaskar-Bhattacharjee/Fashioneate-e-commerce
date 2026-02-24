@@ -12,6 +12,7 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { ProductsView } from "@/src/components/ui/product-view";
+import AnalyticsPage from "@/src/components/analytics/analytics";
 
 
 const Dashboard = () => {
@@ -67,6 +68,7 @@ const Dashboard = () => {
         </header>
         {activeTab === "Overview" && <Overview />}
         {activeTab === "Products" && <ProductsView />}
+        {activeTab === "Analytics" && <AnalyticsPage />}
       </main>
     </div>
   );
