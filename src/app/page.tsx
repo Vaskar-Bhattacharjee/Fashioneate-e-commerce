@@ -6,7 +6,7 @@ import { WhyUs } from "../components/whyUs";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-5 min-h-screen items-center justify-center ">
+    <div className="flex flex-col gap-5 min-h-screen items-center justify-center overflow-hidden">
       <Hero />
       <FeaturesFirst />
       <NewArrivals />

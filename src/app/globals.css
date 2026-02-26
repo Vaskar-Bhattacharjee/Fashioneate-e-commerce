@@ -11,7 +11,7 @@
                   0px 1px 0px 0px rgba(25,28,33,0.02),
                   0px 0px 0px 1px rgba(25,28,33,0.08);
   --radius: 0.625rem;
-  --background: oklch(94.92% 0.00428 15.846);
+  --background: oklch(100% 0.00011 271.152);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -58,6 +58,7 @@ html.dark {
   --color-base: var(--foreground);
   --font-quicksand: var(--font-quicksand);
   --font-inter: var(--font-inter);
+  --font-kumbh: var(--font-kumbh);
   --font-cormorantGaramond: var(--font-cormorant-garamond);
   --shadow-input: var(--shadow-input);
   --color-sidebar-ring: var(--sidebar-ring);

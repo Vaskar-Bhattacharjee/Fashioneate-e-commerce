@@ -43,8 +43,6 @@ export async function GET(req: Request) {
             pendingOrders,
             lowStockProducts,
             totalProducts,
-            
-            // Trends
             salesTrend,
             categoryDistribution,
             topProducts,
@@ -141,7 +139,6 @@ export async function GET(req: Request) {
         const revenueChange = previousRevenue ? Math.round(((currentRevenue - previousRevenue) / previousRevenue) * 100) : 0;
         const ordersChange = prevOrders ? Math.round(((totalOrders - prevOrders) / prevOrders) * 100) : 0;
 
-        // Format category data with colors
         const colors = ["#3b82f6", "#22c55e", "#a855f7", "#f97316", "#ef4444", "#06b6d4"];
         const formattedCategories = categoryDistribution.map((cat: any, idx: number) => ({
             name: cat._id || "Uncategorized",
@@ -149,7 +146,6 @@ export async function GET(req: Request) {
             color: colors[idx % colors.length]
         }));
 
-        // Calculate category percentages
         const totalCategoryValue = formattedCategories.reduce((sum, cat) => sum + cat.value, 0);
         const categoriesWithPercentage = formattedCategories.map(cat => ({
             ...cat,

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Quicksand, Cormorant_Garamond, Roboto, Inter } from "next/font/google";
+import { Quicksand, Cormorant_Garamond, Roboto, Inter, Kumbh_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/src/components/ui/navbar";
 import { ThemeProvider } from "../components/ui/theme-provider";
@@ -10,7 +10,10 @@ const quicksand = Quicksand({
   variable: "--font-quicksand",
   subsets: ["latin"],
 });
-
+const kumbh = Kumbh_Sans({
+  variable: "--font-kumbh-sans",
+  subsets: ["latin"],
+});
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
   subsets: ["latin"],
@@ -38,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${quicksand.variable} ${cormorantGaramond.variable} ${roboto.variable} ${inter.variable} antialiased`}
+        className={`${quicksand.variable} ${cormorantGaramond.variable} ${roboto.variable} ${kumbh.variable} ${inter.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"

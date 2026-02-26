@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import { ProductsView } from "@/src/components/ui/product-view";
 import AnalyticsPage from "@/src/components/analytics/analytics";
+import { Orders } from "@/src/components/orders/orders";
 
 
 const Dashboard = () => {
@@ -38,7 +39,7 @@ const Dashboard = () => {
           {isOpen ? " Dashboard" : "🛍️"}
         </div>
 
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-4 space-y-1">
           {menuItems.map((item) => (
             <SidebarLink
               key={item.label}
@@ -53,10 +54,10 @@ const Dashboard = () => {
       </aside>
 
       <main className="flex-1 flex flex-col">
-        <header className="h-16 border-b border-neutral-300 bg-transparent flex items-center px-6 justify-between  top-20 z-10">
+        <header className="h-12 border-b border-neutral-300 bg-transparent flex items-center px-6 justify-between  top-20 z-10">
           <button
             onClick={() => setOpen(!isOpen)}
-            className="p-2 hover:bg-neutral-100 rounded-lg transition-colors border border-neutral-200 cursor-pointer"
+            className="p-1 hover:bg-neutral-100 rounded-md transition-colors border border-neutral-200 cursor-pointer"
           >
             <IconLayoutSidebarFilled
               className={cn(
@@ -69,6 +70,7 @@ const Dashboard = () => {
         {activeTab === "Overview" && <Overview />}
         {activeTab === "Products" && <ProductsView />}
         {activeTab === "Analytics" && <AnalyticsPage />}
+        {activeTab === "Orders" && <Orders />}
       </main>
     </div>
   );
@@ -115,7 +117,7 @@ export const SidebarLink = ({
         "flex items-center gap-4 px-3 py-2 rounded-lg cursor-pointer transition-colors",
         isActive
           ? "bg-neutral-600 text-white"
-          : "text-neutral-700 hover:bg-neutral-100",
+          : "text-neutral-700 hover:bg-neutral-300",
       )}
     >
       {icon}

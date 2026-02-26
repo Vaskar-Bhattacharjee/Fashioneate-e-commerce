@@ -94,10 +94,10 @@ export default function AnalyticsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-neutral-800 font-inter">
+          <h1 className="text-2xl font-bold text-neutral-800 font-kumbh">
             Analytics Dashboard
           </h1>
-          <p className="text-neutral-500 text-sm font-inter">
+          <p className="text-neutral-500 text-sm font-kumbh">
             Track your business performance and growth
           </p>
         </div>
@@ -163,10 +163,10 @@ export default function AnalyticsPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:col-span-2 bg-white border border-neutral-200 rounded-xl p-6 shadow-sm"
+          className="lg:col-span-2 bg-white border border-neutral-400 rounded-xl p-6 "
         >
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-neutral-800 font-inter">
+            <h3 className="text-lg font-semibold text-neutral-800 font-kumbh">
               Revenue & Orders Trend
             </h3>
             <div className="flex items-center gap-4 text-sm">
@@ -237,7 +237,7 @@ export default function AnalyticsPage() {
           transition={{ delay: 0.1 }}
           className="bg-white border border-neutral-200 rounded-xl p-6 shadow-sm"
         >
-          <h3 className="text-lg font-semibold text-neutral-800 font-inter mb-6">
+          <h3 className="text-lg font-semibold text-neutral-800 font-kumbh mb-6">
             Sales by Category
           </h3>
           <div className="h-64">
