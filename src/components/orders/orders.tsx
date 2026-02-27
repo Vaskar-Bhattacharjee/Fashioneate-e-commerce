@@ -1,6 +1,7 @@
 "use client";
-import { IconPlus, IconDots, IconChevronLeft, IconChevronRight, IconSortDescending2Filled } from "@tabler/icons-react";
-import { useState } from "react";
+import { IconPlus, IconDots, IconChevronLeft, IconChevronRight, IconSortDescending2Filled, IconTrash } from "@tabler/icons-react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 const menuItems = [
   "All",
@@ -36,6 +37,7 @@ const ordersData = [
     amount: 245.50,
     status: "Delivered",
     paymentMethod: "Online",
+    product: "Wireless Headphones",
     items: 3,
   },
   {
@@ -47,6 +49,7 @@ const ordersData = [
     amount: 189.00,
     status: "Pending",
     paymentMethod: "COD",
+    product: "Smartwatch",
     items: 2,
   },
   {
@@ -58,6 +61,7 @@ const ordersData = [
     amount: 567.80,
     status: "Awaiting Payment",
     paymentMethod: "Online",
+    product: "Gaming Console",
     items: 5,
   },
   {
@@ -69,6 +73,7 @@ const ordersData = [
     amount: 123.25,
     status: "Shipped",
     paymentMethod: "COD",
+    product: "Laptop",
     items: 1,
   },
   {
@@ -80,6 +85,7 @@ const ordersData = [
     amount: 899.99,
     status: "Cancelled",
     paymentMethod: "Online",
+    product: "Smartphone",
     items: 4,
   },
   {
@@ -91,6 +97,7 @@ const ordersData = [
     amount: 456.00,
     status: "Processing",
     paymentMethod: "Online",
+    product: "Tablet",
     items: 3,
   },
   {
@@ -102,6 +109,7 @@ const ordersData = [
     amount: 234.50,
     status: "Confirmed",
     paymentMethod: "COD",
+    product: "Bluetooth Speaker",
     items: 2,
   },
 ];
@@ -124,14 +132,18 @@ export const Orders = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
   const [currentPage, setCurrentPage] = useState(1);
+  const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+  const [dropdownPosition, setDropdownPosition] = useState<"above" | "below">("below");
 
   const filteredOrders = ordersData.filter((order) => {
     const matchesTab = activeTab === "All" || order.status === activeTab;
     const matchesSearch =
       order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.email.toLowerCase().includes(searchQuery.toLowerCase())||
       order.product.toLowerCase().includes(searchQuery.toLowerCase());
+
+
     return matchesTab && matchesSearch;
   });
 
@@ -145,6 +157,17 @@ export const Orders = () => {
     paginatedOrders.length > 0 &&
     paginatedOrders.every((o) => selectedRows.has(o.id));
 
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpenDropdownId(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   const toggleSelectAll = () => {
     if (allVisibleSelected) {
       const next = new Set(selectedRows);
@@ -174,6 +197,22 @@ export const Orders = () => {
     setCurrentPage(1);
   };
 
+  const handleViewOrder = (id: string) => {
+    alert(`View details for order ${id}`);
+    setOpenDropdownId(null);
+  };
+
+  const handleEditOrder = (id: string) => {
+    alert(`Edit order ${id}`);
+    setOpenDropdownId(null);
+  };
+  const handleDeleteOrder = (id: string) => {
+    if (confirm(`Are you sure you want to delete order ${id}?`)) {
+      alert(`Order ${id} deleted`);
+    }
+    setOpenDropdownId(null);
+  }
+
   return (
     <div className="p-4 flex flex-col">
       <h1 className="text-2xl font-bold mb-4 font-kumbh">Orders</h1>
@@ -200,9 +239,9 @@ export const Orders = () => {
         </div>
       </div>
 
-      {/* ── Orders Table ── */}
-      <div className="mt-6 border border-neutral-300 rounded-lg overflow-hidden">
-        <div className="overflow-x-auto">
+      
+      <div className="mt-6 border border-neutral-300 rounded-lg overflow-auto">
+        <div className="min-h-[500px]">
           <table className="w-full text-left text-sm">
             <thead className="bg-neutral-100 border-b border-neutral-300">
               <tr>
@@ -214,13 +253,13 @@ export const Orders = () => {
                     className="accent-neutral-900 size-4 cursor-pointer"
                   />
                 </th>
-                <th className="px-4 py-3 font-semibold font-kumbh text-neutral-600 text-xs uppercase tracking-wider">
+                <th className="px-4 py-3 font-kumbh text-neutral-900 text-xs uppercase tracking-wider font-bold">
                   Order
                 </th>
-                <th className="px-4 py-3 font-semibold font-kumbh text-neutral-600 text-xs uppercase tracking-wider">
+                <th className="px-4 py-3 font-kumbh text-neutral-900 text-xs uppercase tracking-wider font-bold">
                   Customer
                 </th>
-                <th className="px-4 py-3 font-semibold font-kumbh text-neutral-600 text-xs uppercase tracking-wider">
+                <th className="px-4 py-3 font-kumbh text-neutral-900 text-xs uppercase tracking-wider font-bold">
                   Product
                 </th>
                 <th className="px-4 py-3 font-semibold font-kumbh text-neutral-600 text-xs uppercase tracking-wider flex items-center gap-1 cursor-pointer">
@@ -275,12 +314,21 @@ export const Orders = () => {
                       </div>
                     </td>
                     <td className="px-4 py-3 font-kumbh font-semibold text-neutral-600">
-                      {order.product}
+                      <div className="flex justify-start items-center gap-1">
+                        <div className="w-10 h-10 rounded-lg overflow-hidden relative">
+                          <Image
+                            src={order.avatar}
+                            alt={order.product}
+                            fill>
+                          </Image>
+                        </div>
+                        <span className="text-sm">{order.product}</span>
+                      </div>
                     </td>
                     <td className="px-4 py-3 font-semibold font-kumbh text-neutral-900">
                       {order.amount}
                     </td>
-                    <td className="px-4 py-3 font-kumbh text-neutral-600">
+                    <td className="px-4 py-3 font-kumbh text-sm font-semibold text-neutral-700">
                       {order.date}
                     </td>
                     <td className="px-4 py-3">
@@ -292,10 +340,44 @@ export const Orders = () => {
                         {order.status}
                       </span>
                     </td>
-                    <td className="px-4 py-3">
-                      <button className="p-1 rounded-md hover:bg-neutral-200 transition-colors cursor-pointer">
+                    <td className="px-4 py-2 relative">
+                      <button
+                      ref={(e) => { buttonRefs.current[order.id] = e; }}  
+                      onClick={(e)=> {
+                        e.stopPropagation();
+                        setOpenDropdownId(openDropdownId === order.id ? null : order.id)}}
+                      className="p-1 rounded-md hover:bg-neutral-200 transition-colors cursor-pointer">
                         <IconDots className="size-4 text-neutral-600" />
                       </button>
+                      {openDropdownId === order.id && (
+                        <div
+                          ref={dropdownRef}
+                          className={`absolute   w-38 bg-white border border-neutral-200 rounded-lg shadow-lg z-50 py-1
+                            ${
+                            dropdownPosition === "above" 
+                              ? "bottom-full mb-1 right-3"  
+                              : "top-full mt-0.5 right-3"   
+                          }`}
+                        >
+                         
+                          <MenuItem 
+                            
+                            label="Order Details"
+                            onClick={() => handleViewOrder(order.id)}
+                          />
+                          <MenuItem 
+                            
+                            label="Edit Order"
+                            onClick={() => handleEditOrder(order.id)}
+                          />
+                          <MenuItem 
+                            
+                            label="Delete"
+                            onClick={() => handleDeleteOrder(order.id)}
+                          />                
+                         
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))
@@ -322,7 +404,7 @@ export const Orders = () => {
             >
               <IconChevronLeft className="size-4 text-neutral-700" />
             </button>
-            <span className="text-sm font-kumbh text-neutral-700 min-w-[80px] text-center">
+            <span className="text-sm font-kumbh text-neutral-700 min-w-20 text-center">
               Page {currentPage} of {totalPages || 1}
             </span>
             <button
@@ -369,8 +451,24 @@ const Search = ({
         placeholder="Search orders..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="outline-0 placeholder:text-[14px] placeholder:text-neutral-600 w-full"
+        className="outline-0 placeholder:text-[14px] placeholder:text-neutral-600 text-neutral-800 font-semibold w-full"
       />
     </div>
   );
 };
+
+interface MenuItemProps {
+  label: string;
+  onClick: () => void;
+  
+}
+
+const MenuItem = ({  label, onClick }: MenuItemProps) => (
+  <button
+    onClick={onClick}
+    className={"w-full flex items-center gap-3 px-4 py-2.5 text-sm font-kumbh font-semibold text-neutral-900 hover:bg-neutral-100 transition-colors cursor-pointer"}
+      
+  >
+    {label}
+  </button>
+);
