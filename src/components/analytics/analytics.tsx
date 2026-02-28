@@ -10,6 +10,8 @@ import {
   IconUsers,
   IconPackage,
   IconCurrencyDollar,
+  IconFileTextFilled,
+  IconFileExcel,
 } from "@tabler/icons-react";
 import {
   XAxis,
@@ -23,6 +25,7 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import { Icon } from "lucide-react";
 
 // Types for your analytics data
 interface AnalyticsData {
@@ -63,7 +66,9 @@ interface AnalyticsData {
 export default function AnalyticsPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [timeRange, setTimeRange] = useState<"7d" | "30d" | "90d" | "1y">("30d");
+  const [timeRange, setTimeRange] = useState<"7d" | "30d" | "90d" | "1y">(
+    "30d",
+  );
 
   useEffect(() => {
     fetchAnalytics();
@@ -72,7 +77,9 @@ export default function AnalyticsPage() {
   const fetchAnalytics = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`/api/admin/analytics?range=${timeRange}`);
+      const response = await axios.get(
+        `/api/admin/analytics?range=${timeRange}`,
+      );
       setData(response.data);
     } catch (error) {
       console.error("Failed to fetch analytics:", error);
@@ -86,7 +93,11 @@ export default function AnalyticsPage() {
   }
 
   if (!data) {
-    return <div className="p-8 text-center text-neutral-500">Failed to load analytics</div>;
+    return (
+      <div className="p-8 text-center text-neutral-500">
+        Failed to load analytics
+      </div>
+    );
   }
 
   return (
@@ -101,7 +112,7 @@ export default function AnalyticsPage() {
             Track your business performance and growth
           </p>
         </div>
-        
+
         {/* Time Range Selector */}
         <div className="flex items-center gap-2 bg-white border border-neutral-200 rounded-lg p-1">
           {[
@@ -185,28 +196,33 @@ export default function AnalyticsPage() {
               <AreaChart data={data.salesTrend}>
                 <defs>
                   <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="colorOrders" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#22c55e" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" />
-                <XAxis 
-                  dataKey="date" 
+                <XAxis
+                  dataKey="date"
                   stroke="#737373"
                   fontSize={12}
-                  tickFormatter={(value) => new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                  tickFormatter={(value) =>
+                    new Date(value).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })
+                  }
                 />
                 <YAxis stroke="#737373" fontSize={12} />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: '#fff', 
-                    border: '1px solid #e5e5e5',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#fff",
+                    border: "1px solid #e5e5e5",
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
                   }}
                 />
                 <Area
@@ -262,15 +278,20 @@ export default function AnalyticsPage() {
           </div>
           <div className="mt-4 space-y-2">
             {data.categoryDistribution.map((cat) => (
-              <div key={cat.name} className="flex items-center justify-between text-sm">
+              <div
+                key={cat.name}
+                className="flex items-center justify-between text-sm"
+              >
                 <span className="flex items-center gap-2">
-                  <span 
-                    className="w-3 h-3 rounded-full" 
+                  <span
+                    className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: cat.color }}
                   />
                   {cat.name}
                 </span>
-                <span className="font-medium text-neutral-700">{cat.value}%</span>
+                <span className="font-medium text-neutral-700">
+                  {cat.value}%
+                </span>
               </div>
             ))}
           </div>
@@ -286,12 +307,15 @@ export default function AnalyticsPage() {
           transition={{ delay: 0.2 }}
           className="bg-white border border-neutral-200 rounded-xl p-6 shadow-sm"
         >
+          <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-neutral-800 font-inter mb-4">
             Top Selling Products
           </h3>
+           <Export />
+           </div>
           <div className="space-y-4">
             {data.topProducts.map((product, index) => (
-              <div 
+              <div
                 key={product.name}
                 className="flex items-center justify-between p-3 hover:bg-neutral-50 rounded-lg transition-colors"
               >
@@ -300,8 +324,12 @@ export default function AnalyticsPage() {
                     {index + 1}
                   </span>
                   <div>
-                    <p className="font-medium text-neutral-800">{product.name}</p>
-                    <p className="text-sm text-neutral-500">{product.sales} sales</p>
+                    <p className="font-medium text-neutral-800">
+                      {product.name}
+                    </p>
+                    <p className="text-sm text-neutral-500">
+                      {product.sales} sales
+                    </p>
                   </div>
                 </div>
                 <span className="font-semibold text-neutral-800">
@@ -319,28 +347,39 @@ export default function AnalyticsPage() {
           transition={{ delay: 0.3 }}
           className="bg-white border border-neutral-200 rounded-xl p-6 shadow-sm"
         >
-          <h3 className="text-lg font-semibold text-neutral-800 font-inter mb-4">
-            Recent Orders
-          </h3>
+          <div className="w-full flex justify-between items-center">
+            <h3 className="text-lg font-semibold text-neutral-800 font-inter mb-4">
+              Recent Orders
+            </h3>
+            <Export />
+          </div>
           <div className="space-y-3">
             {data.recentOrders.map((order) => (
-              <div 
+              <div
                 key={order.id}
                 className="flex items-center justify-between p-3 border border-neutral-100 rounded-lg"
               >
                 <div>
-                  <p className="font-medium text-neutral-800">{order.customer}</p>
+                  <p className="font-medium text-neutral-800">
+                    {order.customer}
+                  </p>
                   <p className="text-sm text-neutral-500">
                     {new Date(order.date).toLocaleDateString()}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold text-neutral-800">${order.amount}</p>
-                  <span className={`text-xs px-2 py-1 rounded-full ${
-                    order.status === 'completed' ? 'bg-green-100 text-green-700' :
-                    order.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-                    'bg-red-100 text-red-700'
-                  }`}>
+                  <p className="font-semibold text-neutral-800">
+                    ${order.amount}
+                  </p>
+                  <span
+                    className={`text-xs px-2 py-1 rounded-full ${
+                      order.status === "completed"
+                        ? "bg-green-100 text-green-700"
+                        : order.status === "pending"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : "bg-red-100 text-red-700"
+                    }`}
+                  >
                     {order.status}
                   </span>
                 </div>
@@ -383,23 +422,64 @@ function OverviewCard({
       className="bg-white border border-neutral-300 rounded-xl p-5  hover:shadow-sm transition-shadow"
     >
       <div className="flex items-start justify-between">
-        <div className={`p-2 rounded-lg ${colorStyles[color]}`}>
-          {icon}
-        </div>
-        <div className={`flex items-center gap-1 text-sm font-medium ${
-          isPositive ? 'text-green-600' : 'text-red-600'
-        }`}>
-          {isPositive ? <IconTrendingUp className="size-4" /> : <IconTrendingDown className="size-4" />}
+        <div className={`p-2 rounded-lg ${colorStyles[color]}`}>{icon}</div>
+        <div
+          className={`flex items-center gap-1 text-sm font-medium ${
+            isPositive ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {isPositive ? (
+            <IconTrendingUp className="size-4" />
+          ) : (
+            <IconTrendingDown className="size-4" />
+          )}
           {Math.abs(change)}%
         </div>
       </div>
       <div className="mt-3">
-        <p className="text-2xl font-bold text-neutral-800 font-inter">{value}</p>
+        <p className="text-2xl font-bold text-neutral-800 font-inter">
+          {value}
+        </p>
         <p className="text-sm text-neutral-500 font-inter">{title}</p>
       </div>
     </motion.div>
   );
 }
+
+const Export = () => {
+  const [clickExport, setClickExport] = useState<boolean>(false);
+  return (
+    <div className="relative">
+      <div
+        onClick={() => setClickExport(!clickExport)}
+        className="flex gap-2 items-center justify-center border border-neutral-300 rounded-sm px-2 py-1 cursor-pointer  hover:bg-neutral-100 transition-colors z-50"
+      >
+        <FolderUp className="size-5 text-neutral-600 cursor-pointer hover:text-neutral-800 transition-colors" />
+        <span className="text-sm text-neutral-900 font-bold font-kumbh">
+          Export
+        </span>
+      </div>
+      {clickExport && (
+        <div className="absolute flex flex-col gap-1 items-start justify-center w-30 h-20 px-2 py-2   rounded-sm border border-neutral-300 z-50 bg-white top-full right-0 mt-2 shadow-lg">
+          <div className="w-full flex items-center gap-2 justify-start h-full hover:bg-neutral-100 cursor-pointer transition-colors">
+            <IconFileTextFilled className="size-5 text-neutral-600" />
+            <span className="text-sm text-neutral-900 font-semibold font-kumbh">
+              {" "}
+              PDF
+            </span>
+          </div>
+          <div className="w-full flex items-center gap-2 justify-start h-full hover:bg-neutral-100 cursor-pointer transition-colors">
+            <IconFileExcel className="size-5 text-neutral-600" />
+            <span className="text-sm text-neutral-900 font-semibold font-kumbh">
+              {" "}
+              Excel
+            </span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 // Loading Skeleton
 function AnalyticsSkeleton() {
@@ -408,7 +488,10 @@ function AnalyticsSkeleton() {
       <div className="h-8 w-48 bg-neutral-200 rounded animate-pulse" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-32 bg-neutral-200 rounded-xl animate-pulse" />
+          <div
+            key={i}
+            className="h-32 bg-neutral-200 rounded-xl animate-pulse"
+          />
         ))}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -418,3 +501,23 @@ function AnalyticsSkeleton() {
     </div>
   );
 }
+
+const FolderUp = ({ className }: { className?: string }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+      <path d="M12 10v6" />
+      <path d="m15 13-3 3-3-3" />
+    </svg>
+  );
+};

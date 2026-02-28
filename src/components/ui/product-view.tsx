@@ -23,6 +23,7 @@ import { FieldErrors, useForm, UseFormRegister } from "react-hook-form";
 import z from "zod";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { Switch } from "./switch";
 
 interface ProductProps {
   _id: string;
@@ -625,29 +626,25 @@ className="w-full bg-white hover:bg-neutral-50 border border-neutral-200 text-ne
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+            <div className="mb-4">
               <label className="block font-semibold text-sm font-inter text-neutral-600 mb-2">
                 Status
               </label>
-              <div className="space-y-2">
-                {["active", "inactive"].map((statusOption) => (
-                  <label
-                    key={statusOption}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <input
-                      type="radio"
-                      value={statusOption}
-                      {...form.register("status")}
-                      className="size-4 cursor-pointer text-neutral-900 focus:ring-neutral-900 accent-neutral-900"
-                    />
-                    <span className="text-sm font-inter font-medium text-neutral-700 capitalize">
-                      {statusOption.replace("-", " ")}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
+<div className="flex items-center gap-3 ">
+  {/* The Switch itself */}
+  <Switch
+    size="default"
+    checked={form.watch("status") === "active"}
+    onCheckedChange={(checked) => {
+      form.setValue("status", checked ? "active" : "inactive");
+    }}
+  />
+
+  <span className="text-sm font-semibold font-inter text-neutral-700 capitalize">
+    {form.watch("status")}
+  </span>
+</div>
+            </div>  
 
             <div className="space-y-3">
               <label className="flex items-center gap-2 cursor-pointer">
