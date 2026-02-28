@@ -1,5 +1,12 @@
 "use client";
-import { IconPlus, IconDots, IconChevronLeft, IconChevronRight, IconSortDescending2Filled, IconTrash } from "@tabler/icons-react";
+import {
+  IconPlus,
+  IconDots,
+  IconChevronLeft,
+  IconChevronRight,
+  IconSortDescending2Filled,
+  IconTrash,
+} from "@tabler/icons-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -14,8 +21,12 @@ const menuItems = [
   "Cancelled",
 ];
 
-
-type OrderStatus = "Completed" | "Pending" | "Cancelled" | "Refunded" | "Returned";
+type OrderStatus =
+  | "Completed"
+  | "Pending"
+  | "Cancelled"
+  | "Refunded"
+  | "Returned";
 
 interface Order {
   id: string;
@@ -34,7 +45,7 @@ const ordersData = [
     email: "sarah@example.com",
     avatar: "https://i.pravatar.cc/150?u=sarah",
     date: "2024-01-15T14:30:00",
-    amount: 245.50,
+    amount: 245.5,
     status: "Delivered",
     paymentMethod: "Online",
     product: "Wireless Headphones",
@@ -46,7 +57,7 @@ const ordersData = [
     email: "michael@example.com",
     avatar: "https://i.pravatar.cc/150?u=michael",
     date: "2024-01-15T16:45:00",
-    amount: 189.00,
+    amount: 189.0,
     status: "Pending",
     paymentMethod: "COD",
     product: "Smartwatch",
@@ -58,7 +69,7 @@ const ordersData = [
     email: "emma@example.com",
     avatar: "https://i.pravatar.cc/150?u=emma",
     date: "2024-01-14T09:20:00",
-    amount: 567.80,
+    amount: 567.8,
     status: "Awaiting Payment",
     paymentMethod: "Online",
     product: "Gaming Console",
@@ -94,7 +105,7 @@ const ordersData = [
     email: "david@example.com",
     avatar: "https://i.pravatar.cc/150?u=david",
     date: "2024-01-13T10:20:00",
-    amount: 456.00,
+    amount: 456.0,
     status: "Processing",
     paymentMethod: "Online",
     product: "Tablet",
@@ -106,7 +117,7 @@ const ordersData = [
     email: "anna@example.com",
     avatar: "https://i.pravatar.cc/150?u=anna",
     date: "2024-01-12T14:15:00",
-    amount: 234.50,
+    amount: 234.5,
     status: "Confirmed",
     paymentMethod: "COD",
     product: "Bluetooth Speaker",
@@ -114,15 +125,14 @@ const ordersData = [
   },
 ];
 
-
 const statusStyles: Record<string, string> = {
   "Awaiting Payment": "bg-orange-50 text-orange-700 border-orange-400",
-  "Pending": "bg-yellow-50 text-yellow-700 border-yellow-500",
-  "Confirmed": "bg-indigo-50 text-indigo-700 border-indigo-400",
-  "Processing": "bg-purple-50 text-purple-700 border-purple-400",
-  "Shipped": "bg-cyan-50 text-cyan-700 border-cyan-400",
-  "Delivered": "bg-green-50 text-green-700 border-green-400",
-  "Cancelled": "bg-red-50 text-red-700 border-red-400",
+  Pending: "bg-yellow-50 text-yellow-700 border-yellow-500",
+  Confirmed: "bg-indigo-50 text-indigo-700 border-indigo-400",
+  Processing: "bg-purple-50 text-purple-700 border-purple-400",
+  Shipped: "bg-cyan-50 text-cyan-700 border-cyan-400",
+  Delivered: "bg-green-50 text-green-700 border-green-400",
+  Cancelled: "bg-red-50 text-red-700 border-red-400",
 };
 
 const ROWS_PER_PAGE = 8;
@@ -133,16 +143,17 @@ export const Orders = () => {
   const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
   const [currentPage, setCurrentPage] = useState(1);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
-  const [dropdownPosition, setDropdownPosition] = useState<"above" | "below">("below");
+  const [dropdownPosition, setDropdownPosition] = useState<"above" | "below">(
+    "below",
+  );
 
   const filteredOrders = ordersData.filter((order) => {
     const matchesTab = activeTab === "All" || order.status === activeTab;
     const matchesSearch =
       order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.email.toLowerCase().includes(searchQuery.toLowerCase())||
+      order.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.product.toLowerCase().includes(searchQuery.toLowerCase());
-
 
     return matchesTab && matchesSearch;
   });
@@ -150,24 +161,40 @@ export const Orders = () => {
   const totalPages = Math.ceil(filteredOrders.length / ROWS_PER_PAGE);
   const paginatedOrders = filteredOrders.slice(
     (currentPage - 1) * ROWS_PER_PAGE,
-    currentPage * ROWS_PER_PAGE
+    currentPage * ROWS_PER_PAGE,
   );
 
   const allVisibleSelected =
     paginatedOrders.length > 0 &&
     paginatedOrders.every((o) => selectedRows.has(o.id));
 
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setOpenDropdownId(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+ useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as Node;
+
+    // 1) If click is inside the dropdown menu, ignore it
+    if (dropdownRef.current && dropdownRef.current.contains(target)) {
+      return;
+    }
+
+    // 2) If click is on one of the three-dots buttons (or inside it), ignore it.
+    //    This prevents the document handler from closing the menu before the button's onClick runs.
+    for (const key in buttonRefs.current) {
+      const btn = buttonRefs.current[key];
+      if (btn && btn.contains(target)) {
+        return;
       }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    }
+
+    // Otherwise — it's an outside click: close dropdown.
+    setOpenDropdownId(null);
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, []);
   const toggleSelectAll = () => {
     if (allVisibleSelected) {
       const next = new Set(selectedRows);
@@ -211,7 +238,7 @@ export const Orders = () => {
       alert(`Order ${id} deleted`);
     }
     setOpenDropdownId(null);
-  }
+  };
 
   return (
     <div className="p-4 flex flex-col">
@@ -239,7 +266,6 @@ export const Orders = () => {
         </div>
       </div>
 
-      
       <div className="mt-6 border border-neutral-300 rounded-lg overflow-auto">
         <div className="min-h-[500px]">
           <table className="w-full text-left text-sm">
@@ -319,8 +345,8 @@ export const Orders = () => {
                           <Image
                             src={order.avatar}
                             alt={order.product}
-                            fill>
-                          </Image>
+                            fill
+                          ></Image>
                         </div>
                         <span className="text-sm">{order.product}</span>
                       </div>
@@ -342,40 +368,56 @@ export const Orders = () => {
                     </td>
                     <td className="px-4 py-2 relative">
                       <button
-                      ref={(e) => { buttonRefs.current[order.id] = e; }}  
-                      onClick={(e)=> {
-                        e.stopPropagation();
-                        setOpenDropdownId(openDropdownId === order.id ? null : order.id)}}
-                      className="p-1 rounded-md hover:bg-neutral-200 transition-colors cursor-pointer">
+                        ref={(el) => {
+                          buttonRefs.current[order.id] = el;
+                        }}
+                        onClick={(e) => {
+                          
+                          if (openDropdownId === order.id) {
+                            setOpenDropdownId(null);
+                            return;
+                          }
+
+                          if (openDropdownId !== order.id) {
+                            const button = e.currentTarget;
+                            if (button) {
+                              const rect = button.getBoundingClientRect();
+                              const spaceBelow =
+                                window.innerHeight - rect.bottom;
+                              setDropdownPosition(
+                                spaceBelow < 150 ? "above" : "below",
+                              );
+                            }
+                            setOpenDropdownId(order.id);
+                          }
+
+                          
+                        }}
+                        className="p-1.5 rounded-md hover:bg-neutral-200 transition-colors cursor-pointer"
+                      >
                         <IconDots className="size-4 text-neutral-600" />
                       </button>
                       {openDropdownId === order.id && (
                         <div
                           ref={dropdownRef}
-                          className={`absolute   w-38 bg-white border border-neutral-200 rounded-lg shadow-lg z-50 py-1
-                            ${
-                            dropdownPosition === "above" 
-                              ? "bottom-full mb-1 right-3"  
-                              : "top-full mt-0.5 right-3"   
+                          className={`absolute right-3 w-38 bg-white border border-neutral-200 rounded-lg shadow-lg z-50 py-1 ${
+                            dropdownPosition === "above"
+                              ? "bottom-full mb-1"
+                              : "top-full mt-0.5"
                           }`}
                         >
-                         
-                          <MenuItem 
-                            
+                          <MenuItem
                             label="Order Details"
                             onClick={() => handleViewOrder(order.id)}
                           />
-                          <MenuItem 
-                            
+                          <MenuItem
                             label="Edit Order"
                             onClick={() => handleEditOrder(order.id)}
                           />
-                          <MenuItem 
-                            
+                          <MenuItem
                             label="Delete"
                             onClick={() => handleDeleteOrder(order.id)}
-                          />                
-                         
+                          />
                         </div>
                       )}
                     </td>
@@ -393,7 +435,7 @@ export const Orders = () => {
               ? `${selectedRows.size} of ${filteredOrders.length} row(s) selected`
               : `Showing ${(currentPage - 1) * ROWS_PER_PAGE + 1}–${Math.min(
                   currentPage * ROWS_PER_PAGE,
-                  filteredOrders.length
+                  filteredOrders.length,
                 )} of ${filteredOrders.length}`}
           </span>
           <div className="flex items-center gap-2">
@@ -460,14 +502,14 @@ const Search = ({
 interface MenuItemProps {
   label: string;
   onClick: () => void;
-  
 }
 
-const MenuItem = ({  label, onClick }: MenuItemProps) => (
+const MenuItem = ({ label, onClick }: MenuItemProps) => (
   <button
     onClick={onClick}
-    className={"w-full flex items-center gap-3 px-4 py-2.5 text-sm font-kumbh font-semibold text-neutral-900 hover:bg-neutral-100 transition-colors cursor-pointer"}
-      
+    className={
+      "w-full flex items-center gap-3 px-4 py-2.5 text-sm font-kumbh font-semibold text-neutral-900 hover:bg-neutral-100 transition-colors cursor-pointer"
+    }
   >
     {label}
   </button>
