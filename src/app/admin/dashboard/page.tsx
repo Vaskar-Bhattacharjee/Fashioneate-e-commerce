@@ -71,6 +71,7 @@ const Dashboard = () => {
         {activeTab === "Products" && <ProductsView />}
         {activeTab === "Analytics" && <AnalyticsPage />}
         {activeTab === "Orders" && <Orders />}
+        
       </main>
     </div>
   );

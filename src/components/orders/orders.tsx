@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/src/lib/utils";
 import {
   IconPlus,
   IconDots,
@@ -9,6 +10,7 @@ import {
 } from "@tabler/icons-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const menuItems = [
   "All",
@@ -146,7 +148,7 @@ export const Orders = () => {
   const [dropdownPosition, setDropdownPosition] = useState<"above" | "below">(
     "below",
   );
-
+  const router = useRouter();
   const filteredOrders = ordersData.filter((order) => {
     const matchesTab = activeTab === "All" || order.status === activeTab;
     const matchesSearch =
@@ -225,6 +227,8 @@ export const Orders = () => {
   };
 
   const handleViewOrder = (id: string) => {
+    
+    router.push(`/admin/dashboard/order-details/${id}`);
     alert(`View details for order ${id}`);
     setOpenDropdownId(null);
   };
@@ -395,7 +399,13 @@ export const Orders = () => {
                         }}
                         className="p-1.5 rounded-md hover:bg-neutral-200 transition-colors cursor-pointer"
                       >
-                        <IconDots className="size-4 text-neutral-600" />
+                        <div className={cn("size-4 text-neutral-600 w-8 h-8 flex items-center justify-center",
+                          openDropdownId === order.id && "text-neutral-900 bg-neutral-200 rounded-md")}
+                         >
+                        <IconDots className={cn("size-4 text-neutral-600",
+                          openDropdownId === order.id && "text-neutral-900 bg-neutral-200 rounded-md")}
+                         />
+                         </div>
                       </button>
                       {openDropdownId === order.id && (
                         <div
@@ -514,3 +524,8 @@ const MenuItem = ({ label, onClick }: MenuItemProps) => (
     {label}
   </button>
 );
+function push(path: string) {
+  const router = useRouter();
+  router.push(path);
+}
+

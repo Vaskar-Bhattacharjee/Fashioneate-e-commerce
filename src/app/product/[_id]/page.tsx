@@ -6,10 +6,10 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/src/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { Fallback_Products } from "@/src/lib/data";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useCartStore } from "@/src/store/useCartStore";
 import axios from "axios";
+import { Link } from "lucide-react";
 interface ProductProps {
   _id: string;
   name: string;
@@ -35,6 +35,7 @@ export default function Product() {
   const [available, setAvailable] = useState(5);
   const [selectedSize, setSelectedSize] = useState("M"); // Lifted state from Sizes component
 
+  const router = useRouter();
   const params = useParams();
   const _id = params._id;
   const _id2 = _id?.toString() || ""; 
@@ -102,7 +103,6 @@ export default function Product() {
         }
       } catch (error) {
         console.warn("Failed to fetch product details:", error);
-        setProduct(Fallback_Products[0] as ProductProps);
       } finally {
         setLoading(false);
       }
@@ -197,9 +197,15 @@ export default function Product() {
               >
                 Add to Cart
               </button>
-              <button className="h-11 w-44 font-inter text-neutral-800 border border-neutral-300 rounded-lg hover:bg-neutral-100 transition cursor-pointer">
+              
+              <button
+              onClick={()=>{
+                router.push("/checkout")
+              }}
+              className="h-11 w-44 font-inter text-neutral-800 border border-neutral-300 rounded-lg hover:bg-neutral-100 transition cursor-pointer">
                 Buy Now
               </button>
+              
             </div>
           </motion.div>
         </div>
