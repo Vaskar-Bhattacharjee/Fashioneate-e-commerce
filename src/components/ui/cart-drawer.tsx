@@ -135,11 +135,11 @@ export const CartDrawer = () => {
                 >
                   Continue Shopping
                 </button>
-                <button className={cn("flex-1 py-3 bg-neutral-900 text-white rounded-md text-sm font-medium cursor-pointer",
+                <Link href="/checkout" className={cn("flex items-center justify-center flex-1 py-3 bg-neutral-900 text-white rounded-md text-sm font-medium cursor-pointer",
                 cart.length === 0 && "bg-neutral-400 cursor-not-allowed"
                 )}>
                   Checkout
-                </button>
+                </Link>
               </div>
             </div>
           </motion.aside>

@@ -52,7 +52,7 @@ function Input({
         bg-white
         ${hasError
           ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-100"
-          : "border-neutral-200 hover:border-neutral-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-100"
+          : "border-neutral-200 hover:border-neutral-300 focus:border-green-500 focus:ring-2 focus:ring-violet-100"
         }
         ${className}
       `}
@@ -114,19 +114,19 @@ export const Left = () => {
   };
 
   return (
-    <div className="w-full bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden">
+    <div className="w-1/2 bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden ">
 
       {/* ── Header ── */}
       <div className="px-6 py-5 border-b border-neutral-300 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-violet-50 flex items-center justify-center">
-          <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="size-10 rounded-full bg-violet-50 flex items-center justify-center">
+          <svg className="size-6 text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
               d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         </div>
         <div>
-          <h1 className="text-4xl font-bold text-neutral-800 font-kumbh">Shipping Address</h1>
+          <h1 className="text-4xl font-semibold text-neutral-800 ">Shipping Address</h1>
           <p className="text-md text-neutral-700 mt-0.5 font-semibold">Where should we deliver your order?</p>
         </div>
       </div>
@@ -136,10 +136,7 @@ export const Left = () => {
 
         {/* ── Contact sub-section ── */}
         <div>
-          <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-neutral-400 mb-3 flex items-center gap-2">
-            <span className="text-neutral-500">Contact</span>
-            <span className="flex-1 h-px bg-neutral-200" />
-          </p>
+
           <div className="space-y-4">
             {/* Name row */}
             <div className="grid grid-cols-2 gap-3">
@@ -202,10 +199,6 @@ export const Left = () => {
 
         {/* ── Address sub-section ── */}
         <div>
-          <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-neutral-400 mb-3 flex items-center gap-2">
-            <span className="text-neutral-500">Delivery Details</span>
-            <span className="flex-1 h-px bg-neutral-200" />
-          </p>
           <div className="space-y-4">
 
             {/* Country — locked to Bangladesh */}
@@ -217,7 +210,7 @@ export const Left = () => {
                   className="bg-neutral-50 text-neutral-500 cursor-not-allowed border-neutral-100 hover:border-neutral-100 focus:ring-0 focus:border-neutral-100"
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <span className="text-[10px] bg-neutral-200 text-neutral-500 px-2 py-0.5 rounded-full font-medium tracking-wide uppercase">
+                  <span className="text-[10px] bg-green-200/20 text-green-500 border border-green-500 px-2 py-1 rounded-sm font-medium tracking-wide uppercase">
                     Fixed
                   </span>
                 </div>
