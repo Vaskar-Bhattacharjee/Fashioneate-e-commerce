@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export const checkoutSchemaZod = z.object({
   firstname: z.string(),
-  lastname: z.string(),
+  lastname: z.string().optional(),
   email: z.email("Invalid email address"),
   phone: z.string().min(11, "Phone number must be at least 11 digits"),
   country: z.string().default("Bangladesh"),

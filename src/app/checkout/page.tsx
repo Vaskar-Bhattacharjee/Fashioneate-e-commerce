@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { checkoutSchema } from "@/src/lib/checkout.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { toast } from "sonner";
 
 export type CheckoutFormValues = {
   firstname: string;
@@ -25,7 +27,6 @@ export type CheckoutFormValues = {
 
  const CheckoutPage = () => {
   const cartItems = useCartStore((s) => s.cart);
-  const [paymentMethod, setPaymentMethod] = useState<"COD" | "Online">("COD");
   const [loading, setLoading] = useState(false);
 
 
@@ -42,20 +43,50 @@ export type CheckoutFormValues = {
     },
     })
   
-  const onFormSubmit = (data: CheckoutFormValues) => {
-    try {
-      setLoading(true);
-      
-    } catch (error) {
-      
+const onFormSubmit = async (data: CheckoutFormValues) => {
+  try {
+    setLoading(true);
+    const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const shippingFee = subtotal >= 3000 ? 0 : 120;
+    const totalAmount = subtotal + shippingFee;
+
+    const payload = {
+      ...data,
+      totalAmount,
+      items: cartItems.map((item) => ({
+        productId: item._id, 
+        quantity: item.quantity,
+        price: item.price,
+      })),
+    };
+
+    const response = await axios.post("/api/checkout/place-order", payload);
+
+    if (response.status === 200) {
+      const result = response.data;
+
+      // 3. Handle the Redirection
+      if (data.paymentMethod === "Online" && result.checkoutUrl) {
+        window.location.href = result.checkoutUrl;
+      } else {
+        window.location.href = `/checkout/success?orderId=${result.orderId}`;
+        toast.success("Order placed successfully!");
+      }
     }
+  } catch (error: any) {
+    console.error("Error during checkout:", error);
+    // 4. Alert the user! (They hate silent failures)
+    alert(error.response?.data?.message || "Something went wrong. Please try again.");
+  } finally {
+    setLoading(false);
   }
+};
  
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} >
     <div className=" max-w-6xl  mx-auto lg:pt-28">
       <div className="flex flex-col md:flex-row items-start justify-center gap-10">
-              <Left />
+              <Left register={register} errors={errors} />
               <Right
                 register={register}
                 cartItems={cartItems || []}

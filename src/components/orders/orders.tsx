@@ -9,8 +9,9 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const menuItems = [
   "All",
@@ -23,109 +24,28 @@ const menuItems = [
   "Cancelled",
 ];
 
-type OrderStatus =
-  | "Completed"
-  | "Pending"
-  | "Cancelled"
-  | "Refunded"
-  | "Returned";
-
-interface Order {
-  id: string;
-  customer: string;
-  email: string;
-  product: string;
-  amount: string;
-  date: string;
-  status: OrderStatus;
+interface OrderItem {
+  productId: string;
+  quantity: number;
+  price: number;
+  name: string;
+  image: string;
 }
 
-const ordersData = [
-  {
-    id: "ORD-7523",
-    customer: "Sarah Johnson",
-    email: "sarah@example.com",
-    avatar: "https://i.pravatar.cc/150?u=sarah",
-    date: "2024-01-15T14:30:00",
-    amount: 245.5,
-    status: "Delivered",
-    paymentMethod: "Online",
-    product: "Wireless Headphones",
-    items: 3,
-  },
-  {
-    id: "ORD-7524",
-    customer: "Michael Chen",
-    email: "michael@example.com",
-    avatar: "https://i.pravatar.cc/150?u=michael",
-    date: "2024-01-15T16:45:00",
-    amount: 189.0,
-    status: "Pending",
-    paymentMethod: "COD",
-    product: "Smartwatch",
-    items: 2,
-  },
-  {
-    id: "ORD-7525",
-    customer: "Emma Williams",
-    email: "emma@example.com",
-    avatar: "https://i.pravatar.cc/150?u=emma",
-    date: "2024-01-14T09:20:00",
-    amount: 567.8,
-    status: "Awaiting Payment",
-    paymentMethod: "Online",
-    product: "Gaming Console",
-    items: 5,
-  },
-  {
-    id: "ORD-7526",
-    customer: "James Brown",
-    email: "james@example.com",
-    avatar: "https://i.pravatar.cc/150?u=james",
-    date: "2024-01-14T11:15:00",
-    amount: 123.25,
-    status: "Shipped",
-    paymentMethod: "COD",
-    product: "Laptop",
-    items: 1,
-  },
-  {
-    id: "ORD-7527",
-    customer: "Lisa Davis",
-    email: "lisa@example.com",
-    avatar: "https://i.pravatar.cc/150?u=lisa",
-    date: "2024-01-13T15:50:00",
-    amount: 899.99,
-    status: "Cancelled",
-    paymentMethod: "Online",
-    product: "Smartphone",
-    items: 4,
-  },
-  {
-    id: "ORD-7528",
-    customer: "David Wilson",
-    email: "david@example.com",
-    avatar: "https://i.pravatar.cc/150?u=david",
-    date: "2024-01-13T10:20:00",
-    amount: 456.0,
-    status: "Processing",
-    paymentMethod: "Online",
-    product: "Tablet",
-    items: 3,
-  },
-  {
-    id: "ORD-7529",
-    customer: "Anna Taylor",
-    email: "anna@example.com",
-    avatar: "https://i.pravatar.cc/150?u=anna",
-    date: "2024-01-12T14:15:00",
-    amount: 234.5,
-    status: "Confirmed",
-    paymentMethod: "COD",
-    product: "Bluetooth Speaker",
-    items: 2,
-  },
-];
+interface Order {
+  _id: string; 
+  firstname: string;
+  lastname?: string;
+  email: string;
+  phone: string;
+  items: OrderItem[];
+  totalAmount: number;
+  status: "Awaiting Payment" | "Pending" | "Confirmed" | "Processing" | "Shipped" | "Delivered" | "Cancelled";
+  paymentMethod: "COD" | "Online";
+  createdAt: string; 
+}
+
+
 
 const statusStyles: Record<string, string> = {
   "Awaiting Payment": "bg-orange-50 text-orange-700 border-orange-400",
@@ -148,7 +68,19 @@ export const Orders = () => {
   const [dropdownPosition, setDropdownPosition] = useState<"above" | "below">(
     "below",
   );
+  const [ordersData, setOrdersData] = useState<Order[]>([]);
   const router = useRouter();
+  useEffect(() => {
+    const  orderData = async () => {
+      try {
+        const res = await axios.get('/api/admin/orders');
+        setOrdersData(res.data);
+      } catch (error) {
+        
+      }
+    }
+    orderData();
+  }, []);
   const filteredOrders = ordersData.filter((order) => {
     const matchesTab = activeTab === "All" || order.status === activeTab;
     const matchesSearch =
@@ -271,7 +203,7 @@ export const Orders = () => {
       </div>
 
       <div className="mt-6 border border-neutral-300 rounded-lg overflow-auto">
-        <div className="min-h-[500px]">
+        <div className="min-h-125">
           <table className="w-full text-left text-sm">
             <thead className="bg-neutral-100 border-b border-neutral-300">
               <tr>
@@ -317,26 +249,26 @@ export const Orders = () => {
               ) : (
                 paginatedOrders.map((order) => (
                   <tr
-                    key={order.id}
+                    key={order._id}
                     className={`hover:bg-neutral-200/20 transition-colors ${
-                      selectedRows.has(order.id) ? "bg-neutral-50" : ""
+                      selectedRows.has(order._id) ? "bg-neutral-50" : ""
                     }`}
                   >
                     <td className="px-4 py-3">
                       <input
                         type="checkbox"
-                        checked={selectedRows.has(order.id)}
-                        onChange={() => toggleRow(order.id)}
+                        checked={selectedRows.has(order._id)}
+                        onChange={() => toggleRow(order._id)}
                         className="accent-neutral-900 size-4 cursor-pointer"
                       />
                     </td>
                     <td className="px-4 py-3 font-medium font-kumbh text-neutral-900">
-                      {order.id}
+                      {order._id}
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex flex-col">
                         <span className="font-bold font-kumbh text-neutral-900">
-                          {order.customer}
+                          {order.firstname} {order.lastname}
                         </span>
                         <span className="text-xs text-neutral-700 font-kumbh">
                           {order.email}
@@ -347,8 +279,8 @@ export const Orders = () => {
                       <div className="flex justify-start items-center gap-1">
                         <div className="w-10 h-10 rounded-lg overflow-hidden relative">
                           <Image
-                            src={order.avatar}
-                            alt={order.product}
+                            src={orderItem.image}
+                            alt={order.}
                             fill
                           ></Image>
                         </div>

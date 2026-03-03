@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { FieldErrors, useForm, UseFormRegister } from "react-hook-form";
+import { CheckoutFormValues } from "../page";
 
 const BD_DIVISIONS = [
   "Barisal", "Chittagong", "Dhaka", "Khulna",
@@ -95,23 +97,12 @@ function Select({
   );
 }
 
+interface LeftProps {
+  register: UseFormRegister<CheckoutFormValues>;
+  errors: FieldErrors<CheckoutFormValues>;
+}
 // ── Main Component ────────────────────────────────────────────────────────────
-export const Left = () => {
-  const [form, setForm] = useState({
-    firstname: "", lastname: "",
-    country: "Bangladesh",
-    state: "", city: "", postcode: "",
-    addressLine1: "", addressLine2: "",
-    email: "", phone: "",
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const set = (key: string) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setForm((p) => ({ ...p, [key]: e.target.value }));
-    if (errors[key]) setErrors((p) => ({ ...p, [key]: "" }));
-  };
+export const Left = ({ register, errors }: LeftProps) => {
 
   return (
     <div className="w-1/2 bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden ">
@@ -140,32 +131,29 @@ export const Left = () => {
           <div className="space-y-4">
             {/* Name row */}
             <div className="grid grid-cols-2 gap-3">
-              <Field label="First Name" required error={errors.firstname}>
+              <Field label="First Name" required error={errors.firstname?.message}>
                 <Input
                   placeholder="Rahim"
-                  value={form.firstname}
-                  onChange={set("firstname")}
+                  {...register("firstname")}
                   hasError={!!errors.firstname}
                 />
               </Field>
               <Field label="Last Name">
                 <Input
                   placeholder="Uddin"
-                  value={form.lastname}
-                  onChange={set("lastname")}
+                  {...register("lastname")}
                 />
               </Field>
             </div>
 
             {/* Email + Phone row */}
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Email" required error={errors.email}>
+              <Field label="Email" required error={errors.email?.message}>
                 <div className="relative">
                   <Input
                     type="email"
                     placeholder="you@email.com"
-                    value={form.email}
-                    onChange={set("email")}
+                    {...register("email")}
                     hasError={!!errors.email}
                     className="pl-9"
                   />
@@ -176,13 +164,12 @@ export const Left = () => {
                   </svg>
                 </div>
               </Field>
-              <Field label="Phone" required error={errors.phone}>
+              <Field label="Phone" required error={errors.phone?.message}>
                 <div className="relative">
                   <Input
                     type="tel"
                     placeholder="+880 1XXX-XXXXXX"
-                    value={form.phone}
-                    onChange={set("phone")}
+                    {...register("phone")}
                     hasError={!!errors.phone}
                     className="pl-9"
                   />
@@ -219,10 +206,9 @@ export const Left = () => {
 
             {/* Division + City */}
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Division" required error={errors.state}>
+              <Field label="Division" required error={errors.state?.message}>
                 <Select
-                  value={form.state}
-                  onChange={set("state")}
+                  {...register("state")}
                   hasError={!!errors.state}
                 >
                   <option value="">Select Division</option>
@@ -231,11 +217,10 @@ export const Left = () => {
                   ))}
                 </Select>
               </Field>
-              <Field label="City / Upazila" required error={errors.city}>
+              <Field label="City / Upazila" required error={errors.city?.message}>
                 <Input
                   placeholder="e.g. Chittagong"
-                  value={form.city}
-                  onChange={set("city")}
+                  {...register("city")}
                   hasError={!!errors.city}
                 />
               </Field>
@@ -244,20 +229,18 @@ export const Left = () => {
             {/* Address Line 1 + Postcode */}
             <div className="grid grid-cols-3 gap-3">
               <div className="col-span-2">
-                <Field label="Address Line 1" required error={errors.addressLine1}>
+                <Field label="Address Line 1" required error={errors.addressLine1?.message}>
                   <Input
                     placeholder="House, Road, Area"
-                    value={form.addressLine1}
-                    onChange={set("addressLine1")}
+                    {...register("addressLine1")}
                     hasError={!!errors.addressLine1}
                   />
                 </Field>
               </div>
-              <Field label="Postcode" required error={errors.postcode}>
+              <Field label="Postcode" required error={errors.postcode?.message}>
                 <Input
                   placeholder="4000"
-                  value={form.postcode}
-                  onChange={set("postcode")}
+                  {...register("postcode")}
                   hasError={!!errors.postcode}
                 />
               </Field>
@@ -267,8 +250,7 @@ export const Left = () => {
             <Field label="Address Line 2">
               <Input
                 placeholder="Apartment, floor, building (optional)"
-                value={form.addressLine2}
-                onChange={set("addressLine2")}
+                {...register("addressLine2")}
               />
             </Field>
           </div>
@@ -280,7 +262,7 @@ export const Left = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
               d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p className="text-xs text-violet-600 leading-relaxed">
+          <p className="text-xs text-blue-600 leading-relaxed">
             Please ensure your address is accurate. Orders are dispatched within <strong>1–2 business days</strong> after confirmation.
           </p>
         </div>

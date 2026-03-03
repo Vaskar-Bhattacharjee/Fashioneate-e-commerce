@@ -57,13 +57,9 @@ export const checkoutSchema = z.object({
   phone: z
     .string()
     .min(1, "Phone number is required")
-    .regex(
-      /^(\+880|0)(1[3-9]\d{8})$/,
-      "Enter a valid Bangladeshi phone number"
-    )
     .trim(),
-
-  paymentMethod: z.enum(["COD", "Online"]).default("COD"),
+    
+  paymentMethod: z.enum(["COD", "Online"])
 });
 
 export type CheckoutFormValues = z.infer<typeof checkoutSchema>;

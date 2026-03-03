@@ -2,11 +2,21 @@ import { dbConnect } from "@/src/lib/dbConnect";
 import {checkout} from "@/src/model/checkout.model";
 import { NextResponse } from "next/server";
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request) {
     try {
     await dbConnect();
+    const orders = await checkout.find().sort({ createdAt: -1 });
+    return NextResponse.json({ orders }, { status: 200 });
+    } catch (error) {
+    console.log("Error fetching orders:", error);
+    return NextResponse.json({ message: "Error fetching orders" }, { status: 500 });
+    }
+}
+export async function PUT(request: Request) {
+    try {
+    await dbConnect();
+    const { id } = await request.json();
     const { status } = await request.json();
-    const { id } = params;
 
     if (!status) {
         return NextResponse.json({ message: "Status is required" }, { status: 400 });
