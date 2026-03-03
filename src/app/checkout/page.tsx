@@ -28,10 +28,11 @@ export type CheckoutFormValues = {
   const [paymentMethod, setPaymentMethod] = useState<"COD" | "Online">("COD");
   const [loading, setLoading] = useState(false);
 
+
   const {
     register,
+    watch,
     handleSubmit,
-    control,
     formState: { errors, isSubmitting },
   } = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),  
@@ -40,20 +41,31 @@ export type CheckoutFormValues = {
       paymentMethod: "COD",
     },
     })
+  
+  const onFormSubmit = (data: CheckoutFormValues) => {
+    try {
+      setLoading(true);
+      
+    } catch (error) {
+      
+    }
+  }
+ 
   return (
+    <form onSubmit={handleSubmit(onFormSubmit)} >
     <div className=" max-w-6xl  mx-auto lg:pt-28">
       <div className="flex flex-col md:flex-row items-start justify-center gap-10">
               <Left />
               <Right
-              cartItems={cartItems}
-              paymentMethod={paymentMethod}
-              onPaymentChange={setPaymentMethod}
-              onPlaceOrder={}
-              loading={loading}
+                register={register}
+                cartItems={cartItems || []}
+                watch={watch}
+                loading={isSubmitting}
             />
       </div>
       
     </div>
+    </form>
   );
 }
 

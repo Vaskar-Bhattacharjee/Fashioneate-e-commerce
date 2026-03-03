@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { UseFormRegister, UseFormWatch } from "react-hook-form";
+import { CheckoutFormValues } from "../page";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface CartItem {
-  productId: string;
+  _id: string;
   name: string;
   image: string;
   size?: string | null;
@@ -14,10 +16,9 @@ interface CartItem {
 }
 
 interface RightProps {
+  register: UseFormRegister<CheckoutFormValues>;
+  watch: UseFormWatch<CheckoutFormValues>;
   cartItems: CartItem[];
-  paymentMethod: "COD" | "Online";
-  onPaymentChange: (method: "COD" | "Online") => void;
-  onPlaceOrder: () => void;
   loading?: boolean;
 }
 
@@ -27,16 +28,13 @@ const FREE_SHIPPING_THRESHOLD = 3000;
 
 // ── Right Component ───────────────────────────────────────────────────────────
 export const Right = ({
-  cartItems,
-  paymentMethod,
-  onPaymentChange,
-  onPlaceOrder,
-  loading = false,
+register, watch, cartItems, loading
+ 
 }: RightProps) => {
   const [promoCode, setPromoCode] = useState("");
   const [promoApplied, setPromoApplied] = useState(false);
   const [promoError, setPromoError] = useState("");
-
+  const paymentMethod = watch("paymentMethod");
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -279,8 +277,7 @@ export const Right = ({
               type="radio"
               name="payment"
               value="COD"
-              checked={paymentMethod === "COD"}
-              onChange={() => onPaymentChange("COD")}
+              {...register("paymentMethod")}
               className="sr-only"
             />
             <div className={`
@@ -320,8 +317,7 @@ export const Right = ({
               type="radio"
               name="payment"
               value="Online"
-              checked={paymentMethod === "Online"}
-              onChange={() => onPaymentChange("Online")}
+              {...register("paymentMethod")}
               className="sr-only"
             />
             <div className={`
@@ -383,8 +379,7 @@ export const Right = ({
 
       {/* ══════════════════ PLACE ORDER BUTTON ══════════════════ */}
       <button
-        type="button"
-        onClick={onPlaceOrder}
+        type="submit"
         disabled={loading || cartItems.length === 0}
         className="
           w-full py-4 px-6 rounded-2xl font-bold text-sm tracking-wide font-kumbh
