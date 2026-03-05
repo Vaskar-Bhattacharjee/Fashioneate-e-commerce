@@ -9,7 +9,7 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import Image from "next/image";
-import { use, useEffect, useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
@@ -25,11 +25,15 @@ const menuItems = [
 ];
 
 interface OrderItem {
-  productId: string;
+  productId: {
+    _id: string;
+    name: string;
+    image: string;
+  } 
   quantity: number;
   price: number;
-  name: string;
-  image: string;
+
+ 
 }
 
 interface Order {
@@ -74,7 +78,8 @@ export const Orders = () => {
     const  orderData = async () => {
       try {
         const res = await axios.get('/api/admin/orders');
-        setOrdersData(res.data);
+        const actualData = Array.isArray(res.data) ? res.data : (res.data.orders || []);
+        setOrdersData(actualData);
       } catch (error) {
         
       }
@@ -84,10 +89,10 @@ export const Orders = () => {
   const filteredOrders = ordersData.filter((order) => {
     const matchesTab = activeTab === "All" || order.status === activeTab;
     const matchesSearch =
-      order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.firstname.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.product.toLowerCase().includes(searchQuery.toLowerCase());
+      order.phone.toLowerCase().includes(searchQuery.toLowerCase());
 
     return matchesTab && matchesSearch;
   });
@@ -100,7 +105,7 @@ export const Orders = () => {
 
   const allVisibleSelected =
     paginatedOrders.length > 0 &&
-    paginatedOrders.every((o) => selectedRows.has(o.id));
+    paginatedOrders.every((o) => selectedRows.has(o._id));
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -132,11 +137,11 @@ export const Orders = () => {
   const toggleSelectAll = () => {
     if (allVisibleSelected) {
       const next = new Set(selectedRows);
-      paginatedOrders.forEach((o) => next.delete(o.id));
+      paginatedOrders.forEach((o) => next.delete(o._id));
       setSelectedRows(next);
     } else {
       const next = new Set(selectedRows);
-      paginatedOrders.forEach((o) => next.add(o.id));
+      paginatedOrders.forEach((o) => next.add(o._id));
       setSelectedRows(next);
     }
   };
@@ -161,7 +166,6 @@ export const Orders = () => {
   const handleViewOrder = (id: string) => {
     
     router.push(`/admin/dashboard/order-details/${id}`);
-    alert(`View details for order ${id}`);
     setOpenDropdownId(null);
   };
 
@@ -277,21 +281,25 @@ export const Orders = () => {
                     </td>
                     <td className="px-4 py-3 font-kumbh font-semibold text-neutral-600">
                       <div className="flex justify-start items-center gap-1">
-                        <div className="w-10 h-10 rounded-lg overflow-hidden relative">
+                        {
+                          order.items[0].productId?.image && (
+                           <div className="w-10 h-10 rounded-lg overflow-hidden relative">
                           <Image
-                            src={orderItem.image}
-                            alt={order.}
+                            src={order.items[0].productId?.image }
+                            alt = "product"
                             fill
                           ></Image>
                         </div>
-                        <span className="text-sm">{order.product}</span>
+                          )
+                        }
+                        <span className="text-sm">{order.items[0].productId?.name}</span>
                       </div>
                     </td>
                     <td className="px-4 py-3 font-semibold font-kumbh text-neutral-900">
-                      {order.amount}
+                      {order.totalAmount}
                     </td>
                     <td className="px-4 py-3 font-kumbh text-sm font-semibold text-neutral-700">
-                      {order.date}
+                      {order.createdAt}
                     </td>
                     <td className="px-4 py-3">
                       <span
@@ -305,16 +313,16 @@ export const Orders = () => {
                     <td className="px-4 py-2 relative">
                       <button
                         ref={(el) => {
-                          buttonRefs.current[order.id] = el;
+                          buttonRefs.current[order._id] = el;
                         }}
                         onClick={(e) => {
                           
-                          if (openDropdownId === order.id) {
+                          if (openDropdownId === order._id) {
                             setOpenDropdownId(null);
                             return;
                           }
 
-                          if (openDropdownId !== order.id) {
+                          if (openDropdownId !== order._id) {
                             const button = e.currentTarget;
                             if (button) {
                               const rect = button.getBoundingClientRect();
@@ -324,7 +332,7 @@ export const Orders = () => {
                                 spaceBelow < 150 ? "above" : "below",
                               );
                             }
-                            setOpenDropdownId(order.id);
+                            setOpenDropdownId(order._id);
                           }
 
                           
@@ -332,14 +340,14 @@ export const Orders = () => {
                         className="p-1.5 rounded-md hover:bg-neutral-200 transition-colors cursor-pointer"
                       >
                         <div className={cn("size-4 text-neutral-600 w-8 h-8 flex items-center justify-center",
-                          openDropdownId === order.id && "text-neutral-900 bg-neutral-200 rounded-md")}
+                          openDropdownId === order._id && "text-neutral-900 bg-neutral-200 rounded-md")}
                          >
                         <IconDots className={cn("size-4 text-neutral-600",
-                          openDropdownId === order.id && "text-neutral-900 bg-neutral-200 rounded-md")}
+                          openDropdownId === order._id && "text-neutral-900 bg-neutral-200 rounded-md")}
                          />
                          </div>
                       </button>
-                      {openDropdownId === order.id && (
+                      {openDropdownId === order._id && (
                         <div
                           ref={dropdownRef}
                           className={`absolute right-3 w-38 bg-white border border-neutral-200 rounded-lg shadow-lg z-50 py-1 ${
@@ -350,15 +358,15 @@ export const Orders = () => {
                         >
                           <MenuItem
                             label="Order Details"
-                            onClick={() => handleViewOrder(order.id)}
+                            onClick={() => handleViewOrder(order._id)}
                           />
                           <MenuItem
                             label="Edit Order"
-                            onClick={() => handleEditOrder(order.id)}
+                            onClick={() => handleEditOrder(order._id)}
                           />
                           <MenuItem
                             label="Delete"
-                            onClick={() => handleDeleteOrder(order.id)}
+                            onClick={() => handleDeleteOrder(order._id)}
                           />
                         </div>
                       )}

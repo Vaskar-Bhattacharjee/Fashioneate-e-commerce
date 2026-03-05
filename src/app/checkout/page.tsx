@@ -5,24 +5,11 @@ import { Left } from "./Left/page";
 import { Right } from "./Right/page";
 import { useState } from "react"; 
 import { useForm } from "react-hook-form";
-import { checkoutSchema } from "@/src/lib/checkout.schema";
+import { CheckoutFormValues, checkoutSchema } from "@/src/lib/checkout.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { toast } from "sonner";
-
-export type CheckoutFormValues = {
-  firstname: string;
-  lastname?: string;
-  country?: string;
-  state: string;
-  city: string;
-  postcode: string;
-  addressLine1: string;
-  addressLine2?: string;
-  email: string;
-  phone: string;
-  paymentMethod?: "COD" | "Online";
-};
+import z from "zod";
 
 
  const CheckoutPage = () => {
@@ -36,12 +23,12 @@ export type CheckoutFormValues = {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<CheckoutFormValues>({
-    resolver: zodResolver(checkoutSchema),  
+    resolver: zodResolver(checkoutSchema),
     defaultValues: {
       country: "Bangladesh",
       paymentMethod: "COD",
     },
-    })
+  });
   
 const onFormSubmit = async (data: CheckoutFormValues) => {
   try {
@@ -55,6 +42,8 @@ const onFormSubmit = async (data: CheckoutFormValues) => {
       totalAmount,
       items: cartItems.map((item) => ({
         productId: item._id, 
+        name: item.name,
+        image: item.image,
         quantity: item.quantity,
         price: item.price,
       })),
@@ -75,7 +64,6 @@ const onFormSubmit = async (data: CheckoutFormValues) => {
     }
   } catch (error: any) {
     console.error("Error during checkout:", error);
-    // 4. Alert the user! (They hate silent failures)
     alert(error.response?.data?.message || "Something went wrong. Please try again.");
   } finally {
     setLoading(false);

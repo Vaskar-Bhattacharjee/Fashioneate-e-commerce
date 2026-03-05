@@ -15,8 +15,7 @@ export const checkoutSchema = z.object({
 
   country: z
     .string()
-    .min(1, "Country is required")
-    .default("Bangladesh"),
+    .min(1, "Country is required"),
 
   state: z
     .string()
@@ -58,6 +57,8 @@ export const checkoutSchema = z.object({
     .string()
     .min(1, "Phone number is required")
     .trim(),
+
+  
     
   paymentMethod: z.enum(["COD", "Online"])
 });

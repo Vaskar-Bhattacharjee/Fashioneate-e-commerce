@@ -1,11 +1,16 @@
 import { dbConnect } from "@/src/lib/dbConnect";
 import {checkout} from "@/src/model/checkout.model";
+import Product  from "@/src/model/product.model";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
     try {
     await dbConnect();
-    const orders = await checkout.find().sort({ createdAt: -1 });
+    void Product; 
+    const orders = await checkout
+                    .find()
+                    .populate("items.productId", "name image")
+                    .sort({ createdAt: -1 });
     return NextResponse.json({ orders }, { status: 200 });
     } catch (error) {
     console.log("Error fetching orders:", error);
