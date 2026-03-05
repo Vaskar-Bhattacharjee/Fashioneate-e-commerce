@@ -9,9 +9,11 @@ import { IconArrowLeft, IconPackage } from "@tabler/icons-react";
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface OrderItem {
   _id: string;
-  productId: string;
-  name: string;
-  image: string;
+  productId: {
+    name: string;
+    image: string;
+  }
+  
   quantity: number;
   price: number;
 }
@@ -49,8 +51,8 @@ const statusStyles: Record<string, string> = {
 // ── Section Card ──────────────────────────────────────────────────────────────
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white border border-neutral-200 rounded-xl overflow-hidden">
-      <div className="px-5 py-4 border-b border-neutral-100">
+    <div className="bg-white border border-neutral-300 rounded-xl overflow-hidden">
+      <div className="px-5 py-4 border-b border-neutral-200">
         <h2 className="text-sm font-bold text-neutral-800 font-kumbh uppercase tracking-wider">{title}</h2>
       </div>
       <div className="px-5 py-4">{children}</div>
@@ -62,7 +64,7 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 function InfoRow({ label, value }: { label: string; value?: string }) {
   return (
     <div className="flex justify-between items-start py-1.5 border-b border-neutral-50 last:border-0">
-      <span className="text-xs text-neutral-400 font-kumbh font-semibold uppercase tracking-wide w-32 shrink-0">{label}</span>
+      <span className="text-xs text-neutral-600 font-kumbh font-semibold uppercase tracking-wide w-32 shrink-0">{label}</span>
       <span className="text-sm text-neutral-800 font-kumbh font-semibold text-right">{value || "—"}</span>
     </div>
   );
@@ -131,12 +133,12 @@ function InfoRow({ label, value }: { label: string; value?: string }) {
   return (
     <div className="px-6 pt-30 max-w-5xl mx-auto flex flex-col gap-6">
 
-      {/* ── Header ── */}
+   
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button
             onClick={() => router.back()}
-            className="p-2 rounded-lg border border-neutral-200 hover:bg-neutral-100 transition-colors cursor-pointer"
+            className="p-2 rounded-lg border border-neutral-300 hover:bg-neutral-100 transition-colors cursor-pointer"
           >
             <IconArrowLeft className="size-4 text-neutral-700" />
           </button>
@@ -171,14 +173,14 @@ function InfoRow({ label, value }: { label: string; value?: string }) {
         {/* LEFT — Items */}
         <div className="flex flex-col gap-6">
           <Card title={`Items Ordered — ${order.items.length} item${order.items.length !== 1 ? "s" : ""}`}>
-            <div className="divide-y divide-neutral-100">
+            <div className="divide-y divide-neutral-200">
               {order.items.map((item, idx) => (
                 <div key={item._id || idx} className="flex items-center gap-4 py-4 first:pt-0 last:pb-0">
                   {/* Image */}
                   <div className="w-16 h-16 rounded-xl overflow-hidden relative shrink-0 border border-neutral-100">
                     <Image
-                      src={item.image}
-                      alt={item.name}
+                      src={item.productId?.image || ""}
+                      alt={item.productId?.name || ""}
                       fill
                       className="object-cover"
                     />
@@ -186,23 +188,23 @@ function InfoRow({ label, value }: { label: string; value?: string }) {
 
                   {/* Details */}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-neutral-800 font-kumbh truncate">{item.name}</p>
+                    <p className="text-sm font-bold text-neutral-800 font-kumbh truncate">{item.productId?.name}</p>
                     <p className="text-xs text-neutral-400 font-kumbh mt-0.5">
-                      Unit price: <span className="text-neutral-600 font-semibold">৳{item.price.toLocaleString()}</span>
+                      Unit price: <span className="text-neutral-600 font-semibold">${item.price.toLocaleString()}</span>
                     </p>
                   </div>
 
                   {/* Quantity */}
                   <div className="shrink-0 text-center">
-                    <span className="text-[10px] text-neutral-400 font-kumbh uppercase tracking-wider block">Qty</span>
+                    <span className="text-[10px] text-neutral-600 font-semibold font-kumbh uppercase tracking-wider block">Qty</span>
                     <span className="text-sm font-bold text-neutral-800 font-kumbh">×{item.quantity}</span>
                   </div>
 
                   {/* Line total */}
                   <div className="shrink-0 text-right min-w-20">
-                    <span className="text-[10px] text-neutral-400 font-kumbh uppercase tracking-wider block">Total</span>
+                    <span className="text-[10px] text-neutral-600 font-semibold font-kumbh uppercase tracking-wider block">Total</span>
                     <span className="text-sm font-bold text-neutral-900 font-kumbh">
-                      ৳{(item.price * item.quantity).toLocaleString()}
+                      ${(item.price * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -211,20 +213,20 @@ function InfoRow({ label, value }: { label: string; value?: string }) {
 
             {/* Price summary */}
             <div className="mt-4 pt-4 border-t border-neutral-100 space-y-2">
-              <div className="flex justify-between text-sm text-neutral-500 font-kumbh">
+              <div className="flex justify-between text-sm text-neutral-600 font-semibold font-kumbh">
                 <span>Subtotal</span>
-                <span className="font-semibold text-neutral-700">৳{subtotal.toLocaleString()}</span>
+                <span className="font-semibold text-neutral-700">${subtotal.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between text-sm text-neutral-500 font-kumbh">
+              <div className="flex justify-between text-sm text-neutral-600 font-semibold font-kumbh">
                 <span>Shipping</span>
                 <span className={`font-semibold ${shippingFee === 0 ? "text-green-600" : "text-neutral-700"}`}>
-                  {shippingFee === 0 ? "Free" : `৳${shippingFee}`}
+                  {shippingFee === 0 ? "Free" : `$${shippingFee}`}
                 </span>
               </div>
               <div className="flex justify-between items-center pt-2 border-t border-neutral-200">
-                <span className="text-base font-bold text-neutral-800 font-kumbh">Total</span>
+                <span className="text-base font-bold font-kumbh">Total</span>
                 <span className="text-xl font-bold text-neutral-900 font-kumbh">
-                  ৳{order.totalAmount.toLocaleString()}
+                  ${order.totalAmount.toLocaleString()}
                 </span>
               </div>
             </div>

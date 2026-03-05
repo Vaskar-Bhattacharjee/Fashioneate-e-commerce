@@ -12,6 +12,7 @@ import Image from "next/image";
 import {  useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { set } from "mongoose";
 
 const menuItems = [
   "All",
@@ -73,6 +74,8 @@ export const Orders = () => {
     "below",
   );
   const [ordersData, setOrdersData] = useState<Order[]>([]);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [orderToDelete, setOrderToDelete] = useState<string | null>(null);
   const router = useRouter();
   useEffect(() => {
     const  orderData = async () => {
@@ -181,7 +184,14 @@ export const Orders = () => {
   };
 
   return (
-    <div className="p-4 flex flex-col">
+    <div className="p-4 flex flex-col relative">
+      {
+        popupOpen && <PopUp 
+        setPopupOpen={setPopupOpen}
+        onConfirm = {handleDeleteOrder}
+        />
+      }
+
       <h1 className="text-2xl font-bold mb-4 font-kumbh">Orders</h1>
       <div className="flex space-x-1 mb-4 bg-neutral-200 w-fit rounded-lg p-px ">
         {menuItems.map((item) => (
@@ -366,7 +376,11 @@ export const Orders = () => {
                           />
                           <MenuItem
                             label="Delete"
-                            onClick={() => handleDeleteOrder(order._id)}
+                            onClick={() => {
+                              setOrderToDelete(order._id);
+                              setPopupOpen(true)
+                              setOpenDropdownId(null);
+                            }}
                           />
                         </div>
                       )}
@@ -467,5 +481,26 @@ const MenuItem = ({ label, onClick }: MenuItemProps) => (
 function push(path: string) {
   const router = useRouter();
   router.push(path);
+}
+
+const PopUp = ({setPopupOpen, onConfirm}:{setPopupOpen: React.Dispatch<React.SetStateAction<boolean>>, onConfirm: () => void}) => {
+  return (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-2 justify-center items-start bg-neutral-100 border border-neutral-200
+         rounded-lg p-4 w-95 h-50 shadow-2xl z-30">
+            <h2 className="font-kumbh font-bold text-2xl text-neutral-700
+            ">Delete Item?</h2>
+            <p className="font-kumbh font-medium text-neutral-500 text-sm ">This action cannot be undone. This will permanently delete the item from dashboard</p>
+            <div className="flex justify-end items-center gap-2 w-full">
+            <button
+            onClick={()=> setPopupOpen(false) }
+            className="border border-neutral-300 rounded-sm px-3 py-1 bg-neutral-100 text-neutral-700 font-kumbh font-semibold text-sm cursor-pointer">Cancel</button>
+            <button
+            onClick={()=> {
+              onConfirm();
+              setPopupOpen(false) }}
+            className="border border-neutral-800 rounded-sm px-3 py-1 bg-neutral-900 text-neutral-200 font-kumbh font-semibold text-sm cursor-pointer">Delete</button>
+            </div>
+        </div>
+  )
 }
 
