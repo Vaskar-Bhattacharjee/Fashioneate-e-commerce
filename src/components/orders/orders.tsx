@@ -13,6 +13,7 @@ import {  useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { set } from "mongoose";
+import { toast } from "sonner";
 
 const menuItems = [
   "All",
@@ -176,19 +177,28 @@ export const Orders = () => {
     alert(`Edit order ${id}`);
     setOpenDropdownId(null);
   };
-  const handleDeleteOrder = (id: string) => {
-    if (confirm(`Are you sure you want to delete order ${id}?`)) {
-      alert(`Order ${id} deleted`);
-    }
-    setOpenDropdownId(null);
-  };
+  const handleDeleteOrder = async(id: string) => {
+
+        try {
+          await axios.delete(`/api/admin/orders/order-delete/${id}`);
+          setPopupOpen(false);
+          setOpenDropdownId(null);
+          setOrdersData((prev) => prev.filter((o) => o._id !== id));
+          toast.success("Order deleted successfully");
+        } catch (error) {
+          console.error(error);
+        }
+      }
+  
 
   return (
     <div className="p-4 flex flex-col relative">
       {
         popupOpen && <PopUp 
         setPopupOpen={setPopupOpen}
-        onConfirm = {handleDeleteOrder}
+        onConfirm={() => {
+          if (orderToDelete) handleDeleteOrder(orderToDelete);
+        }}        
         />
       }
 
@@ -255,7 +265,7 @@ export const Orders = () => {
                 <tr>
                   <td
                     colSpan={8}
-                    className="px-4 py-12 text-center text-neutral-500 font-kumbh"
+                    className="px-4 py-12 text-center text-neutral-500 font-kumbh font-bold leading-relaxed text-2xl"
                   >
                     No orders found.
                   </td>
