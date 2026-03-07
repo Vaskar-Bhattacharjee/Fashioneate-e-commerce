@@ -16,6 +16,8 @@ import Link from "next/link";
 import { useCartStore } from "@/src/store/useCartStore";
 import { CartDrawer } from "./cart-drawer";
 import api from "@/src/lib/api"; 
+import { usePathname } from "next/navigation";
+import { useAuthStore } from "@/src/store/useAuthStore";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -27,21 +29,26 @@ const navLinks = [
 export const Navbar = () => {
 
 
-   const [userRole, setUserRole] = useState<string | null>(null);
+   const { userRole, setUserRole } = useAuthStore();
+   const pathname = usePathname();
 
   useEffect(() => {
-    const mounted = true;
+    let mounted = true;
 
     const fetchUserRole = async () => {
       try {
         const res = await api.get("/api/auth", { withCredentials: true });
         if (mounted) setUserRole(res.data?.role ?? res.data?.user?.role ?? null);
       } catch (err: unknown) {
+        if (mounted) setUserRole(null); 
         console.log("error while getting user role", err);
       }
     };
     fetchUserRole();
-  }, []);
+     return () => {
+     mounted = false;
+    };
+  }, [pathname, setUserRole]);
   return (
     <Container>
       <DesktopNavbar userRole={userRole} />
@@ -53,7 +60,7 @@ export const Navbar = () => {
 
 export const Logo = ({ className }: { className?: string }) => {
   return (
-    <h1 className={cn("font-cormorantGaramond font-extrabold text-2xl text-neutral-800 md:text-4xl md:mb-2 tracking-tight ", className)}>
+    <h1 className={cn("font-cormorantGaramond font-extrabold text-2xl text-neutral-800 md:text-4xl md:mb-2 tracking-tight ml-5", className)}>
       Fashioneate
     </h1>
   );
@@ -66,7 +73,7 @@ export const DesktopNavbar = ({userRole}: {userRole?: string | null}) => {
   const canAccessDashboard = userRole === "admin" || userRole === "moderator";
 
   return (
-    <nav className={cn("fixed transition-all duration-200 ease-out top-0 inset-x-0 my-0 bg-transparent z-50 hidden lg:flex h-20 items-center justify-center gap-28 px-2 border border-b border-neutral-300 bg-neutral-50")}>
+    <nav className={cn("fixed transition-all duration-200 ease-out top-0 inset-x-0 my-0  z-50 hidden lg:flex h-20 items-center justify-center gap-28 border-b border-neutral-300 bg-neutral-50")}>
       <Logo />
 
       <div>
@@ -86,7 +93,7 @@ export const DesktopNavbar = ({userRole}: {userRole?: string | null}) => {
         <Input />
       </div>
 
-      <div className="flex gap-4 items-center justify-between">
+      <div className="flex gap-4 items-center justify-between ">
         {canAccessDashboard && (
           <Link 
             href="/admin/dashboard" 

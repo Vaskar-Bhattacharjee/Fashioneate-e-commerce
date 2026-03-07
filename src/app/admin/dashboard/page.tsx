@@ -15,12 +15,17 @@ import AnalyticsPage from "@/src/components/analytics/analytics";
 import { Orders } from "@/src/components/orders/orders";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/src/store/useAuthStore";
+import { set } from "mongoose";
 
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Overview");
   const [activeNotice, setActiveNotice] = useState<boolean>(false);
   const [activeAdminBoard, setActiveAdminBoard] = useState<boolean>(false);
+  const [popupOpen, setPopupOpen] = useState<boolean>(false);
+  const {userRole } = useAuthStore();
+  const { setUserRole } = useAuthStore();
   const menuItems = [
     { label: "Overview", icon: <IconHome size={19} /> },
     { label: "Analytics", icon: <IconChartBar size={19} /> },
@@ -33,16 +38,31 @@ const Dashboard = () => {
     try {
       const res = await axios.post("/api/moderator/mod-logout");
       if (res.status === 200) {
-        router.push("/")
+        setUserRole(null);
+        router.replace("/");
+        
       }
 
     } catch (error) {
       console.log("error while logging out", error);
     }
   }
-
+  if (userRole !== "admin" && userRole !== "moderator") {
+    return (
+      <div className="flex items-center justify-center min-h-screen flex-col gap-3">
+        <p className="text-red-500 font-bold font-kumbh text-xl">Not Authorized</p>
+        <button
+          onClick={() => router.replace("/")}
+          className="text-sm text-neutral-500 underline cursor-pointer font-kumbh"
+        >
+          Go to Homepage
+        </button>
+      </div>
+    );
+  }
   return (
-    <div className="flex w-full min-h-screen bg-transparent pt-20">
+    <div className="relative flex w-full min-h-screen bg-transparent pt-20">
+      {popupOpen && <PopUp setPopupOpen={setPopupOpen} onConfirm={async() => await LogoutHandle() } />}
       <aside
         className={cn(
           "bg-transparent border-r border-neutral-300 transition-all duration-300 ease-in-out overflow-hidden flex flex-col",
@@ -100,10 +120,7 @@ const Dashboard = () => {
               >
                 <User className="size-6 text-neutral-700" />
               </button>
-              {activeAdminBoard && <AdminCard onConfirm={() => {
-                LogoutHandle()
-                setActiveAdminBoard(false)
-              }} />}
+              {activeAdminBoard && <AdminCard setPopupOpen={setPopupOpen} />}
             </div>
           </div>
         </header>
@@ -229,7 +246,7 @@ const User = ({ className }: { className?: string }) => {
   );
 };
 
-const AdminCard = ({ onConfirm }: { onConfirm: () => void}) => {
+const AdminCard = ({setPopupOpen}:{setPopupOpen: React.Dispatch<React.SetStateAction<boolean>>}) => {
   return (
     <div
       className="absolute top-9 -right-2.5 w-60 h-30 border border-neutral-300 bg-white rounded-md shadow-lg
@@ -249,7 +266,7 @@ const AdminCard = ({ onConfirm }: { onConfirm: () => void}) => {
         </div>
       </div>
       <button
-      onClick={()=>onConfirm()}
+      onClick={()=>setPopupOpen(true)}
       className="flex items-center justify-start w-full gap-2 mt-2 cursor-pointer ">
         <Logout className="size-5 text-neutral-700" />
         <span className="text-sm text-neutral-700 font-semibold font-inter">
@@ -261,3 +278,24 @@ const AdminCard = ({ onConfirm }: { onConfirm: () => void}) => {
 };
 
 export default Dashboard;
+
+const PopUp = ({setPopupOpen, onConfirm}:{setPopupOpen: React.Dispatch<React.SetStateAction<boolean>>, onConfirm: () => void}) => {
+  return (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-2 justify-center items-start bg-neutral-100 border border-neutral-200
+         rounded-lg p-4 w-95 h-50 shadow-2xl z-30">
+            <h2 className="font-kumbh font-bold text-2xl text-neutral-700
+            ">Log out</h2>
+            <p className="font-kumbh font-medium text-neutral-500 text-sm ">Are you sure you want to log out</p>
+            <div className="flex justify-end items-center gap-2 w-full">
+            <button
+            onClick={()=> setPopupOpen(false) }
+            className="border border-neutral-300 rounded-sm px-3 py-1 bg-neutral-100 text-neutral-700 font-kumbh font-semibold text-sm cursor-pointer">Cancel</button>
+            <button
+            onClick={()=> {
+              onConfirm();
+              setPopupOpen(false) }}
+            className="border border-neutral-800 rounded-sm px-3 py-1 bg-neutral-900 text-neutral-200 font-kumbh font-semibold text-sm cursor-pointer">Delete</button>
+            </div>
+        </div>
+  )
+}

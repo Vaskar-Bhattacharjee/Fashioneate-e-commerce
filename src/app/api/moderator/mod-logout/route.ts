@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
         }
         const response = NextResponse.json({ message: "Logout successful" }, { status: 200 });
         response.cookies.delete("refreshToken");
+        response.cookies.delete("accessToken");
         return response;
     } catch (error) {
         console.error("LOGOUT ERROR:", error);
