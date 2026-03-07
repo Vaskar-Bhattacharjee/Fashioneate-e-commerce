@@ -50,7 +50,7 @@ interface AnalyticsData {
     color: string;
   }[];
   recentOrders: {
-    id: string;
+    _id: string;
     customer: string;
     amount: number;
     status: string;
@@ -108,7 +108,7 @@ export default function AnalyticsPage() {
           <h1 className="text-2xl font-bold text-neutral-800 font-kumbh">
             Analytics Dashboard
           </h1>
-          <p className="text-neutral-500 text-sm font-kumbh">
+          <p className="text-neutral-600 text-sm leading-tight font-kumbh">
             Track your business performance and growth
           </p>
         </div>
@@ -356,7 +356,7 @@ export default function AnalyticsPage() {
           <div className="space-y-3">
             {data.recentOrders.map((order) => (
               <div
-                key={order.id}
+                key={order._id}
                 className="flex items-center justify-between p-3 border border-neutral-100 rounded-lg"
               >
                 <div>
