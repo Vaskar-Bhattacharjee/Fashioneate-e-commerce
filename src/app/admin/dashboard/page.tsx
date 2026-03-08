@@ -9,7 +9,7 @@ import {
   IconUsers,
   IconShield,
 } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ProductsView } from "@/src/components/ui/product-view";
 import AnalyticsPage from "@/src/components/analytics/analytics";
 import { Orders } from "@/src/components/orders/orders";
@@ -17,6 +17,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/src/store/useAuthStore";
 import { set } from "mongoose";
+import { Notifications } from "@/src/components/ui/notifications";
 
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(true);
@@ -26,6 +27,19 @@ const Dashboard = () => {
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
   const {userRole } = useAuthStore();
   const { setUserRole } = useAuthStore();
+  const adminCardRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (adminCardRef.current && !adminCardRef.current.contains(e.target as Node)) {
+      setActiveAdminBoard(false);
+    }
+  };
+  if (activeAdminBoard) {
+    document.addEventListener("mousedown", handleClickOutside);
+  }
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, [activeAdminBoard]);
   const menuItems = [
     { label: "Overview", icon: <IconHome size={19} /> },
     { label: "Analytics", icon: <IconChartBar size={19} /> },
@@ -50,10 +64,10 @@ const Dashboard = () => {
   if (userRole !== "admin" && userRole !== "moderator") {
     return (
       <div className="flex items-center justify-center min-h-screen flex-col gap-3">
-        <p className="text-red-500 font-bold font-kumbh text-xl">Not Authorized</p>
+        <p className="text-red-500 font-bold font-inter text-7xl">Not Authorized</p>
         <button
           onClick={() => router.replace("/")}
-          className="text-sm text-neutral-500 underline cursor-pointer font-kumbh"
+          className="text-xl text-neutral-500 underline cursor-pointer font-kumbh"
         >
           Go to Homepage
         </button>
@@ -103,17 +117,11 @@ const Dashboard = () => {
               )}
             />
           </button>
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex items-center justify-center gap-3 mr-4">
             <div className="relative">
-              <button
-                onClick={() => setActiveNotice(!activeNotice)}
-                className="relative p-1 hover:bg-neutral-100 rounded-md transition-colors cursor-pointer"
-              >
-                <IconBell className="size-4 text-neutral-600" />
-                <div className="absolute size-1.5 rounded-full bg-red-500 top-1 right-1.5"></div>
-              </button>
+              <Notifications />
             </div>
-            <div className="relative">
+            <div className="relative" ref={adminCardRef}>
               <button
                 onClick={() => setActiveAdminBoard(!activeAdminBoard)}
                 className="flex items-center justify-center gap-1"
@@ -235,7 +243,7 @@ const User = ({ className }: { className?: string }) => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}

@@ -200,7 +200,9 @@ export default function Product() {
               
               <button
               onClick={()=>{
+                handleAddToCart();
                 router.push("/checkout")
+                
               }}
               className="h-11 w-44 font-inter text-neutral-800 border border-neutral-300 rounded-lg hover:bg-neutral-100 transition cursor-pointer">
                 Buy Now

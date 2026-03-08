@@ -1,8 +1,8 @@
 "use client";
 
+import { CheckoutFormValues } from "@/src/lib/checkout.schema";
 import { useState } from "react";
 import { UseFormRegister, UseFormWatch } from "react-hook-form";
-import { CheckoutFormValues } from "../page";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface CartItem {
@@ -108,7 +108,7 @@ register, watch, cartItems, loading
             </div>
           ) : (
             cartItems.map((item) => (
-              <div key={`${item.productId}-${item.size}`} className="flex gap-3.5 px-6 py-4 hover:bg-neutral-50/60 transition-colors">
+              <div key={`${item._id}-${item.size}`} className="flex gap-3.5 px-6 py-4 hover:bg-neutral-50/60 transition-colors">
                 {/* Image */}
                 <div className="relative shrink-0">
                   <img
@@ -275,7 +275,6 @@ register, watch, cartItems, loading
           <label className="cursor-pointer block">
             <input
               type="radio"
-              name="payment"
               value="COD"
               {...register("paymentMethod")}
               className="sr-only"
@@ -315,7 +314,6 @@ register, watch, cartItems, loading
           <label className="cursor-pointer block">
             <input
               type="radio"
-              name="payment"
               value="Online"
               {...register("paymentMethod")}
               className="sr-only"
