@@ -60,7 +60,7 @@ export const Navbar = () => {
 
 export const Logo = ({ className }: { className?: string }) => {
   return (
-    <h1 className={cn("font-cormorantGaramond font-extrabold text-2xl text-neutral-800 md:text-4xl md:mb-2 tracking-tight ml-5", className)}>
+    <h1 className={cn("font-cormorantGaramond font-extrabold text-3xl text-neutral-800 md:text-4xl md:mb-2 tracking-tight ml-5", className)}>
       Fashioneate
     </h1>
   );
@@ -126,7 +126,7 @@ export const MobileNavbar = ({userRole}: {userRole?: string | null}) => {
   const canAccessDashboard = userRole === "admin" || userRole === "moderator";
  
   return (
-    <nav className="w-full lg:hidden h-20 flex items-center justify-between px-4 fixed top-0 bg-[#f1eded] z-50 border-b border-neutral-200">
+    <nav className="w-screen lg:hidden h-20 flex items-center justify-between px-4 fixed top-0 bg-[#f1eded] z-50 border-b border-neutral-200">
       <Logo />
       <div className="hidden md:block">
         <Input />
