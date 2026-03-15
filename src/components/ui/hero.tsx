@@ -9,7 +9,7 @@ import { cn } from "@/src/lib/utils";
 
 export const Hero = () => {
   return (
-    <section className="relative w-screen min-h-[90vh] lg:h-[90vh] pt-32 lg:pt-0">
+    <section className="relative w-screen min-h-[90vh] lg:h-[90vh] pt-32 lg:pt-0 overflow-hidden border-b border-neutral-200 ">
       <Container>
         <div className="w-full min-h-[98vh] lg:h-[98vh] flex flex-col lg:flex-row items-center justify-center gap-10 lg:justify-between px-6 md:px-12 lg:pl-16 lg:pr-28">
           <Gridline />
@@ -108,7 +108,7 @@ export const Hero = () => {
             <div
               className={cn(
                 "w-72 h-72 md:w-96 md:h-96 lg:w-120 lg:h-120 rounded-md overflow-hidden relative border-2 border-dashed border-neutral-200",
-                "bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed",
+                "bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed",
               )}
             ></div>
             <div

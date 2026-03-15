@@ -1,8 +1,6 @@
 "use client";
-
-import { useState } from "react";
+import { CheckoutFormValues } from "@/src/lib/checkout.schema";
 import { FieldErrors, useForm, UseFormRegister } from "react-hook-form";
-import { CheckoutFormValues } from "../page";
 
 const BD_DIVISIONS = [
   "Barisal", "Chittagong", "Dhaka", "Khulna",
@@ -102,7 +100,7 @@ interface LeftProps {
   errors: FieldErrors<CheckoutFormValues>;
 }
 // ── Main Component ────────────────────────────────────────────────────────────
-export const Left = ({ register, errors }: LeftProps) => {
+export  const Left = ({ register, errors }: LeftProps) => {
 
   return (
     <div className="w-1/2 bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden ">

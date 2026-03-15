@@ -1,8 +1,8 @@
 "use client";
 
 import { useCartStore } from "@/src/store/useCartStore";
-import { Left } from "./Left/page";
-import { Right } from "./Right/page";
+import { Left } from "./Left/left";
+import { Right } from "./Right/right";
 import { useState } from "react"; 
 import { useForm } from "react-hook-form";
 import { CheckoutFormValues, checkoutSchema } from "@/src/lib/checkout.schema";

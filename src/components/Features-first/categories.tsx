@@ -229,11 +229,11 @@ export const Categories = () => {
                 <AnimatePresence>
                   {hoverIndex === index && (
                     <motion.div
-                      layoutId="hoverBackground"
+                      
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="absolute inset-0 w-full h-full border-[0.2px] border-neutral-300 rounded-[15.2px] bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed"
+                      className="absolute inset-0 w-full h-full border-[0.2px] border-neutral-300 rounded-[9px] bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed"
                     />
                   )}
                 </AnimatePresence>
