@@ -51,7 +51,7 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <Heading className="text-neutral-700 tracking-tight">
-                Welcome to Fashioneate
+                Timeless pieces for the life you're building
               </Heading>
             </motion.div>
 
@@ -61,11 +61,8 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <SubHeading>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Molestiae impedit fugiat laborum sequi consectetur
-                exercitationem unde aspernatur autem dicta alias voluptate aut
-                quasi illum possimus fugit praesentium, eligendi molestias,
-                architecto quae veniam
+                Premium fashion for those who believe that how you dress is how you meet the world. Timeless pieces, honest prices.
+                
               </SubHeading>
             </motion.div>
 
