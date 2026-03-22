@@ -68,13 +68,12 @@ export const NewArrivals = () => {
     );
   }
 
-  return (
+return (
     <section className="h-auto">
       <Container>
-        {/* ── CHANGED: pt-32 too large on mobile → pt-16 mobile, pt-24 tablet, pt-32 desktop ── */}
         <div className="w-full min-h-96 pt-16 md:pt-24 lg:pt-32 flex flex-col items-center justify-center">
 
-          {/* ── Header section — UNCHANGED structure, small padding tweak ── */}
+          {/* Header — UNCHANGED */}
           <div className="flex flex-col items-center justify-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -90,7 +89,6 @@ export const NewArrivals = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              // ── CHANGED: mt-4 → mt-2 md:mt-4, added px-4 for mobile breathing room ──
               className="mt-2 md:mt-4 max-w-2xl px-4 md:px-0"
             >
               <SubHeading className="text-center text-neutral-500">
@@ -101,69 +99,68 @@ export const NewArrivals = () => {
             </motion.div>
           </div>
 
-          {/* ── CHANGED: w-5xl h-150 fixed → w-full px-4 on mobile, auto height on mobile/tablet ── */}
-<motion.div
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.4 }}
-  className="mt-8 md:mt-12 w-full px-4 md:px-0 md:w-4xl lg:w-5xl
-    flex flex-col lg:flex-row gap-4 lg:gap-6"
->
-  {/* Left large card */}
-  <motion.div
-    initial={{ opacity: 0, x: -20 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    transition={{ delay: 0.6 }}
-    className="w-full lg:flex-1"
-  >
-    <NewArrivalsItemCard
-      imgSrc={displayedProducts[0].image}
-      productName={displayedProducts[0].name}
-      price={displayedProducts[0].newprice}
-      id={displayedProducts[0]._id}
-      className="h-80 md:h-96 lg:h-150" // ← height goes HERE directly into card
-    />
-  </motion.div>
+          {/* ── 3 cards in a single row — no wrapping ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="mt-8 md:mt-12 w-full px-4 md:px-0 md:w-4xl lg:w-5xl
+              flex flex-row gap-4 lg:gap-6"  // ← flex-row always, no wrapping
+          >
+            {/* Card 1 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="flex-1 min-w-0"  // ← flex-1 + min-w-0 prevents overflow
+            >
+              <NewArrivalsItemCard
+                imgSrc={displayedProducts[0].image}
+                productName={displayedProducts[0].name}
+                price={displayedProducts[0].newprice}
+                id={displayedProducts[0]._id}
+                className="h-64 md:h-80 lg:h-96"
+              />
+            </motion.div>
 
-  {/* Right column */}
-  <div className="w-full lg:flex-1 flex flex-col gap-4">
+            {/* Card 2 */}
+            {displayedProducts[1] && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="flex-1 min-w-0"
+              >
+                <NewArrivalsItemCard
+                  imgSrc={displayedProducts[1].image}
+                  productName={displayedProducts[1].name}
+                  price={displayedProducts[1].newprice}
+                  id={displayedProducts[1]._id}
+                  className="h-64 md:h-80 lg:h-96"
+                />
+              </motion.div>
+            )}
 
-    {displayedProducts[1] && (
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.6 }}
-      >
-        <NewArrivalsItemCard
-          imgSrc={displayedProducts[1].image}
-          productName={displayedProducts[1].name}
-          price={displayedProducts[1].newprice}
-          id={displayedProducts[1]._id}
-          className="h-64 md:h-72 lg:h-[calc(75rem/2-0.875rem)]" // ← half of 150 minus half gap
-        />
-      </motion.div>
-    )}
+            {/* Card 3 */}
+            {displayedProducts[2] && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="flex-1 min-w-0"
+              >
+                <NewArrivalsItemCard
+                  imgSrc={displayedProducts[2].image}
+                  productName={displayedProducts[2].name}
+                  price={displayedProducts[2].newprice}
+                  id={displayedProducts[2]._id}
+                  className="h-64 md:h-80 lg:h-96"
+                />
+              </motion.div>
+            )}
+          </motion.div>
 
-    {displayedProducts[2] && (
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.8 }}
-      >
-        <NewArrivalsItemCard
-          imgSrc={displayedProducts[2].image}
-          productName={displayedProducts[2].name}
-          price={displayedProducts[2].newprice}
-          id={displayedProducts[2]._id}
-          className="h-64 md:h-72 lg:h-[calc(75rem/2-0.875rem)]" // ← same
-        />
-      </motion.div>
-    )}
-
-  </div>
-</motion.div>
-
-          {/* ── See More button — UNCHANGED ── */}
+          {/* See More — UNCHANGED */}
           <div className="mt-10 md:mt-12 flex items-center justify-center">
             <Link href="/new-arrivals">
               <div className="flex items-center justify-between gap-2 w-35 group hover:bg-neutral-900 hover:shadow-lg transition-all duration-300 px-3 py-2 border border-neutral-900 rounded-full text-neutral-900">
@@ -181,4 +178,5 @@ export const NewArrivals = () => {
       </Container>
     </section>
   );
+
 };

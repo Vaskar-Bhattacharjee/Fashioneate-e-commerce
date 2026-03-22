@@ -252,10 +252,10 @@ export const Categories = () => {
                     {item.description}
                   </p>
                   <div className="flex items-center justify-between gap-2">
-                    <p className="flex items-center justify-center h-7 py-[1.5px] text-center text-neutral-800 text-xs md:text-sm font-semibold rounded-full bg-amber-500/20 border border-amber-500 px-2">
+                    <p className="flex items-center justify-center h-7 py-[1px] text-center text-neutral-800 text-xs md:text-xs font-semibold rounded-md bg-amber-500/20 border border-amber-500 px-2">
                       {item.discount}
                     </p>
-                    <span className="flex items-center justify-center h-7 py-[1.5px] text-center text-neutral-800 text-xs md:text-sm font-semibold rounded-full bg-green-500/20 border border-green-500 px-2 hover:bg-green-500/60 transition-all duration-300">
+                    <span className="flex items-center justify-center h-7 py-[1px] text-center text-neutral-800 text-xs md:text-xs font-semibold rounded-md bg-green-500/20 border border-green-500 px-2 hover:bg-green-500/60 transition-all duration-300">
                       Explore
                     </span>
                   </div>
