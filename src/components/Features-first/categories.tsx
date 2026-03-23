@@ -91,7 +91,7 @@ image: "https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg",
 type CardProps = {
   label: string;
   image: string;
-  Icon: ({ className }: { className: string }) => JSX.Element;
+  Icon: ({ className }: { className: string }) => React.ReactElement;
   className?: string;
   iconSize?: string;
 };
