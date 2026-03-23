@@ -126,7 +126,7 @@ export const Hero = () => {
                   src="https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg"
                   alt="shop"
                   fill
-                  className="object-cover"
+                  className="object-cover grayscale opacity-99"
                 />
                 <motion.div
                   initial={{ opacity: 0 }}

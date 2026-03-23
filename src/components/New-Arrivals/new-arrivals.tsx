@@ -2,6 +2,8 @@ import { IconHeartFilled, IconShoppingBag } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 
+
+
 export const NewArrivalsItemCard = ({
   imgSrc,
   productName,
