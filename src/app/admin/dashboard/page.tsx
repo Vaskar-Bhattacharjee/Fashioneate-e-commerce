@@ -22,7 +22,6 @@ import { Notifications } from "@/src/components/ui/notifications";
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Overview");
-  const [activeNotice, setActiveNotice] = useState<boolean>(false);
   const [activeAdminBoard, setActiveAdminBoard] = useState<boolean>(false);
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
   const {userRole } = useAuthStore();

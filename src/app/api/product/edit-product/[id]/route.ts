@@ -4,7 +4,11 @@ import Product from "@/src/model/product.model";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-
+const parseFormDataBoolean = z.preprocess((val) => {
+    if (val === "true") return true;
+    if (val === "false") return false;
+    return val;
+}, z.boolean().optional());
 const productUpdateSchema = z.object({
     name: z.string().optional(),
     description: z.string().optional(),
@@ -18,7 +22,9 @@ const productUpdateSchema = z.object({
     quantity: z.coerce.number().min(0, "Quantity cannot be negative").optional(),
     unit: z.string().optional(),
     status: z.string().optional(),
-    isFeatured: z.coerce.boolean().optional(),
+    isFeatured: parseFormDataBoolean,
+    newArrival: parseFormDataBoolean,
+    newArrivalFeatured: parseFormDataBoolean,
 });
 
 export async function PATCH(
@@ -49,7 +55,7 @@ export async function PATCH(
             }, { status: 400 });
         }
        
-        const updateData     = validation.data;
+        const updateData = validation.data;
         const existingProduct = await Product.findById(id);
         if (!existingProduct) {
             return NextResponse.json({ message: "Product not found" }, { status: 404 });
@@ -80,6 +86,7 @@ export async function PATCH(
             {$set: updateData}, 
             { new: true });
         if (!updatedProduct) {
+            console.log("Product update failed");
             return NextResponse.json({ message: "Product update failed" }, { status: 500 });
         }
         return NextResponse.json({ message: "Product updated successfully", product: updatedProduct }, { status: 200 });

@@ -52,7 +52,6 @@ export const NewArrivals = () => {
 
   if (loading) {
     return (
-      // ── IMPROVED: better loading state with spinner feel ──
       <div className="h-96 flex flex-col items-center justify-center gap-3">
         <div className="w-8 h-8 border-2 border-neutral-300 border-t-neutral-800 rounded-full animate-spin" />
         <p className="text-neutral-500 font-inter text-sm">Loading latest fashion...</p>
@@ -69,11 +68,10 @@ export const NewArrivals = () => {
   }
 
 return (
-    <section className="h-auto">
+    <section className="h-auto py-18">
       <Container>
-        <div className="w-full min-h-96 pt-16 md:pt-24 lg:pt-32 flex flex-col items-center justify-center">
+        <div className="w-full min-h-96 flex flex-col items-center justify-center">
 
-          {/* Header — UNCHANGED */}
           <div className="flex flex-col items-center justify-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -99,13 +97,12 @@ return (
             </motion.div>
           </div>
 
-          {/* ── 3 cards in a single row — no wrapping ── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             className="mt-8 md:mt-12 w-full px-4 md:px-0 md:w-4xl lg:w-5xl
-              flex flex-row gap-4 lg:gap-6"  // ← flex-row always, no wrapping
+              flex flex-row gap-4 lg:gap-6"  
           >
             {/* Card 1 */}
             <motion.div
@@ -123,7 +120,6 @@ return (
               />
             </motion.div>
 
-            {/* Card 2 */}
             {displayedProducts[1] && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -141,7 +137,6 @@ return (
               </motion.div>
             )}
 
-            {/* Card 3 */}
             {displayedProducts[2] && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -160,7 +155,6 @@ return (
             )}
           </motion.div>
 
-          {/* See More — UNCHANGED */}
           <div className="mt-10 md:mt-12 flex items-center justify-center">
             <Link href="/new-arrivals">
               <div className="flex items-center justify-between gap-2 w-35 group hover:bg-neutral-900 hover:shadow-lg transition-all duration-300 px-3 py-2 border border-neutral-900 rounded-full text-neutral-900">

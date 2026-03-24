@@ -34,6 +34,7 @@ interface ProductProps {
   comparePrice: number;
   category: string;
   newArrival: boolean;
+  newArrivalFeatured: boolean;
   quantity: number;
   unit: string;
   status: string;
@@ -66,7 +67,7 @@ export const ProductsView = () => {
   const onSuccess = () => {
     handleCloseModal();
     setRefreshKey((prevKey) => prevKey + 1);
-    };
+  };
   const handleClear = () => {
     setStatus("");
     setCategory("");
@@ -137,7 +138,6 @@ export const ProductsView = () => {
         )}
       </AnimatePresence>
 
-      {/* FILTERS & SEARCH - FULLY RESTORED */}
       <div className="w-full flex flex-col md:flex-row gap-4 bg-transparent px-4">
         <div className="relative flex-1 border border-neutral-300 rounded-lg">
           <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 size-5" />
@@ -370,7 +370,7 @@ const ProductFormModal = ({
         comparePrice: product.comparePrice,
         category: product.category,
         newArrival: product.newArrival,
-        newArrivalFeatured: false,
+        newArrivalFeatured: product.newArrivalFeatured,
         quantity: product.quantity,
         unit: product.unit,
         status: product.status,
@@ -491,11 +491,12 @@ const ProductFormModal = ({
               </label>
               <select
                 {...form.register("category")}
-className="w-full bg-white hover:bg-neutral-50 border border-neutral-200 text-neutral-800 font-inter rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-neutral-800 transition-all"              >
-                <option value="men fashion" >Men&apos;s Fashion</option>
-                <option value="women fashion" >Women&apos;s Fashion</option>
-                <option value="kids fashion" >Kid&apos;s Fashion</option>
-                <option value="wedding collection" >Wedding Collection</option>
+                className="w-full bg-white hover:bg-neutral-50 border border-neutral-200 text-neutral-800 font-inter rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-neutral-800 transition-all"
+              >
+                <option value="men fashion">Men&apos;s Fashion</option>
+                <option value="women fashion">Women&apos;s Fashion</option>
+                <option value="kids fashion">Kid&apos;s Fashion</option>
+                <option value="wedding collection">Wedding Collection</option>
               </select>
             </div>
           </div>
@@ -630,21 +631,20 @@ className="w-full bg-white hover:bg-neutral-50 border border-neutral-200 text-ne
               <label className="block font-semibold text-sm font-inter text-neutral-600 mb-2">
                 Status
               </label>
-<div className="flex items-center gap-3 ">
-  {/* The Switch itself */}
-  <Switch
-    size="default"
-    checked={form.watch("status") === "active"}
-    onCheckedChange={(checked) => {
-      form.setValue("status", checked ? "active" : "inactive");
-    }}
-  />
+              <div className="flex items-center gap-3 ">
+                <Switch
+                  size="default"
+                  checked={form.watch("status") === "active"}
+                  onCheckedChange={(checked) => {
+                    form.setValue("status", checked ? "active" : "inactive");
+                  }}
+                />
 
-  <span className="text-sm font-semibold font-inter text-neutral-700 capitalize">
-    {form.watch("status")}
-  </span>
-</div>
-            </div>  
+                <span className="text-sm font-semibold font-inter text-neutral-700 capitalize">
+                  {form.watch("status")}
+                </span>
+              </div>
+            </div>
 
             <div className="space-y-3">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -657,6 +657,18 @@ className="w-full bg-white hover:bg-neutral-50 border border-neutral-200 text-ne
                   Mark as new arrival
                 </span>
               </label>
+
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  {...form.register("newArrivalFeatured")}
+                  className="size-4 rounded border-neutral-300 text-neutral-900 focus:ring-neutral-900 accent-neutral-900"
+                />
+                <span className="text-sm font-inter font-medium text-neutral-700">
+                  New Arrival Featured 
+                </span>
+              </label>
+
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
@@ -728,7 +740,6 @@ export const ProductList = ({
           response.data.length > 0
         ) {
           setProducts(response.data);
-          
         } else {
           toast.error("No products found.");
         }

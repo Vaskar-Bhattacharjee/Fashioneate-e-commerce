@@ -37,8 +37,6 @@ const productSchema = new mongoose.Schema({
     newArrivalFeatured: {
       type: Boolean,
       default: false,
-      min: 3,
-      max: 3
     },
     quantity: {
       type: Number,
