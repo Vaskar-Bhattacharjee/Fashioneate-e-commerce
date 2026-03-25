@@ -9,7 +9,7 @@ import { cn } from "@/src/lib/utils";
 
 export const Hero = () => {
   return (
-    <section className="relative w-screen min-h-[90vh] lg:h-[90vh] pt-32 lg:pt-0 overflow-hidden border-b border-neutral-200 ">
+    <section className="relative w-screen min-h-[95vh] lg:h-[90vh] pt-32 lg:pt-0 overflow-hidden border-b border-neutral-200 ">
       <Container>
         <div className="w-full min-h-[98vh] lg:h-[98vh] flex flex-col lg:flex-row items-center justify-center gap-10 lg:justify-between px-6 md:px-12 lg:pl-16 lg:pr-28">
           <Gridline />
@@ -90,10 +90,10 @@ export const Hero = () => {
                 transition={{ duration: 0.2 }}
               >
                 <Link
-                  href="/shop"
+                  href="/new-arrivals"
                   className="text-neutral-900 bg-neutral-100 text-md border px-6 py-2 rounded-lg font-semibold cursor-pointer hover:bg-neutral-200 hover:text-neutral-800 transition-all duration-300 inline-block"
                 >
-                  View Collection
+                  New Arrivals
                 </Link>
               </motion.div>
             </motion.div>

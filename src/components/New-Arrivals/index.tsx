@@ -79,9 +79,9 @@ return (
               transition={{ delay: 0.5 }}
               className="flex items-center justify-center gap-2"
             >
-              <span className="w-8 bg-neutral-400 h-0.5"></span>
+              <span className="w-30 bg-neutral-300 h-0.5"></span>
               <Heading className="font-extrabold py-0 text-center">New Arrivals</Heading>
-              <span className="w-8 bg-neutral-400 h-0.5"></span>
+              <span className="w-30 bg-neutral-300 h-0.5"></span>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
