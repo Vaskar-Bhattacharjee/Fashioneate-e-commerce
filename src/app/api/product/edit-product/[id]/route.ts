@@ -25,6 +25,7 @@ const productUpdateSchema = z.object({
     isFeatured: parseFormDataBoolean,
     newArrival: parseFormDataBoolean,
     newArrivalFeatured: parseFormDataBoolean,
+    size: z.union([z.string(), z.array(z.string())]).optional(),
 });
 
 export async function PATCH(

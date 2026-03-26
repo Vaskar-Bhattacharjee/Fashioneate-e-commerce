@@ -1,7 +1,6 @@
 "use client";
 
 import { Container } from "../ui/container";
-import { Heading } from "../ui/header";
 import { motion } from "framer-motion";
 import { cn } from "@/src/lib/utils";
 
@@ -168,7 +167,7 @@ const Left = () => {
 
 const Right = () => {
   return (
-    <div className="w-full lg:w-120 flex flex-col">
+    <div className="w-full lg:w-120 flex flex-col border-r  border-neutral-300 ">
       <div className="flex flex-col gap-0">
         <div className="flex items-center gap-4 mb-2">
           <div className="w-0.5 h-12 bg-[#C9A96E] shrink-0" />
@@ -201,7 +200,10 @@ const Right = () => {
 export const WhyUs = () => {
   return (
     <Container className="pt-10 md:pt-20 lg:pt-32 flex flex-col items-center justify-center">
-      <div className="w-full px-4 md:px-6 lg:px-0 lg:w-6xl flex flex-col lg:flex-row items-start justify-between gap-16">
+      <div className="relative w-full px-4 md:px-6 lg:px-0 lg:w-6xl 
+      flex flex-col lg:flex-row items-start justify-between gap-16 
+      border-b border-neutral-300 pb-4">
+        <HandTraceLine className="absolute" />
         <Left />
         <Right />
       </div>
@@ -246,3 +248,35 @@ const TotalHonesty = ({ className }: { className?: string }) => {
             </svg>
   )
 }
+
+const HandTraceLine = ({ className }: { className?: string }) => {
+  return (
+    <svg
+      // Thin ViewBox (0 0 30 120) makes the default size much smaller.
+      viewBox="0 0 30 120"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        // Start Top-Right
+        d="M 25, 10 
+           
+           /* First distinct hook, identical to top-left of your sketch */
+           C 25, 10, 5, 20, 5, 40 
+           
+           /* Long spine downwards, matching the middle segment */
+           L 5, 90 
+           
+           /* Second distinct hook, identical to bottom-right of your sketch */
+           C 5, 110, 25, 110, 25, 120"
+        
+        // Custom "engineered precision" stroke look
+        stroke="currentColor" // Use parent text-white class for color
+        strokeWidth="1.5"     // Thin, professional line weight
+        strokeLinecap="round" // Rounded ends, like a trace
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};

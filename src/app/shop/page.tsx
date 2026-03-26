@@ -41,9 +41,10 @@ interface ProductProps {
   isFeatured: boolean;
 }
 
+
 export default function ShopPage() {
   const [layout, setLayout] = useState<gridLayout["layout"]>("grid");
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState("all");
   const [sortBy, setSortBy] = useState("");
   const [products, setProducts] = useState<ProductProps[]>();
   const [loading, setLoading] = useState(true);
@@ -77,7 +78,7 @@ export default function ShopPage() {
   }, []);
 
   const displayedProducts = [...(products || [])]
-    .filter((p) => (category === "All" ? true : p.category === category))
+    .filter((p) => (category === "all" ? true : p.category === category))
     .sort((a, b) => {
       if (sortBy === "Price: High to Low") {
         return b.newprice - a.newprice;

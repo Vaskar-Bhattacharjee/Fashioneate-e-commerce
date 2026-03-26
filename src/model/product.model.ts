@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema({
     },
     category: {
       type: String,
-      enum: [ "women fashion", "men fashion", "kids fashion", "wedding collection"],
+      enum: [ "women fashion", "men fashion", "kid fashion", "wedding collection"],
       required: true
     },
     newArrival: {

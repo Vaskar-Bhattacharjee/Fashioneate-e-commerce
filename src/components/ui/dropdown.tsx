@@ -66,8 +66,7 @@ export const Dropdown = ({
                     onClick={()=>{
                       setDisplay(item.label)
                       setOpen(false)
-                      onSelect(item.label)
-                    }}
+                      onSelect(item.label.toLowerCase().replace(/'s/g, ""))                    }}
                     className="text-neutral-500 font-semibold text-[14px] cursor-pointer hover:text-neutral-800 flex items-center gap-2  w-full">
                       {item.icon}{item.label}
                     </motion.div>
