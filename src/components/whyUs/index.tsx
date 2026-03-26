@@ -1,30 +1,79 @@
 "use client";
 
-import {
-  IconArrowRight,
-  IconBoltFilled,
-  IconSeedlingFilled,
-  IconTableDashed,
-  IconTableSpark,
-} from "@tabler/icons-react";
 import { Container } from "../ui/container";
-import { Heading, SubHeading } from "../ui/header";
+import { Heading } from "../ui/header";
 import { motion } from "framer-motion";
 import { cn } from "@/src/lib/utils";
-import Link from "next/link";
 
-export const WhyUs = () => {
-  return (
-    <Container className="pt-10 md:pt-20 lg:pt-32 flex flex-col items-center justify-center">
-      <div className="w-full px-4 md:px-6 lg:px-0 lg:w-6xl flex flex-col lg:flex-row items-start justify-between gap-10">
-        <Left />
-        <Right />
-      </div>
-    </Container>
-  );
-};
+const QualityIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#262626"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
+  </svg>
+);
 
-export const WhyUsSection = ({
+const LuxuryIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#262626"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    <path d="M9 12l2 2 4-4" />
+  </svg>
+);
+
+const TransparencyIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#262626"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 16v-4M12 8h.01" />
+  </svg>
+);
+
+const EDGE_ITEMS = [
+  {
+    heading: "Uncompromising Quality",
+    subHeading:
+      "We obsess over the fine details so you don't have to. From premium fabrics to reinforced stitching, every piece is a promise of durability and timeless style.",
+    Icon: QualityIcon,
+  },
+  {
+    heading: "Accessible Luxury",
+    subHeading:
+      "High-end fashion shouldn't require a second mortgage. By streamlining our supply chain, we deliver runway-ready designs at prices that actually make sense.",
+    Icon: LuxuryIcon,
+  },
+  {
+    heading: "Radical Transparency",
+    subHeading:
+      "Integrity is our finest thread. We are committed to ethical sourcing and honest pricing, building a brand relationship that lasts longer than a single season.",
+    Icon: TransparencyIcon,
+  },
+];
+
+const WhyUsSection = ({
   heading,
   subHeading,
   icon,
@@ -37,69 +86,78 @@ export const WhyUsSection = ({
 }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.5 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className={cn(
-        "flex flex-col py-4 items-start justify-start border-b border-neutral-300",
-        isLastChild && "border-b-0",
+        "flex flex-col items-start justify-start",
+        "py-8 border-b border-neutral-300",
+        isLastChild && "border-b-0 pb-0",
       )}
     >
-      <div className="flex items-center justify-start gap-2">
-        {icon}
-        <h1 className="text-neutral-700 font-bold text-xl lg:text-2xl">{heading}</h1>
+      <div className="flex items-center gap-3 mb-3">
+        <div className="text-[#503f20] font-semibold">{icon}</div>
+        <h3 className="font-inter font-semibold text-lg text-neutral-900 tracking-wide">
+          {heading}
+        </h3>
       </div>
-      <SubHeading className="text-left font-inter text-sm w-full lg:w-120">
+      <p className="font-inter text-sm text-neutral-600 font-normal leading-[1.8] lg:w-96">
         {subHeading}
-      </SubHeading>
+      </p>
     </motion.div>
   );
 };
 
-export const Left = () => {
+const Left = () => {
   return (
-    <div className="w-full lg:flex-1 flex flex-col gap-6">
-      <div className="relative group/card overflow-hidden rounded-3xl bg-linear-to-r from-emerald-900/90 to-neutral-800 p-8 text-white shadow-2xl transition-all duration-500 hover:shadow-red-500/10">
-        <div className="absolute top-0 right-0 p-6 opacity-20 group-hover/card:opacity-70 transition-opacity">
-          <IconBoltFilled className="size-24 text-white" />
-        </div>
+    <div className="w-full lg:flex-1 flex flex-col gap-5">
+      <div className="relative overflow-hidden rounded-xl bg-[#1C1C1C] p-10">
+        <div className="absolute -bottom-8 -right-8 w-48 h-48 rounded-full border border-[#C9A96E]/10" />
+        <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-full border border-[#C9A96E]/15" />
+
         <div className="relative z-10">
-          <h3 className="text-xl lg:text-2xl font-bold tracking-tight mb-3">
-            Uncompromising Quality
+          <span className="text-[10px] tracking-[0.3em] uppercase font-inter text-[#C9A96E] mb-5 block">
+            Our Promise
+          </span>
+          <h3 className="font-cormorantGaramond font-normal text-4xl lg:text-5xl text-[#F5F0E8] tracking-tight mb-5 leading-[1.1]">
+            Dressed for life, not just the season.
           </h3>
-          <p className="text-neutral-400 max-w-xs leading-relaxed font-inter text-sm">
-            We source the world's finest textiles to ensure your wardrobe
-            stands the test of time, not just the season.
+          <p className="text-[#A89880] max-w-xs leading-relaxed font-inter text-[16px] font-light">
+            We source the world's finest textiles so every piece earns its place
+            in your wardrobe — year after year.
           </p>
-          <Link
-            href="/materials"
-            className="mt-6 flex items-center gap-2 text-sm font-semibold tracking-widest border border-neutral-300 px-4 py-2 rounded-xl w-50 cursor-pointer bg-transparent group hover:bg-neutral-300 transition-all duration-200"
-          >
-            <p className="text-sm text-neutral-300 group-hover:text-neutral-900">
-              View Materials
-            </p>
-            <IconArrowRight className="size-4 group-hover:text-neutral-900" />
-          </Link>
+          <div className="w-8 h-px bg-[#e7b455] mt-8" />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="rounded-3xl border border-neutral-200 bg-white/50 p-6 backdrop-blur-sm transition-all hover:border-emerald-800/60">
-          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100 text-neutral-900">
-            <IconTableDashed className="size-5" />
+      <div className="grid grid-cols-2 gap-4">
+        <div
+          className="rounded-xl border border-neutral-200 bg-white p-6
+          transition-all duration-500 hover:border-[#C9A96E]/50 group"
+        >
+          <div className="mb-3 text-neutral-300 group-hover:text-[#C9A96E] transition-colors duration-500">
+            <Modern />
           </div>
-          <h4 className="font-bold text-neutral-900">Modern Curation</h4>
-          <p className="mt-2 text-sm font-inter text-neutral-500 leading-relaxed">
+          <h4 className="font-inter font-semibold text-neutral-900 text-sm tracking-wide mb-2 uppercase">
+            Modern Curation
+          </h4>
+          <p className="text-xs font-inter text-neutral-600 leading-relaxed">
             Accessible luxury through direct-to-consumer craftsmanship.
           </p>
         </div>
 
-        <div className="rounded-3xl border border-neutral-200 bg-white/50 p-6 backdrop-blur-sm transition-all hover:border-emerald-800/60">
-          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100 text-neutral-900">
-            <IconTableSpark className="size-5" />
+        <div
+          className="rounded-xl border border-neutral-200 bg-white p-6
+          transition-all duration-500 hover:border-[#C9A96E]/50 group"
+        >
+          <div className="mb-3 text-neutral-300 group-hover:text-[#C9A96E] transition-colors duration-500">
+              <TotalHonesty />
           </div>
-          <h4 className="font-bold text-neutral-900">Total Honesty</h4>
-          <p className="mt-2 text-sm font-inter text-neutral-500 leading-relaxed">
+          <h4 className="font-inter font-semibold text-neutral-900 text-sm tracking-wide mb-2 uppercase">
+            Total Honesty
+          </h4>
+          <p className="text-xs font-inter text-neutral-600 leading-relaxed">
             Ethical labor and transparent pricing in every single thread.
           </p>
         </div>
@@ -108,39 +166,83 @@ export const Left = () => {
   );
 };
 
-export const Right = () => {
+const Right = () => {
   return (
-    <div className="w-full lg:w-auto flex flex-col items-start justify-start">
-      <div className="flex items-start flex-col justify-start gap-6 w-full">
-
-        <div className="flex items-center justify-start gap-3 md:gap-6 w-full">
-          <div className="w-1.5 h-10 bg-[#138b71] shrink-0"></div>
-          <Heading className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-neutral-800">
-            The Fashioneate Edge
-          </Heading>
-          <div className="hidden md:block w-24 h-px bg-neutral-300 shrink-0"></div>
+    <div className="w-full lg:w-120 flex flex-col">
+      <div className="flex flex-col gap-0">
+        <div className="flex items-center gap-4 mb-2">
+          <div className="w-0.5 h-12 bg-[#C9A96E] shrink-0" />
+          <div>
+            <span className="text-[10px] tracking-[0.25em] uppercase font-inter text-neutral-500 block mb-1">
+              Why Fashioneate
+            </span>
+            <h2 className="font-inter font-semibold text-2xl md:text-3xl tracking-tight text-neutral-900">
+              The Fashioneate Edge
+            </h2>
+          </div>
         </div>
 
-        <div className="flex flex-col items-start justify-center gap-8 border-l-2 border-neutral-100 pl-4 md:pl-8 py-2 ml-1 w-full">
-          <WhyUsSection
-            heading="Uncompromising Quality"
-            subHeading="We obsess over the fine details so you don't have to. From premium fabrics to reinforced stitching, every piece is a promise of durability and timeless style."
-            icon={<IconBoltFilled className="size-5 text-orange-500" />}
-          />
-          <WhyUsSection
-            heading="Accessible Luxury"
-            subHeading="High-end fashion shouldn't require a second mortgage. By streamlining our supply chain, we deliver runway-ready designs at prices that actually make sense."
-            icon={<IconTableDashed className="size-5 text-blue-600" />}
-          />
-          <WhyUsSection
-            heading="Radical Transparency"
-            subHeading="Integrity is our finest thread. We are committed to ethical sourcing and honest pricing, building a brand relationship that lasts longer than a single season."
-            icon={<IconSeedlingFilled className="size-5 text-green-700" />}
-            isLastChild
-          />
+        <div className="border-l border-neutral-200 pl-8 ml-px pt-2">
+          {EDGE_ITEMS.map(({ heading, subHeading, Icon }, index) => (
+            <WhyUsSection
+              key={heading}
+              heading={heading}
+              subHeading={subHeading}
+              icon={<Icon />}
+              isLastChild={index === EDGE_ITEMS.length - 1}
+            />
+          ))}
         </div>
-
       </div>
     </div>
   );
 };
+
+export const WhyUs = () => {
+  return (
+    <Container className="pt-10 md:pt-20 lg:pt-32 flex flex-col items-center justify-center">
+      <div className="w-full px-4 md:px-6 lg:px-0 lg:w-6xl flex flex-col lg:flex-row items-start justify-between gap-16">
+        <Left />
+        <Right />
+      </div>
+    </Container>
+  );
+};
+
+const Modern = ({ className }: { className?: string }) => {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#262626"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M12 3L9 7h6l-3-4z" />
+      <path d="M9 7c-2 4-3 8-3 14h12c0-6-1-10-3-14H9z" />
+    </svg>
+  );
+};
+
+const TotalHonesty = ({ className }: { className?: string }) => {
+  return (
+                <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#262626"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={className}
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+  )
+}
