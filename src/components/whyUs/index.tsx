@@ -112,6 +112,13 @@ const Left = () => {
   return (
     <div className="w-full lg:flex-1 flex flex-col gap-5">
       <div className="relative overflow-hidden rounded-xl bg-[#1C1C1C] p-10">
+<div
+  className="absolute inset-0 pointer-events-none z-50 mix-blend-multiply opacity-[0.9] "
+  style={{
+    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+    filter: "contrast(180%) brightness(100%)",
+  }}
+/>
         <div className="absolute -bottom-8 -right-8 w-48 h-48 rounded-full border border-[#C9A96E]/10" />
         <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-full border border-[#C9A96E]/15" />
 
@@ -126,7 +133,7 @@ const Left = () => {
             We source the world's finest textiles so every piece earns its place
             in your wardrobe — year after year.
           </p>
-          <div className="w-8 h-px bg-[#e7b455] mt-8" />
+          <div className="w-40 h-px bg-[#b28531] mt-8" />
         </div>
       </div>
 
@@ -165,33 +172,63 @@ const Left = () => {
   );
 };
 
-const Right = () => {
+
+
+
+export const Right = () => {
   return (
-    <div className="w-full lg:w-120 flex flex-col border-r  border-neutral-300 ">
+    <div className="w-full lg:w-120 flex flex-col border-r border-neutral-300">
       <div className="flex flex-col gap-0">
+        
+        {/* Header Section */}
         <div className="flex items-center gap-4 mb-2">
-          <div className="w-0.5 h-12 bg-[#C9A96E] shrink-0" />
-          <div>
+          {/* 1. The Drawing Bar: Inline scale animation */}
+          <motion.div 
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="w-0.5 h-12 bg-[#C9A96E] shrink-0 origin-top" 
+          />
+          
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <span className="text-[10px] tracking-[0.25em] uppercase font-inter text-neutral-500 block mb-1">
               Why Fashioneate
             </span>
             <h2 className="font-inter font-semibold text-2xl md:text-3xl tracking-tight text-neutral-900">
               The Fashioneate Edge
             </h2>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="border-l border-neutral-200 pl-8 ml-px pt-2">
-          {EDGE_ITEMS.map(({ heading, subHeading, Icon }, index) => (
-            <WhyUsSection
-              key={heading}
-              heading={heading}
-              subHeading={subHeading}
-              icon={<Icon />}
-              isLastChild={index === EDGE_ITEMS.length - 1}
-            />
-          ))}
-        </div>
+        {/* List Section */}
+<div className="border-l border-neutral-200 pl-8 ml-px pt-2">
+  {EDGE_ITEMS.map(({ heading, subHeading, Icon }, index) => (
+    <motion.div
+      key={heading}
+      initial={{ opacity: 0, y: 15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      // THE FIX IS HERE:
+      // margin: "100px" extends the detection zone artificially
+      // amount: 0 forces it to trigger instantly without waiting for the whole box
+      viewport={{ once: false, amount: 0, margin: "100px" }} 
+      transition={{ 
+        duration: 0.5, 
+        delay: index * 0.15 // Increased delay slightly so the waterfall effect is obvious
+      }}
+    >
+      <WhyUsSection
+        heading={heading}
+        subHeading={subHeading}
+        icon={<Icon />}
+        isLastChild={index === EDGE_ITEMS.length - 1}
+      />
+    </motion.div>
+  ))}
+</div>
       </div>
     </div>
   );

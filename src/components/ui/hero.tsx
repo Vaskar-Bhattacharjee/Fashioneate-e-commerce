@@ -79,7 +79,7 @@ export const Hero = () => {
               >
                 <Link
                   href="/shop"
-                  className="text-neutral-100 bg-neutral-900 border text-md px-6 py-2 rounded-lg font-semibold cursor-pointer hover:bg-neutral-800 hover:text-neutral-200 transition-all duration-300 inline-block"
+                  className="text-neutral-100 bg-neutral-900 border text-md px-8 py-1.5 rounded-lg font-semibold cursor-pointer hover:bg-neutral-800 hover:text-neutral-200 transition-all duration-300 inline-block"
                 >
                   Shop Now
                 </Link>
@@ -91,7 +91,7 @@ export const Hero = () => {
               >
                 <Link
                   href="/new-arrivals"
-                  className="text-neutral-900 bg-neutral-100 text-md border px-6 py-2 rounded-lg font-semibold cursor-pointer hover:bg-neutral-200 hover:text-neutral-800 transition-all duration-300 inline-block"
+                  className="text-neutral-900 bg-neutral-100 text-md border px-8 py-1.5 rounded-lg font-semibold cursor-pointer hover:bg-neutral-200 hover:text-neutral-800 transition-all duration-300 inline-block"
                 >
                   New Arrivals
                 </Link>

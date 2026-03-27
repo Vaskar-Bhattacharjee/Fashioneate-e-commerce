@@ -152,7 +152,7 @@ export default function Product() {
   };
 
   return (
-    <Container className="pt-10 md:pt-20 w-6xl mx-auto pb-20">
+    <Container className="pt-10 md:pt-30 w-6xl mx-auto pb-20">
       {loading ? (
         <div className="text-neutral-950 text-7xl font-cormorantGaramond">
           Loading...

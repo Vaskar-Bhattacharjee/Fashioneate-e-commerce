@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Logo } from "../ui/navbar";
 import { IconBrandGithub, IconBrandLinkedin, IconBrandX } from "@tabler/icons-react";
@@ -5,6 +6,14 @@ import { Container } from "../ui/container";
 import { cn } from "@/src/lib/utils";
 
 export const Footer = () => {
+
+  const handleFaqScroll = () => {
+    const faqSection = document.getElementById("faq");
+    if (faqSection) {
+      faqSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <Container className="bg-neutral-900 flex flex-col justify-center items-center rounded-t-3xl mt-20">
       
@@ -19,9 +28,8 @@ export const Footer = () => {
 
       <div className="z-1 grid grid-cols-1 md:grid-cols-5 gap-8 py-10 px-6 md:px-10 lg:px-16 w-full">
 
-
         <div className="py-4 px-4 flex flex-col col-span-1 md:col-span-2 items-start justify-between gap-1 lg:mr-18">
-          <Logo className="text-white md:text-6xl  text-left ml-0 " />
+          <Logo className="text-white md:text-6xl text-left ml-0" />
           <p className="text-sm font-semibold text-left text-neutral-400 w-full mt-2">
             Fashioneate is where timeless elegance meets modern craftsmanship.
             We provide premium quality apparel for men, women, and children
@@ -31,39 +39,47 @@ export const Footer = () => {
           <div className="flex gap-2 mt-5 items-center">
             <span className="text-neutral-400 text-md font-semibold">Follow us on:</span>
             <div className="flex gap-2 md:gap-3">
-              <Link href="#" className="text-neutral-400 hover:text-white transition-colors">
+              <Link href="https://www.linkedin.com/in/vaskar-bhattacharjee/" className="text-neutral-400 hover:text-white transition-colors">
                 <IconBrandLinkedin />
               </Link>
-              <Link href="#" className="text-neutral-400 hover:text-white transition-colors">
+              <Link href="https://x.com/sourav_0002" className="text-neutral-400 hover:text-white transition-colors">
                 <IconBrandX />
               </Link>
-              <Link href="#" className="text-neutral-400 hover:text-white transition-colors">
+              <Link href="https://github.com/Vaskar-Bhattacharjee" className="text-neutral-400 hover:text-white transition-colors">
                 <IconBrandGithub />
               </Link>
             </div>
           </div>
         </div>
+
         <div className="col-span-1 md:col-span-3 grid grid-cols-3 md:grid-cols-3 gap-4 md:gap-8">
+          
           <GridElement
             heading="About Us"
-            element1="Our Story"
-            element2="Our Team"
-            element3="Careers"
-            element4="Press"
+            items={[
+              { label: "Our Story", href: "/about" },
+              { label: "Our Team", href: "/about#team" },
+            ]}
           />
+
           <GridElement
             heading="Customer Service"
-            element1="Shipping & Returns"
-            element2="Contact Us"
-            element3="FAQs"
+            items={[
+              { label: "Shipping & Returns", href: "/ship-policy" },
+              { label: "Contact Us", href: "/contact" },
+              { label: "FAQs", onClick: handleFaqScroll }, // ← scroll, no href
+            ]}
           />
+
           <GridElement
             heading="Legal"
-            element1="Privacy Policy"
-            element2="Terms & Conditions"
+            items={[
+              { label: "Privacy Policy", href: "/privacy-policy" },
+              { label: "Terms & Conditions", href: "/terms-policy" },
+            ]}
           />
-        </div>
 
+        </div>
       </div>
 
       <div className="w-full px-6 md:px-10 lg:px-16">
@@ -79,18 +95,19 @@ export const Footer = () => {
   );
 };
 
+// ── Item can either be a link (href) or a button (onClick) ──
+interface GridItem {
+  label: string;
+  href?: string;
+  onClick?: () => void;
+}
+
 export const GridElement = ({
   heading,
-  element1,
-  element2,
-  element3,
-  element4,
+  items,
 }: {
   heading: string;
-  element1: string;
-  element2: string;
-  element3?: string;
-  element4?: string;
+  items: GridItem[];
 }) => {
   return (
     <div className="flex flex-col gap-2 lg:pt-10">
@@ -98,21 +115,26 @@ export const GridElement = ({
         {heading}
       </h4>
       <div className="flex flex-col gap-2">
-        <Link href="#" className="text-neutral-400 hover:text-white transition-colors text-xs md:text-sm">
-          {element1}
-        </Link>
-        <Link href="#" className="text-neutral-400 hover:text-white transition-colors text-xs md:text-sm">
-          {element2}
-        </Link>
-        {element3 && (
-          <Link href="#" className="text-neutral-400 hover:text-white transition-colors text-xs md:text-sm">
-            {element3}
-          </Link>
-        )}
-        {element4 && (
-          <Link href="#" className="text-neutral-400 hover:text-white transition-colors text-xs md:text-sm">
-            {element4}
-          </Link>
+        {items.map((item) =>
+          item.href ? (
+            // ── Has href → render as Link ──
+            <Link
+              key={item.label}
+              href={item.href}
+              className="text-neutral-400 hover:text-white transition-colors text-xs md:text-sm"
+            >
+              {item.label}
+            </Link>
+          ) : (
+            // ── Has onClick → render as button (FAQ scroll) ──
+            <button
+              key={item.label}
+              onClick={item.onClick}
+              className="text-neutral-400 hover:text-white transition-colors text-xs md:text-sm text-left cursor-pointer"
+            >
+              {item.label}
+            </button>
+          )
         )}
       </div>
     </div>

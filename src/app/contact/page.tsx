@@ -7,7 +7,7 @@ import Image from "next/image";
 const Contact = () => {
   return (
     <Container className="pt-10 md:pt-20 lg:pt-32 flex flex-col items-center justify-center">
-      <Heading>Let us know how we can help you.</Heading>
+      <Heading className="text-center">Let us know how we can help you.</Heading>
       <SubHeading className="w-full md:text-center">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum consequuntur eum quas molestias, nemo officia adipisci, repellendus omnis perspiciatis atque dolor, ab corrupti! Earum officiis natus qui. Porro!
       </SubHeading>
