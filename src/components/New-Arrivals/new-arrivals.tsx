@@ -19,7 +19,7 @@ export const NewArrivalsItemCard = ({
 }) => {
   return (
     <Link href={`/product/${id}`} className="block w-full h-full">
-      <div className={`relative w-full overflow-hidden rounded-2xl group cursor-pointer ${className}`}>
+      <div className={`relative w-full overflow-hidden rounded-md group cursor-pointer ${className}`}>
         
         <Image
           src={imgSrc}

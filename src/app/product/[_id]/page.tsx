@@ -34,8 +34,6 @@ export default function Product() {
   const [loading, setLoading] = useState(true);
   const [available, setAvailable] = useState(5);
   const [selectedSize, setSelectedSize] = useState("M");
-  
-  // New states for related products
   const [relatedProducts, setRelatedProducts] = useState<ProductProps[]>([]);
   const [relatedLoading, setRelatedLoading] = useState(false);
 
@@ -87,7 +85,6 @@ export default function Product() {
     }, 500);
   };
 
-  // Fetch main product
   useEffect(() => {
     const findProduct = async () => {
       try {
@@ -112,21 +109,21 @@ export default function Product() {
     if (_id) findProduct();
   }, [_id]);
 
-  // Fetch related products when product category is available
   useEffect(() => {
     const fetchRelatedProducts = async () => {
       if (!product?.category || !product?._id) return;
       
       try {
         setRelatedLoading(true);
-        // Adjust this API endpoint based on your backend
-        const response = await axios.get(`/api/product/get-products`, {
-          params: {
-            category: product.category,
-            limit: 4,
-            exclude: product._id // Exclude current product
-          }
-        });
+        const response = await axios.get(`/api/product/get-all-product`);
+        const allProducts = Array.isArray(response.data) ? response.data : [];
+        const filtered = allProducts
+          .filter((p: ProductProps) => 
+            p.category === product.category && p._id !== product._id
+          )
+          .slice(0, 4); // ← limit to 4
+
+        setRelatedProducts(filtered);
         
         if (response.data.products) {
           setRelatedProducts(response.data.products);
@@ -162,7 +159,6 @@ export default function Product() {
         </div>
       ) : product ? (
         <div className="flex flex-col gap-12">
-          {/* Main Product Section */}
           <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-8 md:gap-20">
             <motion.div
               initial={{ opacity: 0, scale: 0.3 }}
@@ -262,7 +258,7 @@ export default function Product() {
                 Description
               </h3>
               <div className="prose prose-neutral max-w-none">
-                <p className="text-neutral-700 leading-relaxed  text-inter">
+                <p className="text-neutral-700 leading-relaxed  font-inter">
                   {product.description}
                 </p>
               </div>
@@ -321,11 +317,6 @@ export default function Product() {
                         <span className="font-bold text-neutral-900">
                           ${relatedProduct.newprice}
                         </span>
-                        {relatedProduct.comparePrice && (
-                          <span className="text-sm text-neutral-500 line-through">
-                            ${relatedProduct.comparePrice}
-                          </span>
-                        )}
                       </div>
                       {relatedProduct.status !== "active" && (
                         <span className="text-xs text-red-600 mt-1 block">

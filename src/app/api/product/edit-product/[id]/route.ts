@@ -46,7 +46,12 @@ export async function PATCH(
          else {
             body.set("status", "active");
         }
-        const data = Object.fromEntries(body.entries());       
+        const data = Object.fromEntries(body.entries());
+
+        const sizes = body.getAll("size");
+        if (sizes.length > 0) {
+        (data as Record<string, unknown>).size = sizes;
+        }     
         const validation = productUpdateSchema.safeParse(data);
 
         if (!validation.success) {
