@@ -112,13 +112,6 @@ const Left = () => {
   return (
     <div className="w-full lg:flex-1 flex flex-col gap-5">
       <div className="relative overflow-hidden rounded-xl bg-[#1C1C1C] p-10">
-<div
-  className="absolute inset-0 pointer-events-none z-50 mix-blend-multiply opacity-[0.9] "
-  style={{
-    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-    filter: "contrast(180%) brightness(100%)",
-  }}
-/>
         <div className="absolute -bottom-8 -right-8 w-48 h-48 rounded-full border border-[#C9A96E]/10" />
         <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-full border border-[#C9A96E]/15" />
 
@@ -158,7 +151,7 @@ const Left = () => {
           transition-all duration-500 hover:border-[#C9A96E]/50 group"
         >
           <div className="mb-3 text-neutral-300 group-hover:text-[#C9A96E] transition-colors duration-500">
-              <TotalHonesty />
+            <TotalHonesty />
           </div>
           <h4 className="font-inter font-semibold text-neutral-900 text-sm tracking-wide mb-2 uppercase">
             Total Honesty
@@ -172,24 +165,18 @@ const Left = () => {
   );
 };
 
-
-
-
 export const Right = () => {
   return (
     <div className="w-full lg:w-120 flex flex-col border-r border-neutral-300">
       <div className="flex flex-col gap-0">
-        
-        {/* Header Section */}
         <div className="flex items-center gap-4 mb-2">
-          {/* 1. The Drawing Bar: Inline scale animation */}
-          <motion.div 
+          <motion.div
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-0.5 h-12 bg-[#C9A96E] shrink-0 origin-top" 
+            className="w-0.5 h-12 bg-[#C9A96E] shrink-0 origin-top"
           />
-          
+
           <motion.div
             initial={{ opacity: 0, x: -10 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -204,31 +191,27 @@ export const Right = () => {
           </motion.div>
         </div>
 
-        {/* List Section */}
-<div className="border-l border-neutral-200 pl-8 ml-px pt-2">
-  {EDGE_ITEMS.map(({ heading, subHeading, Icon }, index) => (
-    <motion.div
-      key={heading}
-      initial={{ opacity: 0, y: 15 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      // THE FIX IS HERE:
-      // margin: "100px" extends the detection zone artificially
-      // amount: 0 forces it to trigger instantly without waiting for the whole box
-      viewport={{ once: false, amount: 0, margin: "100px" }} 
-      transition={{ 
-        duration: 0.5, 
-        delay: index * 0.15 // Increased delay slightly so the waterfall effect is obvious
-      }}
-    >
-      <WhyUsSection
-        heading={heading}
-        subHeading={subHeading}
-        icon={<Icon />}
-        isLastChild={index === EDGE_ITEMS.length - 1}
-      />
-    </motion.div>
-  ))}
-</div>
+        <div className="border-l border-neutral-200 pl-8 ml-px pt-2">
+          {EDGE_ITEMS.map(({ heading, subHeading, Icon }, index) => (
+            <motion.div
+              key={heading}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0, margin: "100px" }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.15,
+              }}
+            >
+              <WhyUsSection
+                heading={heading}
+                subHeading={subHeading}
+                icon={<Icon />}
+                isLastChild={index === EDGE_ITEMS.length - 1}
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -237,9 +220,11 @@ export const Right = () => {
 export const WhyUs = () => {
   return (
     <Container className="pt-10 md:pt-20 lg:pt-32 flex flex-col items-center justify-center">
-      <div className="relative w-full px-4 md:px-6 lg:px-0 lg:w-6xl 
+      <div
+        className="relative w-full px-4 md:px-6 lg:px-0 lg:w-6xl 
       flex flex-col lg:flex-row items-start justify-between gap-16 
-      border-b border-neutral-300 pb-4">
+     pb-20"
+      >
         <HandTraceLine className="absolute" />
         <Left />
         <Right />
@@ -269,34 +254,32 @@ const Modern = ({ className }: { className?: string }) => {
 
 const TotalHonesty = ({ className }: { className?: string }) => {
   return (
-                <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#262626"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={className}
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              <path d="M9 12l2 2 4-4" />
-            </svg>
-  )
-}
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#262626"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <path d="M9 12l2 2 4-4" />
+    </svg>
+  );
+};
 
 const HandTraceLine = ({ className }: { className?: string }) => {
   return (
     <svg
-      // Thin ViewBox (0 0 30 120) makes the default size much smaller.
       viewBox="0 0 30 120"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
       <path
-        // Start Top-Right
         d="M 25, 10 
            
            /* First distinct hook, identical to top-left of your sketch */
@@ -307,11 +290,9 @@ const HandTraceLine = ({ className }: { className?: string }) => {
            
            /* Second distinct hook, identical to bottom-right of your sketch */
            C 5, 110, 25, 110, 25, 120"
-        
-        // Custom "engineered precision" stroke look
-        stroke="currentColor" // Use parent text-white class for color
-        strokeWidth="1.5"     // Thin, professional line weight
-        strokeLinecap="round" // Rounded ends, like a trace
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
     </svg>

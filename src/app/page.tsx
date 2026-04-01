@@ -1,3 +1,4 @@
+import { BrandStory } from "../components/brandStory";
 import { FAQs } from "../components/FAQs";
 import { FeaturesFirst } from "../components/Features-first";
 import { NewArrivals } from "../components/New-Arrivals";
@@ -14,6 +15,7 @@ export default function Home() {
       <FeaturesFirst />
       <NewArrivals />
       <WhyUs />
+      <BrandStory />
       <Newsletter />
       <FAQs />
       

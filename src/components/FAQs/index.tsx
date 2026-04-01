@@ -61,7 +61,7 @@ export const FAQs = () => {
                 onClick={() => toggleItem(index)}
                 className="flex items-center justify-between cursor-pointer lg:w-200 group"
               >
-                <h3 className="text-lg md:text-[28px] font-bold text-neutral-800 md:mb-2 group-hover:text-neutral-600 transition-colors">
+                <h3 className="text-lg md:text-[26px] font-semibold text-neutral-800 md:mb-2 group-hover:text-neutral-600 transition-colors">
                   {item.question}
                 </h3>
 

@@ -2,23 +2,27 @@
 
 import { ChevronRight, Send } from "lucide-react";
 import { Container } from "./container";
+import { Heading } from "./header";
 
 export const Newsletter = () => {
   return (
     <section className="py-24 w-full bg-white">
-      <Container className="relative border border-dashed border-neutral-400 w-[90%] md:w-[70%] lg:w-[80%] mx-auto px-16 py-10 text-center">
-
-         <ChevronRight className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 rotate-[225deg] text-neutral-700 size-5 z-20 bg-white" />
+      <Container className="relative border border-dashed border-neutral-300 w-[90%] md:w-[70%] lg:w-[80%] lg:h-120 mx-auto p-5 text-center
+      [--pattern-fg:var(--color-neutral-950)]/10">
+                 <ChevronRight className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 rotate-[225deg] text-neutral-700 size-5 z-20 bg-white" />
         <ChevronRight className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 -rotate-45 text-neutral-700 size-5 z-20 bg-white" />
         <ChevronRight className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 rotate-45 text-neutral-700 size-5 z-20 bg-white" />
         <ChevronRight className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 rotate-[135deg] text-neutral-700 size-5 z-20 bg-white" /> 
+        <div className="absolute top-0 left-0 w-full h-full  bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)] bg-size-[12px_12px] bg-fixed"></div>
+        <div className="w-full h-full border border-dashed border-neutral-300 flex items-center justify-center flex-col relative bg-neutral-100">
+
 
         <span className="text-xs tracking-[0.35em] font-inter font-medium text-neutral-400 uppercase">
           Stay Connected
         </span>
-        <h2 className="font-cormorantGaramond text-5xl md:text-6xl text-neutral-900 font-bold tracking-normal mt-5 mb-5">
+        <Heading className="text-center tracking-tight">
           The Editorial Edit
-        </h2>
+        </Heading>
 
         <div className="w-120 h-px bg-neutral-500 mx-auto mb-5" />
 
@@ -35,7 +39,7 @@ export const Newsletter = () => {
             type="email"
             placeholder="YOUR EMAIL ADDRESS"
             className="w-full bg-transparent border border-dotted border-neutral-400 rounded-xs
-             py-4 pl-0 pr-10 text-sm text-left pl-4
+             py-4 pl-4 pr-12 text-sm text-left
             placeholder:text-neutral-500 tracking-wider outline-none focus:border-neutral-900 transition-all duration-500
              font-inter uppercase font-semibold"
           />
@@ -56,7 +60,7 @@ export const Newsletter = () => {
         <p className="text-[12px] text-neutral-400  tracking-widest font-inter mt-8">
           By subscribing you agree to our Privacy Policy.
         </p>
-
+          </div>
       </Container>
     </section>
   );
