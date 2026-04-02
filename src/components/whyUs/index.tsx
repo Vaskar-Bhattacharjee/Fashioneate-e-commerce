@@ -182,7 +182,7 @@ export const Right = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <span className="text-[10px] tracking-[0.25em] uppercase font-inter text-neutral-500 block mb-1">
+            <span className="text-[10px] tracking-[0.25em] uppercase font-inter text-neutral-500 block mb-4">
               Why Fashioneate
             </span>
             <h2 className="font-inter font-semibold text-2xl md:text-3xl tracking-tight text-neutral-900">
@@ -219,7 +219,7 @@ export const Right = () => {
 
 export const WhyUs = () => {
   return (
-    <Container className="pt-10 md:pt-20 lg:pt-32 flex flex-col items-center justify-center">
+    <Container className="pt-10 md:pt-20 lg:pt-48 flex flex-col items-center justify-center">
       <div
         className="relative w-full px-4 md:px-6 lg:px-0 lg:w-6xl 
       flex flex-col lg:flex-row items-start justify-between gap-16 

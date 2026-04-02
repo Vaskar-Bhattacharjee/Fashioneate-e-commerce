@@ -4,13 +4,21 @@ import { Heading, SubHeading } from "../ui/header";
 import { Container } from "../ui/container";
 import Image from "next/image";
 import { IconCrop11Filled } from "@tabler/icons-react";
+import { motion } from "framer-motion";
 
 // ── YOUR SVGs — untouched ────────────────────────────────────────
 const WeddingRing = ({ className }: { className: string }) => (
-  <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
-    stroke="currentColor" strokeWidth="1"
-    strokeLinecap="round" strokeLinejoin="round"
-    className={className}>
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
     <circle cx="12" cy="15" r="5" />
     <path d="M9 9h6" />
     <path d="M8.5 9l1.5-3h3l1.5 3" />
@@ -19,12 +27,18 @@ const WeddingRing = ({ className }: { className: string }) => (
   </svg>
 );
 
-
 const MenSuit = ({ className }: { className: string }) => (
-  <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
-    stroke="currentColor" strokeWidth="1"
-    strokeLinecap="round" strokeLinejoin="round"
-    className={className}>
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
     {/* Blazer/jacket shape */}
     <path d="M8 2L4 8l4 2V22h12V10l4-2L16 2" />
     <path d="M8 2c0 4 8 4 8 0" />
@@ -33,10 +47,17 @@ const MenSuit = ({ className }: { className: string }) => (
 );
 
 const WomenDress = ({ className }: { className: string }) => (
-  <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
-    stroke="currentColor" strokeWidth="1"
-    strokeLinecap="round" strokeLinejoin="round"
-    className={className}>
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
     <path d="M9 3c0 2-1 3-2 4" />
     <path d="M15 3c0 2 1 3 2 4" />
     <path d="M7 7h10" />
@@ -46,12 +67,18 @@ const WomenDress = ({ className }: { className: string }) => (
   </svg>
 );
 
-
 const Kids = ({ className }: { className: string }) => (
-  <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
-    stroke="currentColor" strokeWidth="1"
-    strokeLinecap="round" strokeLinejoin="round"
-    className={className}>
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
     <path d="M4 6l3 2v11h10V8l3-2" />
     <path d="M4 6c1 0 2 1 3 2" />
     <path d="M20 6c-1 0-2 1-3 2" />
@@ -97,10 +124,15 @@ type CardProps = {
 };
 
 const CategoryCard = ({
-  label, image, Icon, className = "", iconSize = "size-12"
+  label,
+  image,
+  Icon,
+  className = "",
+  iconSize = "size-12",
 }: CardProps) => (
-  <div className={`relative overflow-hidden rounded-sm group bg-[#F5F3EE] ${className}`}>
-
+  <div
+    className={`relative overflow-hidden rounded-sm group bg-[#F5F3EE] ${className}`}
+  >
     <Image
       fill
       src={image}
@@ -125,18 +157,30 @@ export const Categories = () => {
   const [wedding, men, women, kids] = CATEGORIES;
 
   return (
-    <section className="bg-transparent py-20">
+    <section className="bg-transparent">
       <Container className="flex flex-col items-center justify-center md:w-6xl pt-22 lg:pt-0">
         <Heading className="py-0 text-center">Shop by Collection</Heading>
-        <SubHeading className="font-inter text-center text-neutral-500 border-b border-neutral-300 relative">
-          <IconCrop11Filled className="absolute bottom-0 left-0 text-gray-400 -translate-x-2 translate-y-3 border rounded-sm p-0"/>
-          <IconCrop11Filled className="absolute bottom-0 right-0 text-gray-400 translate-x-2 translate-y-3 border rounded-sm p-0"/>
-
+        <SubHeading className="font-inter text-center text-neutral-500 relative">
+          <motion.div
+            initial={{ width: "0%" }}
+            whileInView={{ width: "100%" }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }} 
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 h-px bg-neutral-300 "
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: 0.8 }} // Delays until line is mostly drawn
+          >
+          <IconCrop11Filled className="absolute bottom-0 left-0 text-gray-400 -translate-x-2 translate-y-3 border rounded-sm p-0" />
+          <IconCrop11Filled className="absolute bottom-0 right-0 text-gray-400 translate-x-2 translate-y-3 border rounded-sm p-0" />
+          </motion.div>
           Curated styles for every occasion
         </SubHeading>
 
-        <div className="w-full mt-16 flex gap-10 px-12">
-
+        <div className="w-full mt-30 flex gap-10 px-12">
           <CategoryCard {...wedding} className="w-1/2 h-140" />
 
           <div className="w-1/2 h-140 grid grid-rows-2 gap-6">
@@ -146,12 +190,8 @@ export const Categories = () => {
               <CategoryCard {...kids} className="w-full" />
             </div>
           </div>
-
         </div>
       </Container>
     </section>
   );
 };
-
-
-

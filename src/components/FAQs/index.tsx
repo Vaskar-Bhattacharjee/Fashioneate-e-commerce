@@ -44,7 +44,7 @@ export const FAQs = () => {
         Subheading="Need Help?"
         Heading="Frequently Asked Questions"
       />
-      <div className="w-full px-8 lg:px-0 lg:max-w-4xl lg:pt-20 mx-auto space-y-6">
+      <div className="w-full px-8 lg:px-0 lg:max-w-4xl lg:pt-10 mx-auto space-y-6">
         {FAQ_ITEMS.map((item, index) => {
           const isOpen = activeIndex === index;
 

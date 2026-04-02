@@ -2,7 +2,7 @@ import { cn } from "@/src/lib/utils";
 
 export const Heading = ({ children, className }: { children: React.ReactNode, className?: string }) => {
   return (
-    <h1 className={cn("w-full px-4 md:px-0 text-4xl md:text-5xl lg:text-7xl text-left font-cormorantGaramond font-bold text-fg/90 py-4 tracking-tighter", className)}>
+    <h1 className={cn("w-full px-4 md:px-0 text-4xl md:text-5xl lg:text-6xl text-left font-cormorantGaramond font-bold text-fg/90 py-4 tracking-tighter", className)}>
       {children}
     </h1>
   );
