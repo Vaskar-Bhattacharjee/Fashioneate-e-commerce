@@ -6,9 +6,9 @@ import { Heading, SubHeading } from "./header";
 
 export const Newsletter = () => {
   return (
-    <section className="py-24 w-full bg-white">
+    <section className="pt-20 lg:pt-32 lg:w-6xl bg-white">
       <Container
-        className="relative border border-neutral-300 w-[90%] md:w-[70%] lg:w-[80%] lg:h-120 mx-auto p-5 text-center
+        className="relative border border-neutral-300 w-full lg:h-120 mx-auto p-5 text-center
       [--pattern-fg:var(--color-neutral-950)]/10"
       >
         <ChevronRight className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 rotate-[225deg] text-neutral-700 size-5 z-20 bg-white" />

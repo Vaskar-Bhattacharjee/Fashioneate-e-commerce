@@ -26,7 +26,7 @@ export const Footer = () => {
         )}
       />
 
-      <div className="z-1 grid grid-cols-1 md:grid-cols-5 gap-8 py-10 px-6 md:px-10 lg:px-16 w-full">
+      <div className="z-1 grid grid-cols-1 md:grid-cols-5 gap-8 py-2 w-full lg:w-6xl">
 
         <div className="py-4 px-4 flex flex-col col-span-1 md:col-span-2 items-start justify-between gap-1 lg:mr-18">
           <Logo className="text-white md:text-6xl text-left ml-0" />

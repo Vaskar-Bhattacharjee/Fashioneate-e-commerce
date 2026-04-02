@@ -9,12 +9,14 @@ import { cn } from "@/src/lib/utils";
 
 export const Hero = () => {
   return (
-    <section className="relative w-screen min-h-[95vh] lg:h-[90vh] pt-32 lg:pt-0 overflow-hidden border-b border-neutral-200 ">
-      <Container>
-        <div className="w-full min-h-[98vh] lg:h-[98vh] flex flex-col lg:flex-row items-center justify-center gap-10 lg:justify-between px-6 md:px-12 lg:pl-16 lg:pr-28">
-          <Gridline />
+    <section className="relative w-screen min-h-[100vh] pt-32 lg:pt-0 overflow-hidden border-b border-neutral-200 
+    flex items-center justify-center">
+      
+      <Container className="flex items-center justify-center overflow-hidden  lg:max-w-6xl  ">
+        <Gridline />
+        <div className="relative lg:max-w-6xl min-h-[98vh] lg:h-[98vh] flex flex-col lg:flex-row items-center justify-center gap-10 lg:justify-between mr-39">
+          
 
-          {/* ── Left text section ── */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -132,7 +134,7 @@ export const Hero = () => {
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"
+                  className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"
                 />
               </motion.div>
             </div>
@@ -145,12 +147,12 @@ export const Hero = () => {
 
 export const Gridline = () => {
   return (
-    <div className="pointer-events-none absolute mask-r-from-80% mask-l-from-80% inset-0 z-0 grid h-[350vh] -translate-y-250 lg:-translate-y-200 gap-6 md:gap-10 lg:gap-15 -rotate-45 w-full select-none grid-cols-4">
-      <div className="relative w-full border border-dashed border-neutral-300"></div>
-      <div className="relative w-full border border-dashed border-neutral-300"></div>
-      <div className="relative w-full border border-dashed border-neutral-300"></div>
-      <div className="relative w-full border border-dashed border-neutral-300"></div>
+    <div className="pointer-events-none absolute grid grid-cols-4 gap-15 inset-0 h-500 -rotate-45 translate-x-40 -translate-y-50 mask-t-from-96% mask-b-from-60% z-0 overflow-hidden select-none">
+      
+        <div className="border border-dashed border-neutral-300 "></div>
+        <div className="border border-dashed border-neutral-300 "></div>
+        <div className="border border-dashed border-neutral-300 "></div>
+        <div className="border border-dashed border-neutral-300 "></div>
     </div>
   );
 };
-

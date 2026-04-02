@@ -7,9 +7,8 @@ import { motion } from "framer-motion";
 export const BrandStory = () => {
   return (
     <section className="relative bg-[#1C1C1C] w-full overflow-hidden">
-      <Container className="md:w-7xl max-w-7xl flex flex-col lg:flex-row justify-center items-stretch min-h-[600px]">
+      <Container className="w-full  flex flex-col lg:flex-row justify-center items-stretch min-h-[600px]">
 
-        {/* Left — Editorial Image with "Slow Burn" Animation */}
         <div className="relative w-full lg:w-[50%] min-h-[500px] lg:min-h-full overflow-hidden">
           <motion.div
             initial={{ scale: 1.1, opacity: 0, filter: "grayscale(100%) blur(4px)" }}
