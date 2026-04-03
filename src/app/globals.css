@@ -61,6 +61,7 @@ html.dark {
   --font-kumbh: var(--font-kumbh);
   --font-cormorantGaramond: var(--font-cormorant-garamond);
   --shadow-input: var(--shadow-input);
+  --box-shadow: var(--box-shadow);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -99,6 +100,21 @@ html.dark {
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
   --color-fg: rgb(61 61 61);
+  --shadow-box: 
+    0 0 24px rgba(34, 42, 53, 0.06),
+    0 1px 1px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(34, 42, 53, 0.04),
+    0 0 4px rgba(34, 42, 53, 0.08),
+    0 16px 68px rgba(47, 48, 55, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+--shadow-box-2:
+  0 0 24px rgba(34, 42, 53, 0.06),
+  0 1px 1px rgba(0, 0, 0, 0.05),
+  0 0 0 1px rgba(34, 42, 53, 0.04),
+  0 0 4px rgba(34, 42, 53, 0.08),
+  0 16px 68px rgba(47, 48, 55, 0.05),
+  inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 body {

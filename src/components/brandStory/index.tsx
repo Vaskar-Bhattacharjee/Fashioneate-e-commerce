@@ -7,9 +7,9 @@ import { motion } from "framer-motion";
 export const BrandStory = () => {
   return (
     <section className="relative bg-[#1C1C1C] w-full overflow-hidden">
-      <Container className="w-full  flex flex-col lg:flex-row justify-center items-stretch min-h-[600px]">
+      <Container className="w-full lg:max-w-7xl flex flex-col lg:flex-row justify-center items-stretch min-h-[600px]">
 
-        <div className="relative w-full lg:w-[50%] min-h-[500px] lg:min-h-full overflow-hidden">
+        <div className="relative w-full lg:w-[50%] min-h-125 lg:min-h-full overflow-hidden">
           <motion.div
             initial={{ scale: 1.1, opacity: 0, filter: "grayscale(100%) blur(4px)" }}
             whileInView={{ scale: 1, opacity: 1, filter: "grayscale(100%) blur(0px)" }}
@@ -26,16 +26,12 @@ export const BrandStory = () => {
             />
           </motion.div>
           
-          {/* Subtle dark gradient on right edge — blends into dark right panel */}
-          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-r from-transparent to-[#1C1C1C] z-10" />
-          {/* Bottom gradient for mobile blending */}
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#1C1C1C] to-transparent lg:hidden z-10" />
+          <div className="absolute inset-y-0 right-0 w-24 bg-linear-to-r from-transparent to-[#1C1C1C] z-10" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-[#1C1C1C] to-transparent lg:hidden z-10" />
         </div>
 
-        {/* Right — Content */}
         <div className="w-full lg:w-[50%] flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-16 lg:py-20 z-20">
 
-          {/* Eyebrow */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -49,7 +45,6 @@ export const BrandStory = () => {
             </span>
           </motion.div>
 
-          {/* Heading */}
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -62,7 +57,6 @@ export const BrandStory = () => {
             intention.
           </motion.h2>
 
-          {/* Gold divider */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -71,7 +65,6 @@ export const BrandStory = () => {
             className="w-8 h-px bg-[#C9A96E] mb-8" 
           />
 
-          {/* Body */}
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -105,7 +98,6 @@ export const BrandStory = () => {
             </Link>
           </motion.div>
 
-          {/* Stats row */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

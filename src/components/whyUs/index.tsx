@@ -185,7 +185,7 @@ export const Right = () => {
             <span className="text-[10px] tracking-[0.25em] uppercase font-inter text-neutral-500 block mb-4">
               Why Fashioneate
             </span>
-            <h2 className="font-inter font-semibold text-2xl md:text-3xl tracking-tight text-neutral-900">
+            <h2 className="font-inter font-semibold text-2xl md:text-3xl tracking-tight text-gray-800">
               The Fashioneate Edge
             </h2>
           </motion.div>
@@ -221,7 +221,7 @@ export const WhyUs = () => {
   return (
     <Container className="pt-10 md:pt-20 lg:pt-48 flex flex-col items-center justify-center">
       <div
-        className="relative w-full px-4 md:px-6 lg:px-0 lg:w-6xl 
+        className="relative w-full px-10 lg:px-10 lg:w-7xl 
       flex flex-col lg:flex-row items-start justify-between gap-16 
      pb-20"
       >

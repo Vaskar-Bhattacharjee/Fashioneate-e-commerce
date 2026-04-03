@@ -80,21 +80,21 @@ const TrustElement = [
 
 export const TrustBadge = () => {
   return (
-    <section className="relative lg:pt-48 w-6xl">
+    <section className="relative lg:pt-40 w-full md:w-7xl px-10">
       <Container className="relative border border-neutral-200 w-full mx-auto bg-white">
-<div
-  className="absolute inset-0 pointer-events-none opacity-[0.3] z-50 mix-blend-multiply"
-  style={{
-    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-    filter: "contrast(150%) brightness(100%)", // Makes the grain sharper
-  }}
-/>
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.3] z-50 mix-blend-multiply"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            filter: "contrast(150%) brightness(100%)"
+          }}
+        />
         <ChevronRight className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 rotate-225 text-neutral-500 size-5 z-20 bg-white" />
         <ChevronRight className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 -rotate-45 text-neutral-500 size-5 z-20 bg-white" />
         <ChevronRight className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 rotate-45 text-neutral-500 size-5 z-20 bg-white" />
         <ChevronRight className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 rotate-135 text-neutral-500 size-5 z-20 bg-white" />
-
-        <div className="grid grid-cols-2 lg:grid-cols-4 w-full min-h-[200px]">
+      
+        <div className="grid grid-cols-2 lg:grid-cols-4 w-full min-h-50">
           {TrustElement.map(({ Icon, title }, index) => (
             <div
               key={index}
@@ -110,7 +110,7 @@ export const TrustBadge = () => {
               )}
             >
               <Icon className="w-10 h-10 text-neutral-800 transition-transform duration-500 ease-out group-hover:-translate-y-1.5" />
-              <p className="text-xs uppercase tracking-[0.2em] font-inter font-medium text-neutral-600 transition-colors duration-500 group-hover:text-neutral-900">
+              <p className="text-sm uppercase tracking-[0.1em] font-inter font-semibold text-gray-800 transition-colors duration-500 group-hover:text-neutral-900">
                 {title}
               </p>
             </div>

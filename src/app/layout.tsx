@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Quicksand, Cormorant_Garamond, Roboto, Inter, Kumbh_Sans } from "next/font/google";
-import "./globals.css";
+import "@/src/app/globals.css";
 import { Navbar } from "@/src/components/ui/navbar";
 import { ThemeProvider } from "../components/ui/theme-provider";
 import { Footer } from "../components/Footer/footer";
 import { Toaster } from "../components/ui/sonner";
+
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",

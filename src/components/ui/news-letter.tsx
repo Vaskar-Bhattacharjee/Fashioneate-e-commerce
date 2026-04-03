@@ -6,7 +6,7 @@ import { Heading, SubHeading } from "./header";
 
 export const Newsletter = () => {
   return (
-    <section className="pt-20 lg:pt-32 lg:w-6xl bg-white">
+    <section className="pt-20 lg:pt-40 lg:w-6xl bg-white">
       <Container
         className="relative border border-neutral-300 w-full lg:h-120 mx-auto p-5 text-center
       [--pattern-fg:var(--color-neutral-950)]/10"

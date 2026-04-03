@@ -158,7 +158,7 @@ export const Categories = () => {
 
   return (
     <section className="bg-transparent">
-      <Container className="flex flex-col items-center justify-center md:w-6xl pt-22 lg:pt-0">
+      <Container className="flex flex-col items-center justify-center md:w-7xl px-20 pt-22 lg:pt-0">
         <Heading className="py-0 text-center">Shop by Collection</Heading>
         <SubHeading className="font-inter text-center text-neutral-500 relative">
           <motion.div
@@ -172,7 +172,7 @@ export const Categories = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: 0.8 }} // Delays until line is mostly drawn
+            transition={{ duration: 0.5, delay: 0.8 }}
           >
           <IconCrop11Filled className="absolute bottom-0 left-0 text-gray-400 -translate-x-2 translate-y-3 border rounded-sm p-0" />
           <IconCrop11Filled className="absolute bottom-0 right-0 text-gray-400 translate-x-2 translate-y-3 border rounded-sm p-0" />
@@ -180,7 +180,7 @@ export const Categories = () => {
           Curated styles for every occasion
         </SubHeading>
 
-        <div className="w-full mt-30 flex gap-10 px-12">
+        <div className="w-full mt-30 flex gap-10">
           <CategoryCard {...wedding} className="w-1/2 h-140" />
 
           <div className="w-1/2 h-140 grid grid-rows-2 gap-6">

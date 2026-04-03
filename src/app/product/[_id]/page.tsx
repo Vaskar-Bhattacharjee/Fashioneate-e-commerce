@@ -152,13 +152,13 @@ export default function Product() {
   };
 
   return (
-    <Container className="pt-10 md:pt-30 w-6xl mx-auto pb-20">
+    <Container className="pt-10 md:pt-30 mx-auto pb-20">
       {loading ? (
         <div className="text-neutral-950 text-7xl font-cormorantGaramond">
           Loading...
         </div>
       ) : product ? (
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-12 w-full">
           <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-8 md:gap-20">
             <motion.div
               initial={{ opacity: 0, scale: 0.3 }}
@@ -182,10 +182,10 @@ export default function Product() {
             >
               <Heading className="pb-2">{product.name}</Heading>
               <div className="flex items-center gap-2">
-                <h2 className="text-[2.5rem] text-neutral-800 font-bold">
+                <h2 className="text-[2.5rem] font-inter text-neutral-800 font-bold">
                   ${product.newprice}
                 </h2>
-                <p className="text-sm text-neutral-500 font-semibold mt-3">
+                <p className="text-sm font-inter text-neutral-500 font-semibold mt-3">
                   (Tax Included)
                 </p>
               </div>
@@ -254,7 +254,7 @@ export default function Product() {
             className="w-full max-w-6xl mx-auto px-4 md:px-0"
           >
             <div className="border-t border-neutral-200 pt-8">
-              <h3 className="text-4xl font-extrabold text-neutral-800 mb-4 font-cormorantGaramond">
+              <h3 className="text-4xl font-semibold text-neutral-800 mb-4 font-inter">
                 Description
               </h3>
               <div className="prose prose-neutral max-w-none">

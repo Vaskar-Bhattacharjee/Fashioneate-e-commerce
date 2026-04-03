@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { Container } from "../ui/container";
 import { SectionHeader } from "../ui/section-header";
+import { Heading, SubHeading } from "../ui/header";
 export const FAQ_ITEMS = [
   {
     question: "How long does shipping typically take?",
@@ -40,10 +41,12 @@ export const FAQs = () => {
 
   return (
     <Container className="md:16 lg:pt-32">
-      <SectionHeader
-        Subheading="Need Help?"
-        Heading="Frequently Asked Questions"
+     <SectionHeader
+        Subheading="Need help? We've got answers"
       />
+      <Heading className="text-center pb-8" >
+        Frequently Asked Questions
+      </Heading>
       <div className="w-full px-8 lg:px-0 lg:max-w-4xl lg:pt-10 mx-auto space-y-6">
         {FAQ_ITEMS.map((item, index) => {
           const isOpen = activeIndex === index;

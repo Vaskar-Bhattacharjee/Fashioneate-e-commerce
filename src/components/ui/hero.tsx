@@ -9,27 +9,26 @@ import { cn } from "@/src/lib/utils";
 
 export const Hero = () => {
   return (
-    <section className="relative w-screen min-h-[100vh] pt-32 lg:pt-0 overflow-hidden border-b border-neutral-200 
-    flex items-center justify-center">
+   <section className="relative w-screen h-[85vh] lg:h-[90vh] pt-32 lg:pt-0 overflow-hidden border-b border-neutral-200 flex items-center justify-center">
+
       
-      <Container className="flex items-center justify-center overflow-hidden  lg:max-w-6xl  ">
+      <Container className="flex items-center justify-center h-full relative px-10">        
         <Gridline />
-        <div className="relative lg:max-w-6xl min-h-[98vh] lg:h-[98vh] flex flex-col lg:flex-row items-center justify-center gap-10 lg:justify-between mr-39">
-          
+        <div className="relative w-full h-full flex flex-col lg:flex-row items-center justify-center gap-15 lg:justify-between">          
 
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col items-start justify-center w-full lg:ml-23 z-10"
+            className="flex flex-col items-start justify-center w-full z-10 gap-7"
           >
             <motion.div
-              className="relative w-65 p-[1.5px] group z-10 overflow-hidden h-10 rounded-xl cursor-pointer lg:mt-5"
+              className="relative w-65 p-[1.5px] group z-10 overflow-hidden h-10 rounded-xl cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
-            >
-              <div className="text-black bg-neutral-200 z-20 flex items-center justify-center gap-3 h-full rounded-xl tracking-tight font-mono">
+            > 
+              <div className="text-black bg-neutral-200 z-20 flex items-center justify-center gap-3 h-full rounded-xl tracking-tight font-mono ">
                 <motion.span
                   whileHover={{ rotate: 360, scale: 1.2 }}
                   transition={{ duration: 0.5 }}
@@ -52,8 +51,8 @@ export const Hero = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Heading className="text-neutral-700 tracking-tight">
-                Timeless pieces for the life you're building
+              <Heading className="text-neutral-700 tracking-tight lg:text-7xl">
+                Timeless pieces for the <br /> life you're building
               </Heading>
             </motion.div>
 
@@ -63,41 +62,38 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <SubHeading>
-                Premium fashion for those who believe that how you dress is how you meet the world. Timeless pieces, honest prices.
+                Premium fashion for those who believe that how you dress is < br/>how you meet the world. Timeless pieces, honest prices.
                 
               </SubHeading>
             </motion.div>
 
             <motion.div
-              className="flex items-center justify-center gap-4 md:mt-2 lg:mt-3 px-4 md:px-0"
+              className="flex items-center justify-center gap-4 px-4 md:px-0"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <motion.div
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.2 }}
+              <div
+                className="hover:-translate-y-0.5 transition-all duration-200"
               >
                 <Link
                   href="/shop"
-                  className="text-neutral-100 bg-neutral-900 border text-md px-8 py-1.5 rounded-lg font-semibold cursor-pointer hover:bg-neutral-800 hover:text-neutral-200 transition-all duration-300 inline-block"
+                  className="text-neutral-100 bg-neutral-900 shadow-box-2 border border-neutral-900 text-md px-8 py-2 rounded-md font-semibold cursor-pointer  inline-block font-inter"
                 >
                   Shop Now
                 </Link>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.2 }}
+              </div>
+              <div
+    
+                className="hover:-translate-y-0.5 transition-all duration-200"
               >
                 <Link
                   href="/new-arrivals"
-                  className="text-neutral-900 bg-neutral-100 text-md border px-8 py-1.5 rounded-lg font-semibold cursor-pointer hover:bg-neutral-200 hover:text-neutral-800 transition-all duration-300 inline-block"
+                  className="text-neutral-950 shadow-box bg-neutral-100 text-md  px-4 py-2 rounded-md font-semibold cursor-pointer inline-block font-inter w-40 text-center"
                 >
                   New Arrivals
                 </Link>
-              </motion.div>
+              </div>
             </motion.div>
           </motion.div>
 
@@ -147,12 +143,12 @@ export const Hero = () => {
 
 export const Gridline = () => {
   return (
-    <div className="pointer-events-none absolute grid grid-cols-4 gap-15 inset-0 h-500 -rotate-45 translate-x-40 -translate-y-50 mask-t-from-96% mask-b-from-60% z-0 overflow-hidden select-none">
+    <div className="pointer-events-none absolute grid grid-cols-4 gap-12 inset-0 h-900 scale-[1.2] -rotate-45 translate-x-100 -translate-y-300 mask-t-from-99% mask-b-from-95% z-0 overflow-hidden select-none">
       
-        <div className="border border-dashed border-neutral-300 "></div>
-        <div className="border border-dashed border-neutral-300 "></div>
-        <div className="border border-dashed border-neutral-300 "></div>
-        <div className="border border-dashed border-neutral-300 "></div>
+        <div className="border border-dashed border-neutral-300 bg-rgba(0, 0, 0, 0.2) "></div>
+        <div className="border border-dashed border-neutral-300 bg-[rgba(0, 0, 0, 0.2)] "></div>
+        <div className="border border-dashed border-neutral-300 bg-[rgba(0, 0, 0, 0.2)] "></div>
+        <div className="border border-dashed border-neutral-300 bg-[rgba(0, 0, 0, 0.2)] "></div>
     </div>
   );
 };
