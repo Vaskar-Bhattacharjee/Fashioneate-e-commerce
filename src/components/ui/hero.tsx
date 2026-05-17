@@ -9,7 +9,7 @@ import { cn } from "@/src/lib/utils";
 
 export const Hero = () => {
   return (
-   <section className="relative w-screen h-[85vh] lg:h-[90vh] pt-32 lg:pt-0 overflow-hidden border-b border-neutral-200 flex items-center justify-center">
+   <section className="relative w-screen h-[130vh] lg:h-[90vh] pt-16  lg:pt-0 overflow-hidden border-b border-neutral-200 flex items-center justify-center">
 
       
       <Container className="flex items-center justify-center h-full relative px-10">        
@@ -23,7 +23,7 @@ export const Hero = () => {
             className="flex flex-col items-start justify-center w-full z-10 gap-7"
           >
             <motion.div
-              className="relative w-65 p-[1.5px] group z-10 overflow-hidden h-10 rounded-xl cursor-pointer"
+              className="relative w-65 p-[1.5px] group z-10 overflow-hidden h-10 rounded-xl cursor-pointer hidden"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
@@ -52,9 +52,10 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <Heading className="text-neutral-700 tracking-tight lg:text-7xl">
-                Timeless pieces for the <br /> life you're building
+                Timeless pieces for <br /> the modern wardrobe
               </Heading>
             </motion.div>
+
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -62,7 +63,7 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <SubHeading>
-                Premium fashion for those who believe that how you dress is < br/>how you meet the world. Timeless pieces, honest prices.
+                Premium fashion for those who believe that how you dress is < br className="hidden lg:visible"/>how you meet the world. Timeless pieces, honest prices.
                 
               </SubHeading>
             </motion.div>
@@ -78,7 +79,7 @@ export const Hero = () => {
               >
                 <Link
                   href="/shop"
-                  className="text-neutral-100 bg-neutral-900 shadow-box-2 border border-neutral-900 text-md px-8 py-2 rounded-md font-semibold cursor-pointer  inline-block font-inter"
+                  className="text-neutral-100 bg-neutral-900 shadow-box-2 border border-neutral-900 text-sm md:text-lg px-8 py-2 rounded-md font-semibold cursor-pointer  inline-block font-inter"
                 >
                   Shop Now
                 </Link>
@@ -89,7 +90,7 @@ export const Hero = () => {
               >
                 <Link
                   href="/new-arrivals"
-                  className="text-neutral-950 shadow-box bg-neutral-100 text-md  px-4 py-2 rounded-md font-semibold cursor-pointer inline-block font-inter w-40 text-center"
+                  className="text-neutral-950 shadow-box bg-neutral-100 text-sm md:text-lg  px-4 py-2 rounded-md font-semibold cursor-pointer inline-block font-inter w-40 text-center"
                 >
                   New Arrivals
                 </Link>

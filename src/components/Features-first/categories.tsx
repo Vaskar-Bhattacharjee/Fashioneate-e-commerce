@@ -146,7 +146,7 @@ const CategoryCard = ({
       <h2 className="text-black  group-hover:text-neutral-800 font-serif font-bold text-xl md:text-2xl lg:text-3xl uppercase tracking-[.2em] whitespace-nowrap">
         {label}
       </h2>
-      <span className="text-neutral-800 text-sm font-inter font-semibold uppercase tracking-[.15em] whitespace-nowrap flex items-center gap-1 hover:text-neutral-800 transition-colors cursor-pointer">
+      <span className="text-neutral-800 text-xs md:text-sm font-inter font-semibold uppercase tracking-[.15em] whitespace-nowrap flex items-center gap-1 hover:text-neutral-800 transition-colors cursor-pointer">
         Shop Collection <span>›</span>
       </span>
     </div>
@@ -158,8 +158,8 @@ export const Categories = () => {
 
   return (
     <section className="bg-transparent">
-      <Container className="flex flex-col items-center justify-center md:w-7xl px-20 pt-22 lg:pt-0">
-        <Heading className="py-0 text-center">Shop by Collection</Heading>
+      <Container className="flex flex-col items-center justify-center md:w-7xl px-0 lg:px-20 pt-5 lg:pt-0">
+        <Heading className="py-0 text-center tracking-tight md:tracking-tighter flex-nowrap">Shop by Collection</Heading>
         <SubHeading className="font-inter text-center text-neutral-500 relative">
           <motion.div
             initial={{ width: "0%" }}
@@ -180,17 +180,17 @@ export const Categories = () => {
           Curated styles for every occasion
         </SubHeading>
 
-        <div className="w-full mt-25 flex gap-10">
-          <CategoryCard {...wedding} className="w-1/2 h-140" />
+<div className="w-full mt-25 flex flex-col gap-6 md:flex-row md:gap-10">
+  <CategoryCard {...wedding} className="w-90 h-72 md:w-1/2 md:h-140" />
 
-          <div className="w-1/2 h-140 grid grid-rows-2 gap-6">
-            <CategoryCard {...men} className="w-full" />
-            <div className="grid grid-cols-2 gap-4">
-              <CategoryCard {...women} className="w-full" />
-              <CategoryCard {...kids} className="w-full" />
-            </div>
-          </div>
-        </div>
+  <div className="w-full flex flex-col gap-4 md:w-1/2 md:h-140 md:grid md:grid-rows-2 md:gap-6">
+    <CategoryCard {...men} className="w-full h-72 md:h-auto" />
+    <div className="grid grid-cols-2 gap-4">
+      <CategoryCard {...women} className="w-full h-48 md:h-auto" />
+      <CategoryCard {...kids} className="w-full h-48 md:h-auto" />
+    </div>
+  </div>
+</div>
       </Container>
     </section>
   );
