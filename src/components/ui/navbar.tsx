@@ -121,13 +121,12 @@ export const DesktopNavbar = ({ userRole }: { userRole?: string | null }) => {
 
             <button
               onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 px-2 py-1.5 rounded-lg border border-neutral-200 bg-neutral-100 hover:bg-neutral-200 transition-colors"
+              className="flex items-center gap-2 px-2 py-1.5 rounded-lg border border-neutral-300 bg-neutral-100 hover:bg-neutral-200 transition-colors"
             >
               <IconSearch className="text-neutral-600 size-4" />
               <span className="text-sm text-neutral-500 font-inter w-24 text-left truncate">
                 Search...
               </span>
-              {/* ✏️ add this */}
               <div className="flex items-center gap-0.5 ml-2 bg-white border border-neutral-200 rounded px-2 py-0.5">
                 <kbd className="text-[12px] text-neutral-500  font-inter ">
                   ⌘

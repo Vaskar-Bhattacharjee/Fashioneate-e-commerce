@@ -145,10 +145,10 @@ export const Gridline = () => {
   return (
     <div className="pointer-events-none absolute grid grid-cols-4 gap-12 inset-0 h-900 scale-[1.2] -rotate-45 translate-x-100 -translate-y-300 mask-t-from-99% mask-b-from-95% z-0 overflow-hidden select-none">
       
-        <div className="border border-dashed border-neutral-300 bg-rgba(0, 0, 0, 0.2) "></div>
-        <div className="border border-dashed border-neutral-300 bg-[rgba(0, 0, 0, 0.2)] "></div>
-        <div className="border border-dashed border-neutral-300 bg-[rgba(0, 0, 0, 0.2)] "></div>
-        <div className="border border-dashed border-neutral-300 bg-[rgba(0, 0, 0, 0.2)] "></div>
+        <div className="border border-dashed border-neutral-300 "></div>
+        <div className="border border-dashed border-neutral-300 bg-linear-to-b from-transparent via-neutral-50 to-transparent mask-b-from-70% ma "></div>
+        <div className="border border-dashed border-neutral-300   "></div>
+        <div className="border border-dashed border-neutral-300  "></div>
     </div>
   );
 };

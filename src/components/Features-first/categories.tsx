@@ -180,7 +180,7 @@ export const Categories = () => {
           Curated styles for every occasion
         </SubHeading>
 
-        <div className="w-full mt-30 flex gap-10">
+        <div className="w-full mt-25 flex gap-10">
           <CategoryCard {...wedding} className="w-1/2 h-140" />
 
           <div className="w-1/2 h-140 grid grid-rows-2 gap-6">

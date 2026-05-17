@@ -93,7 +93,7 @@ export default function ShopPage() {
     }
 
   return (
-    <Container className="min-h-screen pt-4 md:pt-20 lg:pt-28 w-full px-3  lg:w-6xl flex flex-col items-start justify-start bg-transparent">
+    <Container className="min-h-screen pt-4 md:pt-20 lg:pt-28 w-full px-9  lg:w-7xl flex flex-col items-start justify-start bg-transparent">
       <div className="w-full flex flex-col justify-center items-start gap-4 border-b border-neutral-200 pb-4">
         <Heading className="text-[29px] lg:text-4xl md:pb-0">
           Our Collection for Your Style Needs

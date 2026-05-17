@@ -28,6 +28,11 @@ export async function dbConnect() {
     cached.promise = mongoose.connect(process.env.MONGODB_URI || "");
   }
 
-  cached.conn = await cached.promise;
+  try {
+    cached.conn = await cached.promise;
+  } catch (error) {
+    cached.promise = null;
+    throw error; 
+  }
   return cached.conn;
-}
+} 

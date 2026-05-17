@@ -219,7 +219,7 @@ export const Right = () => {
 
 export const WhyUs = () => {
   return (
-    <Container className="pt-10 md:pt-20 lg:pt-48 flex flex-col items-center justify-center">
+    <Container className="pt-10 md:pt-20 lg:pt-28 flex flex-col items-center justify-center">
       <div
         className="relative w-full px-10 lg:px-10 lg:w-7xl 
       flex flex-col lg:flex-row items-start justify-between gap-16 

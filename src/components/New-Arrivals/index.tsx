@@ -68,7 +68,7 @@ export const NewArrivals = () => {
   }
 
 return (
-    <section className="h-auto pt-20 lg:pt-48">
+    <section className="h-auto pt-20 lg:pt-30">
       <Container>
         <div className="w-full min-h-96 flex flex-col items-center justify-center">
 

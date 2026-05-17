@@ -94,10 +94,10 @@ export const SearchModal = ({ open, onClose }: SearchModalProps) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -16, scale: 0.98 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed top-24 left-1/2 -translate-x-1/2 w-[90vw] max-w-xl bg-white rounded-xl shadow-2xl z-[70] overflow-hidden border border-neutral-200"
+            className="fixed top-24 left-1/2 -translate-x-1/2 w-[90vw] max-w-xl bg-white rounded-md shadow-2xl z-[70] overflow-hidden border border-neutral-300"
           >
             {/* Search Input Row */}
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-neutral-100">
+            <div className="flex items-center gap-3 px-5 py-4 border-b border-neutral-300">
               <IconSearch className="text-neutral-600 size-5 shrink-0" />
               <input
                 ref={inputRef}
@@ -119,18 +119,18 @@ export const SearchModal = ({ open, onClose }: SearchModalProps) => {
             </div>
 
             {/* Body */}
-            <div className="max-h-[420px] overflow-y-auto">
+            <div className="max-h-105 overflow-y-auto">
 
               {loading && (
                 <div className="flex items-center justify-center py-12">
-                  <div className="w-5 h-5 border-2 border-neutral-200 border-t-neutral-700 rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-neutral-200 border-t-neutral-9700 rounded-full animate-spin" />
                 </div>
               )}
 
               {!loading && !query && (
                 <div className="flex flex-col items-center justify-center py-12 gap-2">
-                  <IconSearch className="size-8 text-neutral-200" />
-                  <p className="text-neutral-400 text-sm font-inter mt-1">
+                  <IconSearch className="size-8 text-neutral-500" />
+                  <p className="text-neutral-500 text-[15px] font-inter mt-1">
                     Start typing to search products
                   </p>
                 </div>

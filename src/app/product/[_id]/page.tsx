@@ -228,7 +228,7 @@ export default function Product() {
                 <button
                   ref={buttonRef} 
                   onClick={handleAddToCart}
-                  className="h-11 w-44 font-inter text-white bg-neutral-800 font-semibold rounded-lg hover:bg-neutral-900 transition cursor-pointer"
+                  className="h-11 w-44 font-inter text-white bg-neutral-800 shadow-box-2 font-semibold rounded-lg hover:bg-neutral-900 transition cursor-pointer"
                 >
                   Add to Cart
                 </button>
@@ -238,7 +238,7 @@ export default function Product() {
                     handleAddToCart();
                     router.push("/checkout")
                   }}
-                  className="h-11 w-44 font-inter text-neutral-800 border border-neutral-300 rounded-lg hover:bg-neutral-100 transition cursor-pointer"
+                  className="h-11 w-44 font-inter text-neutral-800 shadow-box font-semibold rounded-lg hover:bg-neutral-100 transition cursor-pointer"
                 >
                   Buy Now
                 </button>

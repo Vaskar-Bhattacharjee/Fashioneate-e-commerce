@@ -80,7 +80,7 @@ const TrustElement = [
 
 export const TrustBadge = () => {
   return (
-    <section className="relative lg:pt-40 w-full md:w-7xl px-10">
+    <section className="relative lg:pt-25 w-full md:w-7xl px-10">
       <Container className="relative border border-neutral-200 w-full mx-auto bg-white">
         <div
           className="absolute inset-0 pointer-events-none opacity-[0.3] z-50 mix-blend-multiply"
