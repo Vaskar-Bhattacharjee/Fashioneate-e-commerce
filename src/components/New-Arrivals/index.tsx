@@ -157,7 +157,7 @@ return (
 
           <div className="mt-8 md:mt-12 flex items-center justify-center">
             <Link href="/new-arrivals">
-              <div className="flex items-center justify-between gap-1 md:gap-2 w-30 md:w-35 group hover:bg-neutral-900 hover:shadow-lg transition-all duration-300 px-1 md:px-3 py-1 md:py-2 border border-neutral-900 rounded-full text-neutral-900">
+              <div className="flex items-center justify-between gap-1 md:gap-2 w-30 md:w-40 group hover:bg-neutral-900 hover:shadow-lg transition-all duration-300 px-1 md:px-3 py-1 md:py-2 border border-neutral-900 rounded-full text-neutral-900">
                 <span className="bg-neutral-900 group-hover:bg-neutral-100 size-8 rounded-full flex items-center justify-center">
                   <IconArrowRight className="size-7 text-neutral-100 group-hover:text-neutral-900" />
                 </span>

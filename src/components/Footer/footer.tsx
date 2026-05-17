@@ -52,7 +52,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="col-span-1 md:col-span-3 grid grid-cols-3 md:grid-cols-3 gap-4 md:gap-8">
+        <div className="col-span-1 md:col-span-3 grid grid-cols-3 md:grid-cols-3 gap-4 md:gap-8 pl-4 lg:pl-0">
           
           <GridElement
             heading="About Us"

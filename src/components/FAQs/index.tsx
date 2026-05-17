@@ -40,11 +40,12 @@ export const FAQs = () => {
   };
 
   return (
-    <Container className="md:16 lg:pt-32">
+    <Container className="pt-20 lg:pt-32">
      <SectionHeader
+        
         Subheading="Need help? We've got answers"
       />
-      <Heading className="text-center pb-8" >
+      <Heading className="text-center mb-10 md:pb-8 pt-0" >
         Frequently Asked Questions
       </Heading>
       <div className="w-full px-8 lg:px-0 lg:max-w-4xl lg:pt-10 mx-auto space-y-6">
