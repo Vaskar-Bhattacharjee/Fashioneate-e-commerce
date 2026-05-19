@@ -79,7 +79,6 @@ export const DesktopNavbar = ({ userRole }: { userRole?: string | null }) => {
   return (
     <>
       <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />{" "}
-      {/* ✏️ added */}
       <nav
         className={cn(
           "fixed transition-all duration-200 ease-out top-0 inset-x-0 z-50 hidden lg:flex h-20 items-center justify-center border-b border-neutral-300 bg-neutral-50",
@@ -95,7 +94,7 @@ export const DesktopNavbar = ({ userRole }: { userRole?: string | null }) => {
                   <Link
                     href={link.href}
                     className={cn(
-                      "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-xl font-semibold font-cormorantGaramond",
+                      "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 text-[23px] font-semibold font-cormorantGaramond",
                     )}
                   >
                     {link.name}
@@ -137,8 +136,7 @@ export const DesktopNavbar = ({ userRole }: { userRole?: string | null }) => {
               </div>
             </button>
 
-            <IconStarHalfFilled className="text-neutral-800 cursor-pointer" />
-
+            
             <div
               className="relative cursor-pointer"
               id="shopping-cart-target"

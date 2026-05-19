@@ -62,7 +62,7 @@ export const Hero = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <SubHeading>
+              <SubHeading className="-mt-5 lg:w-140">
                 Premium fashion for those who believe that how you dress is < br className="hidden lg:visible"/>how you meet the world. Timeless pieces, honest prices.
                 
               </SubHeading>

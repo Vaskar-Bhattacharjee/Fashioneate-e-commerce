@@ -26,9 +26,20 @@ export const BrandStory = () => {
             />
           </motion.div>
           
-          <div className="absolute inset-y-0 right-0 w-24 bg-linear-to-r from-transparent to-[#1C1C1C] z-10" />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-[#1C1C1C] to-transparent lg:hidden z-10" />
-        </div>
+          <div className="absolute inset-y-0 right-0 w-24 
+                bg-linear-to-r from-transparent to-[#1C1C1C] z-10" />
+
+{/* Add this — left fade */}
+<div className="absolute inset-y-0 left-0 w-20 
+                bg-linear-to-l from-transparent to-[#1C1C1C] z-10" />
+
+{/* Add this — top fade */}
+<div className="absolute inset-x-0 top-0 h-20 
+                bg-linear-to-b from-[#1C1C1C] to-transparent z-10" />
+
+{/* Existing bottom fade — keep */}
+<div className="absolute inset-x-0 bottom-0 h-24 
+                bg-linear-to-t from-[#1C1C1C] to-transparent lg:hidden z-10" />        </div>
 
         <div className="w-full lg:w-[50%] flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-16 lg:py-20 z-20">
 
@@ -53,7 +64,7 @@ export const BrandStory = () => {
             className="font-cormorantGaramond font-normal text-4xl lg:text-5xl text-[#F5F0E8] leading-[1.1] tracking-tight mb-6"
           >
             Crafted for those<br />
-            who dress with<br />
+            who dress with
             intention.
           </motion.h2>
 
@@ -70,7 +81,8 @@ export const BrandStory = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="font-inter text-sm text-[#A89880] leading-[1.9] font-light text-justify mb-10 max-w-md"
+            className="font-inter text-[#A89880]  font-light text-left mb-10 max-w-lg
+            "
           >
             Fashioneate was born from a singular vision — to restore the
             reverence of the garment. Rooted in the heritage of master
@@ -81,22 +93,22 @@ export const BrandStory = () => {
             true style is a legacy of craftsmanship and enduring quality.
           </motion.p>
 
-          {/* CTA */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <Link
-              href="/about"
-              className="inline-flex items-center gap-3 w-fit group mb-16"
+
+            {/* <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="text-[11px] tracking-[0.2em] uppercase font-inter font-medium text-[#F5F0E8] border-b border-[#F5F0E8]/40 pb-1 group-hover:border-[#C9A96E] group-hover:text-[#C9A96E] transition-colors duration-300">
-                Read our story
-              </span>
-            </Link>
-          </motion.div>
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-3 w-fit group mb-16"
+              >
+                <span className="text-[11px] tracking-[0.2em] uppercase font-inter font-medium text-[#F5F0E8] border-b border-[#F5F0E8]/40 pb-1 group-hover:border-[#C9A96E] group-hover:text-[#C9A96E] transition-colors duration-300">
+                  Read our story
+                </span>
+              </Link>
+            </motion.div> */}
 
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -118,7 +130,7 @@ export const BrandStory = () => {
             <div className="hidden sm:block w-px h-10 bg-[#C9A96E]/30 self-start mt-1" />
 
             <div className="w-1/3 sm:flex-1 flex flex-col gap-1 sm:pl-6 sm:border-none border-l border-[#C9A96E]/30 pl-4">
-              <span className="font-cormorantGaramond font-normal text-2xl sm:text-3xl text-[#F5F0E8] leading-none">
+              <span className="font-cormorantGaramond font-normal text-2xl sm:text-4xl text-[#F5F0E8] leading-none">
                 Ethically
               </span>
               <span className="font-cormorantGaramond font-normal text-lg sm:text-xl text-[#F5F0E8] leading-none">

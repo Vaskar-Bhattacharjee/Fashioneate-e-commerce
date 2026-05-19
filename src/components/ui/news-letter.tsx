@@ -39,14 +39,14 @@ export const Newsletter = () => {
             <input
               type="email"
               placeholder="YOUR EMAIL ADDRESS"
-              className="w-full lg:w-70 bg-transparent border border-dotted border-neutral-400 rounded-xs
+              className="w-full lg:w-full bg-transparent border border-dotted border-neutral-400 rounded-xs
              py-4 pl-4 pr-7 text-sm text-left
             placeholder:text-neutral-500 tracking-wider outline-none focus:border-neutral-900 transition-all duration-500
              font-inter uppercase font-semibold"
             />
             <button
               type="submit"
-              className="absolute right-6  md:right-5 lg:right-3 bottom-4  text-neutral-700 hover:text-neutral-900 transition-colors"
+              className="absolute right-6 md:right-5 lg:right-3 bottom-4  text-neutral-700 hover:text-neutral-900 transition-colors"
               aria-label="Subscribe"
             >
               <Send

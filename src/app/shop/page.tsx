@@ -344,7 +344,7 @@ export const CardLayoutOne = ({
   return (
     <Link
       href={`/product/${_id}`}
-      className=" md:w-65 md:h-105 mt-7 md:flex flex-col border border-neutral-200 rounded-md overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300"
+      className=" md:w-75 md:h-105 mt-7 md:flex flex-col border border-neutral-200 rounded-md overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300"
     >
       <div className="w-full h-60 relative">
         <Image src={src} alt="shop" fill className="object-cover" />
@@ -352,14 +352,14 @@ export const CardLayoutOne = ({
 
       <div className="w-full h-45 flex flex-col items-start justify-center px-6 py-4 bg-white">
         <div className="flex flex-col items-start justify-center gap-1">
-          <span className="text-[15px]  tracking-[0.2em] text-neutral-700 font-bold ">
+          <span className="text-[15px]  tracking-widest font-inter text-neutral-600 font-normal ">
             {category}
           </span>
 
           <p className="font-bold text-lg text-black leading-tight">
             {productName}
           </p>
-          <p className="text-sm text-neutral-500 line-clamp-2 leading-relaxed">
+          <p className="text-sm text-neutral-600 line-clamp-2 leading-0.1">
             {description}
           </p>
 
@@ -395,7 +395,7 @@ export const CardLayoutTwo = ({
 
       <div className="w-full h-45 flex flex-col items-start justify-center px-6 py-4 bg-white">
         <div className="flex flex-col items-start justify-center gap-1">
-          <span className="text-[15px]  tracking-[0.2em] text-neutral-700 font-bold ">
+          <span className="text-[15px]  tracking-widest font-inter text-neutral-600 font-normal ">
             {category}
           </span>
 
@@ -439,7 +439,7 @@ export const CardLayoutThree = ({
 
       <div className="w-full h-45 flex flex-col items-start justify-center px-6 py-4 bg-white">
         <div className="flex flex-col items-start justify-center gap-1">
-          <span className="text-[15px]  tracking-[0.2em] text-neutral-700 font-bold ">
+          <span className="text-[15px]  tracking-widest font-inter text-neutral-600 font-normal ">
             {category}
           </span>
 
@@ -483,7 +483,7 @@ export const CardLayoutFour = ({
 
       <div className=" h-full  flex flex-col items-start justify-center px-3 md:px-6 py-4 bg-white">
         <div className="flex flex-col items-start justify-center md:gap-1 py-2">
-          <span className="text-xs md:text-[15px]  tracking-[0.2em] text-neutral-700 font-bold ">
+          <span className="text-[15px]  tracking-widest font-inter text-neutral-600 font-normal ">
             {category}
           </span>
           <p className="font-bold text-xl text-black leading-tight">

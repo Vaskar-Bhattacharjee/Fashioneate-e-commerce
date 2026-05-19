@@ -104,13 +104,13 @@ const CATEGORIES = [
   {
     id: "women",
     label: "Women",
-    image: "https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg",
+    image: "https://images.pexels.com/photos/33616961/pexels-photo-33616961.jpeg",
     Icon: WomenDress,
   },
   {
     id: "kids",
     label: "Kids",
-    image: "https://images.pexels.com/photos/1619697/pexels-photo-1619697.jpeg",
+    image: "https://images.pexels.com/photos/6863565/pexels-photo-6863565.jpeg",
     Icon: Kids,
   },
 ];
@@ -126,7 +126,7 @@ type CardProps = {
 const CategoryCard = ({
   label,
   image,
-  Icon,
+  //Icon,
   className = "",
   iconSize = "size-12",
 }: CardProps) => (
@@ -140,9 +140,10 @@ const CategoryCard = ({
       className="object-cover grayscale opacity-80 transition-all duration-700 
       group-hover:opacity-90 group-hover:scale-105"
     />
+   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
 
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3">
-      <Icon className={`text-neutral-700 ${iconSize}`} />
+      {/* <Icon className={`text-neutral-700 ${iconSize}`} /> */}
       <h2 className="text-black  group-hover:text-neutral-800 font-serif font-bold text-xl md:text-2xl lg:text-3xl uppercase tracking-[.2em] whitespace-nowrap">
         {label}
       </h2>
