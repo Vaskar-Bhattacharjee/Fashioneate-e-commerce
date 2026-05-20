@@ -47,26 +47,33 @@ export const SearchModal = ({ open, onClose }: SearchModalProps) => {
   }, [open]);
 
   useEffect(() => {
-    if (!query.trim()) { setResults([]); return; }
+    if (!query.trim()) {
+      setResults([]);
+      return;
+    }
     const q = query.toLowerCase();
     const filtered = products
       .filter(
         (p) =>
           p.name.toLowerCase().includes(q) ||
           p.category.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q)
+          p.description.toLowerCase().includes(q),
       )
       .slice(0, 6);
     setResults(filtered);
   }, [query, products]);
 
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, [onClose]);
 
-  useEffect(() => { if (!open) setQuery(""); }, [open]);
+  useEffect(() => {
+    if (!open) setQuery("");
+  }, [open]);
 
   const handleSeeAll = () => {
     if (!query.trim()) return;
@@ -96,6 +103,15 @@ export const SearchModal = ({ open, onClose }: SearchModalProps) => {
             transition={{ duration: 0.2, ease: "easeOut" }}
             className="fixed top-24 left-1/2 -translate-x-1/2 w-[90vw] max-w-xl bg-white rounded-md shadow-2xl z-[70] overflow-hidden border border-neutral-300"
           >
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 z-10 p-1.5 rounded-md
+               text-neutral-400 hover:text-neutral-900 
+               hover:bg-neutral-100 transition-all duration-200"
+              aria-label="Close search"
+            >
+              <IconX className="size-4" />
+            </button>
             {/* Search Input Row */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-neutral-300">
               <IconSearch className="text-neutral-600 size-5 shrink-0" />
@@ -113,14 +129,10 @@ export const SearchModal = ({ open, onClose }: SearchModalProps) => {
                   <IconX className="text-neutral-600 size-4 hover:text-neutral-700 transition-colors" />
                 </button>
               )}
-              <kbd className="hidden sm:flex items-center text-[11px] text-neutral-600 border border-neutral-200 rounded px-1.5 py-0.5 font-mono">
-                ESC
-              </kbd>
             </div>
 
             {/* Body */}
             <div className="max-h-105 overflow-y-auto">
-
               {loading && (
                 <div className="flex items-center justify-center py-12">
                   <div className="w-5 h-5 border-2 border-neutral-200 border-t-neutral-9700 rounded-full animate-spin" />
@@ -162,7 +174,6 @@ export const SearchModal = ({ open, onClose }: SearchModalProps) => {
                       onClick={onClose}
                       className="flex items-center gap-4 px-5 py-3 hover:bg-neutral-50 transition-colors group"
                     >
-                      {/* Thumbnail */}
                       <div className="w-12 h-12 relative rounded-md overflow-hidden border border-neutral-100 shrink-0">
                         <Image
                           src={product.image}

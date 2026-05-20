@@ -49,7 +49,7 @@ export const NewArrivalsItemCard = ({
               {productName}
             </h3>
             <p className="text-white/80 font-medium text-sm mt-1">
-              ৳{price}
+              ${price}
             </p>
           </div>
 

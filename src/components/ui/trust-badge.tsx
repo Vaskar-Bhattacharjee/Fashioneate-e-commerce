@@ -3,8 +3,7 @@
 import { cn } from "@/src/lib/utils";
 import { Container } from "./container";
 import { ChevronRight } from "lucide-react";
-
-// SVGs remain exactly as your original code
+import { motion } from "framer-motion";
 const FreeReturns = ({ className }: { className?: string }) => (
   <svg
     viewBox="0 0 24 24"
@@ -96,7 +95,10 @@ export const TrustBadge = () => {
       
         <div className="grid grid-cols-2 lg:grid-cols-4 w-full min-h-50">
           {TrustElement.map(({ Icon, title }, index) => (
-            <div
+            <motion.div
+            initial={{ y: 20, filter: "blur(20px)" }}
+            whileInView={{  y: 0, filter: "blur(0px)" }}
+            transition={{ delay: index * 0.2, duration: 0.5 }}
               key={index}
               className={cn(
                 "group flex flex-col items-center justify-center gap-4 py-10 transition-colors hover:bg-neutral-50/30",
@@ -113,7 +115,7 @@ export const TrustBadge = () => {
               <p className="text-sm uppercase tracking-[0.1em] font-inter font-semibold text-gray-800 transition-colors duration-500 group-hover:text-neutral-900">
                 {title}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </Container>

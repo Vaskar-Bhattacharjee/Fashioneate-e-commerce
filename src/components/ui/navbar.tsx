@@ -7,7 +7,6 @@ import {
   IconShoppingBag,
   IconX,
   IconLayoutDashboard,
-  IconStarHalfFilled,
   IconAdjustmentsFilled,
 } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
@@ -158,7 +157,6 @@ export const DesktopNavbar = ({ userRole }: { userRole?: string | null }) => {
   );
 };
 
-// MobileNavbar — replace Input with icon button
 export const MobileNavbar = ({ userRole }: { userRole?: string | null }) => {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false); // ✏️ added
@@ -177,7 +175,7 @@ export const MobileNavbar = ({ userRole }: { userRole?: string | null }) => {
   return (
     <>
       <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />{" "}
-      {/* ✏️ added */}
+
       <nav className="w-screen lg:hidden h-20 flex items-center justify-between px-4 fixed top-0 bg-[#f1eded] z-50 border-b border-neutral-200">
         <Logo />
 
@@ -189,7 +187,6 @@ export const MobileNavbar = ({ userRole }: { userRole?: string | null }) => {
               </Link>
             )}
 
-            {/* ✏️ replaced Input with icon button */}
             <button onClick={() => setSearchOpen(true)}>
               <IconSearch className="text-neutral-600 size-6" />
             </button>
@@ -220,7 +217,6 @@ export const MobileNavbar = ({ userRole }: { userRole?: string | null }) => {
           </div>
         </div>
 
-        {/* Mobile menu — unchanged */}
         {open && (
           <motion.div
             style={{ backdropFilter: "blur(15px)" }}

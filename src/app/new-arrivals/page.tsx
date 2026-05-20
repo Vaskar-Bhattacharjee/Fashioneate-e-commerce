@@ -168,7 +168,7 @@ export const NewArrivalsCard = ({
   return (
     <Link href={`/product/${_id}`}>
       <motion.div className="group w-full border border-neutral-200 rounded-2xl flex flex-col gap-5 items-start justify-start overflow-hidden cursor-pointer p-[1.5px]  bg-white bg-[radial-gradient(circle_at_top_left,theme(colors.blue.400)_0%,transparent_50%)] transition-all duration-300">
-        <div className="w-full h-80 relative rounded-tl-[14.6px] rounded-tr-[14.6px] overflow-hidden bg-neutral-100 border border-neutral-100 ">
+        <div className="w-full h-80 relative rounded-tl-[16px] rounded-tr-[14.6px] overflow-hidden bg-neutral-100 border border-neutral-100 ">
           <Image src={image} alt={alt || "shop"} fill className="object-cover group-hover:scale-110 transition-all ease-in-out duration-300" />
         </div>
 

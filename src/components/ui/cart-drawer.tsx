@@ -27,7 +27,6 @@ export const CartDrawer = () => {
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 flex"
         >
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.5 }}

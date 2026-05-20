@@ -3,8 +3,22 @@
 import { ChevronRight, Send } from "lucide-react";
 import { Container } from "./container";
 import { Heading, SubHeading } from "./header";
+import { TypewriterEffectSmooth } from "./typewriter-effect";
 
 export const Newsletter = () => {
+    const words = [
+    {
+      text: "The",
+    },
+    {
+      text: "Editorial",
+    },
+    {
+      text: "Edit",
+    },
+  
+  ];
+  
   return (
     <section className="pt-20 lg:pt-30 lg:w-6xl bg-white">
       <Container
@@ -20,9 +34,7 @@ export const Newsletter = () => {
           <span className="text-[12px] text-neutral-400 tracking-widest font-inter mt-8 mb-4 lg:mb-0">
             Stay Connected
           </span>
-          <Heading className="text-center tracking-tight">
-            The Editorial Edit
-          </Heading>
+          <TypewriterEffectSmooth words={words} />
 
           <div className="w-4/5 md:w-120 h-px bg-neutral-500 mx-auto mb-5" />
 
