@@ -75,7 +75,7 @@ return (
           <div className="flex flex-col items-center justify-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
               className="flex items-center justify-center gap-2"
             >
@@ -85,7 +85,7 @@ return (
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
               className="mt-2 md:mt-4 max-w-2xl px-4 md:px-0"
             >
@@ -99,7 +99,7 @@ return (
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             className="mt-8 md:mt-12 w-full px-4 md:px-0 md:w-4xl lg:w-5xl
               flex flex-col lg:flex-row gap-4 lg:gap-6"  
@@ -107,7 +107,7 @@ return (
             {/* Card 1 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
               className="flex-1 min-w-0"  // ← flex-1 + min-w-0 prevents overflow
             >
@@ -123,7 +123,7 @@ return (
             {displayedProducts[1] && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
                 className="flex-1 min-w-0"
               >
@@ -140,7 +140,7 @@ return (
             {displayedProducts[2] && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
                 className="flex-1 min-w-0"
               >

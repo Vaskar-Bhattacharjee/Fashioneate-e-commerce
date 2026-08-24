@@ -12,8 +12,7 @@ export const BrandStory = () => {
         <div className="relative w-full lg:w-[50%] min-h-125 lg:min-h-full overflow-hidden">
           <motion.div
             initial={{ scale: 1.1, opacity: 0, filter: "grayscale(100%) blur(4px)" }}
-            whileInView={{ scale: 1, opacity: 1, filter: "grayscale(100%) blur(0px)" }}
-            viewport={{ once: true, margin: "-100px" }}
+            animate={{ scale: 1, opacity: 1, filter: "grayscale(100%) blur(0px)" }}
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="absolute inset-0"
           >
@@ -45,8 +44,7 @@ export const BrandStory = () => {
 
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center gap-4 mb-8"
           >
@@ -58,8 +56,7 @@ export const BrandStory = () => {
 
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="font-cormorantGaramond font-normal text-4xl lg:text-5xl text-[#F5F0E8] leading-[1.1] tracking-tight mb-6"
           >
@@ -70,16 +67,14 @@ export const BrandStory = () => {
 
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="w-8 h-px bg-[#C9A96E] mb-8" 
           />
 
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="font-inter text-[#A89880]  font-light text-left mb-10 max-w-lg
             "
@@ -112,8 +107,7 @@ export const BrandStory = () => {
 
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-wrap items-start gap-y-6 gap-x-0 border-t border-white/10 pt-8"
           >

@@ -40,8 +40,7 @@ const WhyUsSection = ({
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={cn(
         "flex flex-col items-start justify-start",
@@ -89,8 +88,7 @@ const Left = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <motion.div
         initial={{ opacity: 0, filter: "blur(10px)" }}
-        whileInView={{ opacity: 1, filter: "blur(0px)" }}
-        viewport={{ once: true }}
+        animate={{ opacity: 1, filter: "blur(0px)" }}
         transition={{ duration: 0.9, ease: "easeOut" }}
           className="rounded-lg border border-neutral-200 bg-white p-8
   transition-all duration-500 hover:border-[#C9A96E]/50 group"
@@ -105,8 +103,7 @@ const Left = () => {
 
         <motion.div
                 initial={{ opacity: 0, filter: "blur(10px)" }}
-        whileInView={{ opacity: 1, filter: "blur(0px)" }}
-        viewport={{ once: true }}
+        animate={{ opacity: 1, filter: "blur(0px)" }}
         transition={{ duration: 0.9, ease: "easeOut" }}
           className="rounded-lg border border-neutral-200 bg-white p-8
   transition-all duration-500 hover:border-[#C9A96E]/50 group"
@@ -130,14 +127,14 @@ export const Right = () => {
         <div className="flex items-center gap-4 mb-0">
           <motion.div
             initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
+            animate={{ scaleY: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="w-0.5 h-12 bg-[#C9A96E] shrink-0 origin-top"
           />
 
           <motion.div
             initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <span className="text-[10px] tracking-[0.25em] uppercase font-inter text-neutral-500 block mb-2">
@@ -154,8 +151,7 @@ export const Right = () => {
             <motion.div
               key={heading}
               initial={{ opacity: 0, y: 15, filter: "blur(10px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={{ once: false, amount: 0, margin: "100px" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{
                 duration: 0.5,
                 delay: index * 0.15,

@@ -97,7 +97,7 @@ export const TrustBadge = () => {
           {TrustElement.map(({ Icon, title }, index) => (
             <motion.div
             initial={{ y: 20, filter: "blur(20px)" }}
-            whileInView={{  y: 0, filter: "blur(0px)" }}
+            animate={{  y: 0, filter: "blur(0px)" }}
             transition={{ delay: index * 0.2, duration: 0.5 }}
               key={index}
               className={cn(

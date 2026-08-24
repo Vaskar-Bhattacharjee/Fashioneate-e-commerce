@@ -164,14 +164,14 @@ export const Categories = () => {
         <SubHeading className="font-inter text-center text-neutral-500 relative">
           <motion.div
             initial={{ width: "0%" }}
-            whileInView={{ width: "100%" }}
+            animate={{ width: "100%" }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }} 
             className="absolute bottom-0 left-1/2 -translate-x-1/2 h-px bg-neutral-300 "
           />
           <motion.div
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: 0.8 }}
           >
