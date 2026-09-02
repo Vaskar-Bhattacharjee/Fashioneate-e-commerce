@@ -2,157 +2,245 @@
 
 import { Heading, SubHeading } from "../ui/header";
 import { Container } from "../ui/container";
-import Image from "next/image";
 import { IconCrop11Filled } from "@tabler/icons-react";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
-// ── YOUR SVGs — untouched ────────────────────────────────────────
-const WeddingRing = ({ className }: { className: string }) => (
-  <svg
-    width="48"
-    height="48"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <circle cx="12" cy="15" r="5" />
-    <path d="M9 9h6" />
-    <path d="M8.5 9l1.5-3h3l1.5 3" />
-    <path d="M8.5 9l3.5 3 3.5-3" />
-    <path d="M12 9v3" />
-  </svg>
-);
-
-const MenSuit = ({ className }: { className: string }) => (
-  <svg
-    width="48"
-    height="48"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    {/* Blazer/jacket shape */}
-    <path d="M8 2L4 8l4 2V22h12V10l4-2L16 2" />
-    <path d="M8 2c0 4 8 4 8 0" />
-    <path d="M12 10v12" />
-  </svg>
-);
-
-const WomenDress = ({ className }: { className: string }) => (
-  <svg
-    width="48"
-    height="48"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d="M9 3c0 2-1 3-2 4" />
-    <path d="M15 3c0 2 1 3 2 4" />
-    <path d="M7 7h10" />
-    <path d="M7 7l-1 5h12l-1-5" />
-    <path d="M6 12l-3 9h18l-3-9" />
-    <path d="M9 3c0 0 1 2 3 2s3-2 3-2" />
-  </svg>
-);
-
-const Kids = ({ className }: { className: string }) => (
-  <svg
-    width="48"
-    height="48"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d="M4 6l3 2v11h10V8l3-2" />
-    <path d="M4 6c1 0 2 1 3 2" />
-    <path d="M20 6c-1 0-2 1-3 2" />
-    <path d="M9 6c0 0 1 2 3 2s3-2 3-2" />
-    <path d="M12 12l0.5 1.5H14l-1.2 0.9 0.5 1.6L12 15l-1.3 1 0.5-1.6L10 13.5h1.5z" />
-  </svg>
-);
 
 const CATEGORIES = [
   {
     id: "wedding",
     label: "Wedding",
-    image: "https://images.pexels.com/photos/1651411/pexels-photo-1651411.jpeg",
-    Icon: WeddingRing,
-    iconSize: "size-18",
+    images: [
+      "https://images.pexels.com/photos/1651411/pexels-photo-1651411.jpeg",
+      "https://images.pexels.com/photos/15686008/pexels-photo-15686008.jpeg",
+      "https://images.pexels.com/photos/10110637/pexels-photo-10110637.jpeg",
+    ],
   },
+
   {
     id: "men",
     label: "Men",
-    image: "https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg",
-    Icon: MenSuit,
+    images: [
+      "https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg",
+      "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg",
+      "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
+    ],
   },
+
   {
     id: "women",
     label: "Women",
-    image: "https://images.pexels.com/photos/33616961/pexels-photo-33616961.jpeg",
-    Icon: WomenDress,
+    images: [
+      "https://images.pexels.com/photos/33616961/pexels-photo-33616961.jpeg",
+      "https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg",
+      "https://images.pexels.com/photos/985635/pexels-photo-985635.jpeg",
+    ],
   },
+
   {
     id: "kids",
     label: "Kids",
-    image: "https://images.pexels.com/photos/6863565/pexels-photo-6863565.jpeg",
-    Icon: Kids,
+    images: [
+      "https://images.pexels.com/photos/6863565/pexels-photo-6863565.jpeg",
+      "https://images.pexels.com/photos/3661358/pexels-photo-3661358.jpeg",
+      "https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg",
+    ],
   },
 ];
 
 type CardProps = {
   label: string;
   image: string;
-  Icon: ({ className }: { className: string }) => React.ReactElement;
   className?: string;
-  iconSize?: string;
 };
+
+
+
+
 
 const CategoryCard = ({
   label,
-  image,
-  //Icon,
+  images,
   className = "",
-  iconSize = "size-12",
-}: CardProps) => (
-  <div
-    className={`relative overflow-hidden rounded-sm group bg-[#F5F3EE] ${className}`}
-  >
-    <Image
-      fill
-      src={image}
-      alt={label}
-      className="object-cover grayscale opacity-80 transition-all duration-700 
-      group-hover:opacity-90 group-hover:scale-105"
-    />
-   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+}: {
+  label: string;
+  images: string[];
+  className?: string;
+}) => {
+  const [index, setIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3">
-      {/* <Icon className={`text-neutral-700 ${iconSize}`} /> */}
-      <h2 className="text-black  group-hover:text-neutral-800 font-serif font-bold text-xl md:text-2xl lg:text-3xl uppercase tracking-[.2em] whitespace-nowrap">
-        {label}
-      </h2>
-      <span className="text-neutral-800 text-xs md:text-sm font-inter font-semibold uppercase tracking-[.15em] whitespace-nowrap flex items-center gap-1 hover:text-neutral-800 transition-colors cursor-pointer">
-        Shop Collection <span>›</span>
-      </span>
-    </div>
-  </div>
-);
+  useEffect(() => {
+    if (isHovered) return;
+
+    const interval = setInterval(() => {
+      setIndex((current) => (current + 1) % images.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [images.length, isHovered]);
+
+  return (
+    <motion.div
+      className={`
+        relative
+        overflow-hidden
+        rounded-sm
+        group
+        bg-[#F5F3EE]
+        ${className}
+      `}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ y: -2 }}
+      transition={{
+        duration: 0.4,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+    >
+      {/* IMAGE LAYER — all three mounted, crossfade by opacity */}
+      <div className="absolute inset-0">
+        {images.map((src, i) => (
+          <motion.div
+            key={src}
+            className="absolute inset-0"
+            initial={false}
+animate={{
+  opacity: i === index ? 1 : 0,
+  scale: i === index ? (isHovered ? 1.05 : 1) : 1.02,
+  x: i === index ? "0%" : "2%",
+}}
+transition={{
+  opacity: { duration: 0.9, ease: "easeInOut" },
+  scale: { duration: 6, ease: [0.22, 1, 0.36, 1] },
+  x: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
+}}
+            style={{ zIndex: i === index ? 1 : 0 }}
+          >
+            <Image
+              src={src}
+              alt={label}
+              fill
+              priority={i === 0}
+              className="
+                object-cover
+                grayscale-[10%]
+                transition-[filter]
+                duration-700
+                group-hover:grayscale-0
+              "
+            />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* EDITORIAL OVERLAY */}
+      <div
+        className="
+          absolute
+          inset-0
+          bg-gradient-to-t
+          from-black/50
+          via-black/10
+          to-transparent
+        "
+      />
+
+      {/* CATEGORY CONTENT */}
+      <div
+        className="
+          absolute
+          inset-0
+          flex
+          flex-col
+          items-center
+          justify-center
+          gap-3
+        "
+      >
+        <motion.h2
+          className="
+            text-white
+            font-serif
+            font-bold
+            text-xl
+            md:text-2xl
+            lg:text-3xl
+            uppercase
+            tracking-[.2em]
+            whitespace-nowrap
+            pointer-events-none
+          "
+          animate={{
+            letterSpacing: isHovered ? "0.24em" : "0.20em",
+          }}
+          transition={{
+            duration: 0.5,
+          }}
+        >
+          {label}
+        </motion.h2>
+
+        <motion.span
+          className="
+            text-white/80
+            text-xs
+            md:text-sm
+            font-inter
+            font-semibold
+            uppercase
+            tracking-[.15em]
+            whitespace-nowrap
+            flex
+            items-center
+            gap-1
+          "
+          animate={{
+            y: isHovered ? -2 : 0,
+            opacity: isHovered ? 1 : 0.8,
+          }}
+          transition={{
+            duration: 0.4,
+          }}
+        >
+          Shop Collection
+          <span>›</span>
+        </motion.span>
+      </div>
+
+      {/* SMALL PROGRESS INDICATOR */}
+      <div
+        className="
+          absolute
+          bottom-5
+          left-1/2
+          -translate-x-1/2
+          flex
+          gap-1.5
+        "
+      >
+        {images.map((_, i) => (
+          <span
+            key={i}
+            className={`
+              h-[2px]
+              rounded-full
+              transition-all
+              duration-500
+              ${
+                i === index
+                  ? "w-7 bg-white"
+                  : "w-2 bg-white/40"
+              }
+            `}
+          />
+        ))}
+      </div>
+    </motion.div>
+  );
+};
 
 export const Categories = () => {
   const [wedding, men, women, kids] = CATEGORIES;

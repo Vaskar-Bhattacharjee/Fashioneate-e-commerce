@@ -176,7 +176,7 @@ export const MobileNavbar = ({ userRole }: { userRole?: string | null }) => {
     <>
       <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />{" "}
 
-      <nav className="w-screen lg:hidden h-20 flex items-center justify-between px-4 fixed top-0 bg-[#f1eded] z-50 border-b border-neutral-200">
+      <nav className="w-screen lg:hidden h-15 flex items-center justify-between px-4 fixed top-0 bg-[#f1eded] z-50 border-b border-neutral-200">
         <Logo />
 
         <div className="flex items-center justify-center gap-6">

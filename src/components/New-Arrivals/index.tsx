@@ -68,7 +68,7 @@ export const NewArrivals = () => {
   }
 
 return (
-    <section className="h-auto pt-20 lg:pt-30">
+    <section className="h-auto pt-20 lg:pt-25">
       <Container>
         <div className="w-full min-h-96 flex flex-col items-center justify-center">
 
@@ -80,7 +80,7 @@ return (
               className="flex items-center justify-center gap-2"
             >
               <span className="w-30 bg-neutral-300 h-0.5"></span>
-              <Heading className="font-extrabold py-0 text-center">New Arrivals</Heading>
+              <Heading className="py-0 text-center">New Arrivals</Heading>
               <span className="w-30 bg-neutral-300 h-0.5"></span>
             </motion.div>
             <motion.div
@@ -89,7 +89,7 @@ return (
               transition={{ delay: 0.7 }}
               className="mt-2 md:mt-4 max-w-2xl px-4 md:px-0"
             >
-              <SubHeading className="text-center text-neutral-600 w-85 text-">
+              <SubHeading className="text-center text-neutral-500 w-85 text-[16px] md:text-[18px]">
                 Explore our latest collection of fashion-forward pieces that
                 have just arrived. From trendy apparel to stylish accessories,
                 discover the perfect additions to elevate your wardrobe.
@@ -157,11 +157,11 @@ return (
 
           <div className="mt-8 md:mt-12 flex items-center justify-center">
             <Link href="/new-arrivals">
-              <div className="flex items-center justify-between gap-1 md:gap-2 w-30 md:w-40 group hover:bg-neutral-900 hover:shadow-lg transition-all duration-300 px-1 md:px-3 py-1 md:py-2 border border-neutral-900 rounded-full text-neutral-900">
+              <div className="flex items-center justify-between gap-1 w-30 md:w-35 group hover:bg-neutral-900 hover:shadow-lg transition-all duration-300 px-2 md:px-3 py-1 md:py-2 border border-neutral-900 rounded-full text-neutral-900">
                 <span className="bg-neutral-900 group-hover:bg-neutral-100 size-8 rounded-full flex items-center justify-center">
                   <IconArrowRight className="size-7 text-neutral-100 group-hover:text-neutral-900" />
                 </span>
-                <p className="text-neutral-900 group-hover:text-white font-inter font-semibold text-md lg:text-lg">
+                <p className="text-neutral-900 group-hover:text-white font-semibold text-md lg:text-lg font-cormorantGaramond">
                   See More
                 </p>
               </div>

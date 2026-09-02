@@ -52,11 +52,11 @@ const WhyUsSection = ({
         <div className="text-[#ba8420] font-medium text-[18px] tracking-[0.15em]">
           0{no}
         </div>
-        <h3 className="font-inter text-balance font-semibold text-xl text-neutral-800 tracking-normal">
+        <h3 className="font-inter text-balance font-medium text-xl text-neutral-800 tracking-tight">
           {heading}
         </h3>
       </div>
-      <p className="font-inter text-balance tracking-tight text-[18px] text-neutral-600 font-normal leading-relaxed  lg:w-140">
+      <p className="font-inter text-balance tracking-tight text-[16px] md:text-[18px] text-neutral-500 font-normal leading-relaxed  lg:w-140">
         {subHeading}
       </p>
     </motion.div>
@@ -77,7 +77,7 @@ const Left = () => {
           <h3 className="font-cormorantGaramond font-normal text-4xl lg:text-5xl text-[#F5F0E8] tracking-tight mb-5 text-balance">
             Dressed for life, not just the season.
           </h3>
-          <p className="text-[#A89880] max-w-sm leading-relaxed font-inter text-[16px] font-light">
+          <p className="text-[#A89880] max-w-sm leading-normal font-inter text-[16px] md:text-[18px] font-light">
             We source the world's finest textiles so every piece earns its place
             in your wardrobe — year after year.
           </p>
@@ -93,10 +93,10 @@ const Left = () => {
           className="rounded-lg border border-neutral-200 bg-white p-8
   transition-all duration-500 hover:border-[#C9A96E]/50 group"
         >
-          <h3 className="font-inter font-semibold text-lg text-neutral-800 tracking-normal text-balance mb-2">
+          <h3 className="font-inter font-medium text-xl text-neutral-800 tracking-tight text-balance mb-2">
             Modern Curation
           </h3>
-          <p className="text-[17px] font-inter text-neutral-600 leading-relaxed">
+          <p className="text-[16px] md:text-[18px] font-inter text-neutral-500 leading-relaxed">
             Accessible luxury direct to consumer craftsmanship.
           </p>
         </motion.div>
@@ -108,10 +108,10 @@ const Left = () => {
           className="rounded-lg border border-neutral-200 bg-white p-8
   transition-all duration-500 hover:border-[#C9A96E]/50 group"
         >
-          <h3 className="font-inter font-semibold text-lg text-neutral-800 tracking-normal text-balance mb-2">
+          <h3 className="font-inter font-medium text-xl text-neutral-800 tracking-tight text-balance mb-2">
             Ethical Craftsmanship
           </h3>
-          <p className="text-[17px] font-inter text-neutral-600 leading-relaxed mt-2">
+          <p className="text-[16px] md:text-[18px] font-inter text-neutral-500 leading-relaxed mt-2">
             Ethical labor and transparent pricing in every single thread.
           </p>
         </motion.div>

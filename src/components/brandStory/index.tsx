@@ -3,6 +3,33 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "../ui/container";
 import { motion } from "framer-motion";
+import React from "react";
+
+const BRAND_STORY = {
+  title: "Our Story",
+  description: "Fashioneate was born from a passion for creating clothing that empowers women to express their unique style. We believe fashion should be accessible, sustainable, and made with care. Our journey began with a simple idea: to make beautiful, high-quality clothing that makes every woman feel confident and beautiful.",
+};
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.2, // Short pause when scrolled into view
+      staggerChildren: 0.03, // The delay between each word
+    },
+  },
+};
+
+const wordVariants = {
+  hidden: { opacity: 0 }, // Removed y: 20
+  visible: {
+    opacity: 1, // Removed y: 0
+    transition: { 
+      duration: 0.8, 
+      ease: [0.22, 1, 0.36, 1] as const 
+    },
+  },
+};
 
 export const BrandStory = () => {
   return (
@@ -50,7 +77,7 @@ export const BrandStory = () => {
           >
             <div className="w-8 h-px bg-[#C9A96E]" />
             <span className="text-[10px] tracking-[0.3em] uppercase font-inter font-medium text-[#C9A96E]">
-              Our Story
+              {BRAND_STORY.title}
             </span>
           </motion.div>
 
@@ -72,21 +99,31 @@ export const BrandStory = () => {
             className="w-8 h-px bg-[#C9A96E] mb-8" 
           />
 
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="font-inter text-[#A89880]  font-light text-left mb-10 max-w-lg
-            "
-          >
-            Fashioneate was born from a singular vision — to restore the
-            reverence of the garment. Rooted in the heritage of master
-            tailoring and the quiet luxury of timeless silhouettes, our
-            collections represent a dialogue between the past and the
-            present. Every stitch is a commitment to permanence. We do not
-            design for the season — we curate for those who understand that
-            true style is a legacy of craftsmanship and enduring quality.
-          </motion.p>
+<motion.p
+  variants={containerVariants}
+  initial="hidden"
+  whileInView="visible" // <--- Triggered ONLY when scrolled into view
+  viewport={{ once: true, amount: 0.2 }} // <--- Ensures it only happens once, and waits until 20% of the paragraph is visible
+  className="font-inter text-[#A89880] font-light text-left mb-10 max-w-lg"
+>
+  {BRAND_STORY.description.split("\n").map((line, lineIndex, array) => (
+    <React.Fragment key={lineIndex}>
+      {/* Map through each word in the line */}
+      {line.split(" ").map((word, wordIndex) => (
+        <motion.span
+          key={`${lineIndex}-${wordIndex}`}
+          variants={wordVariants}
+          className="inline-block mr-[0.25em] text-[16px] md:text-[18px]" // Keeps standard spacing between words
+        >
+          {word}
+        </motion.span>
+      ))}
+      
+      {/* Add a line break at the end of every line EXCEPT the very last one */}
+      {lineIndex !== array.length - 1 && <br />}
+    </React.Fragment>
+  ))}
+</motion.p>
 
 
             {/* <motion.div 

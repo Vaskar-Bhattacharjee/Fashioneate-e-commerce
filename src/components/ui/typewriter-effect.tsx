@@ -86,7 +86,6 @@ export const TypewriterEffect = ({
         }}
         transition={{
           duration: 0.8,
-          repeat: Infinity,
           repeatType: "reverse",
         }}
         className={cn(

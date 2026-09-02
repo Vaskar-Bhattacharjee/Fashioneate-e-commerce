@@ -18,7 +18,7 @@ const Contact = () => {
         {/* Left Side: Form */}
         <div className="flex-1 flex flex-col justify-center items-start gap-8 p-8 md:p-16">
           <div className="space-y-2 text-center md:text-left">
-            <h1 className="text-4xl text-neutral-900 font-bold tracking-tight">
+            <h1 className="text-4xl text-neutral-900 font-bold font-cormorantGaramond tracking-tight">
               Get in Touch
             </h1>
             <p className="text-neutral-500 text-sm md:text-base leading-relaxed">
@@ -42,7 +42,7 @@ const Contact = () => {
               className="w-full h-40 p-4 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all text-black placeholder:text-neutral-400 resize-none"
             ></textarea>  
             
-            <button className="w-full h-12 bg-neutral-900 text-white font-bold rounded-xl hover:bg-neutral-800 transform active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-neutral-200">
+            <button className="w-full h-12 bg-neutral-900 text-white font-semibold text-lg rounded-xl hover:bg-neutral-800 transform active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-neutral-200 font-cormorantGaramond">
               Send Message
             </button>                  
           </div>

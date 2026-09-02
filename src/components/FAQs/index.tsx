@@ -3,7 +3,7 @@ import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { Container } from "../ui/container";
-import { SectionHeader } from "../ui/section-header";
+import { SectionHeader, SectionHeading } from "../ui/section-header";
 import { Heading, SubHeading } from "../ui/header";
 export const FAQ_ITEMS = [
   {
@@ -45,9 +45,9 @@ export const FAQs = () => {
         
         Subheading="Need help? We've got answers"
       />
-      <Heading className="text-center mb-10 md:pb-8 pt-0" >
-        Frequently Asked Questions
-      </Heading>
+      <SectionHeading
+        heading="Frequently Asked Questions"
+      />
       <div className="w-full px-8 lg:px-0 lg:max-w-4xl lg:pt-10 mx-auto space-y-6">
         {FAQ_ITEMS.map((item, index) => {
           const isOpen = activeIndex === index;
@@ -103,7 +103,7 @@ export const FAQs = () => {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
-                    <p className="text-neutral-600 w-120 lg:w-190 pt-4 text-lg font-semibold">
+                    <p className="text-neutral-500 w-120 lg:w-190 pt-4 text-sm md:text-lg font-medium">
                       {item.answer}
                     </p>
                   </motion.div>

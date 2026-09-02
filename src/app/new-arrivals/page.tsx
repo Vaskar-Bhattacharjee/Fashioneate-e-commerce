@@ -86,7 +86,7 @@ const NewArrivals = () => {
         />
 
         <div className="w-5xl flex items-center justify-between gap-6 z-10">
-          <Heading className="text-5xl md:text-5xl font-bold tracking-tight">
+          <Heading className="text-5xl md:text-5xl tracking-tight">
             New Arrivals
           </Heading>
           <div className=" flex items-center gap-4 relative z-50">
@@ -167,8 +167,8 @@ export const NewArrivalsCard = ({
 }) => {
   return (
     <Link href={`/product/${_id}`}>
-      <motion.div className="group w-full border border-neutral-200 rounded-2xl flex flex-col gap-5 items-start justify-start overflow-hidden cursor-pointer p-[1.5px]  bg-white bg-[radial-gradient(circle_at_top_left,theme(colors.blue.400)_0%,transparent_50%)] transition-all duration-300">
-        <div className="w-full h-80 relative rounded-tl-[16px] rounded-tr-[14.6px] overflow-hidden bg-neutral-100 border border-neutral-100 ">
+      <motion.div className="group w-full border border-neutral-200 rounded-xl flex flex-col gap-5 items-start justify-start overflow-hidden cursor-pointer p-[1.5px]  bg-white bg-[radial-gradient(circle_at_top_left,theme(colors.blue.400)_0%,transparent_50%)] transition-all duration-300">
+        <div className="w-full h-80 relative rounded-tl-[13px] rounded-tr-[13px] rounded-bl-[13px] rounded-br-[13px] overflow-hidden bg-neutral-100 border border-neutral-100 ">
           <Image src={image} alt={alt || "shop"} fill className="object-cover group-hover:scale-110 transition-all ease-in-out duration-300" />
         </div>
 
@@ -182,18 +182,19 @@ export const NewArrivalsCard = ({
             <span className="text-lg font-semibold tracking-tight text-neutral-600 ">
               $ {newprice}
             </span>
-            <div
-              onClick={(e) => {
-                e.preventDefault();
-                onAddToCart();
-              }}
-              className="flex justify-center items-center gap-2 z-10 group shadow-input px-2 py-1 rounded-md bg-neutral-50 hover:bg-neutral-100 cursor-pointer"
-            >
-              <p className="text-sm font-semibold tracking-tight text-neutral-600">
-                Add to Cart
-              </p>
-              <IconShoppingBagCheck className="bg-transparent text-neutral-900" />
-            </div>
+<div
+  onClick={(e) => {
+    e.preventDefault();
+    onAddToCart();
+  }}
+  className="flex justify-center items-center gap-2 z-10 group shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200 px-2 py-1 rounded-md bg-neutral-50 hover:bg-neutral-100 cursor-pointer
+  active:scale-95 transition-transform duration-150 w-fit h-fit"
+>
+  <p className="text-sm font-semibold tracking-tight text-neutral-600">
+    Add to Cart
+  </p>
+  <IconShoppingBagCheck className="bg-transparent text-neutral-900" />
+</div>
           </div>
         </div>
       </motion.div>

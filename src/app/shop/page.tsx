@@ -356,7 +356,7 @@ export const CardLayoutOne = ({
             {category}
           </span>
 
-          <p className="font-bold text-lg text-black leading-tight">
+          <p className="font-bold text-lg text-black leading-tight ">
             {productName}
           </p>
           <p className="text-sm text-neutral-600 line-clamp-2 leading-0.1">

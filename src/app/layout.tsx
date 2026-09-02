@@ -32,6 +32,9 @@ export const metadata: Metadata = {
   title: "Fashioneate",
   description:
     "Your Ultimate Fashion Destination - Trendy Styles for Every Occasion",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

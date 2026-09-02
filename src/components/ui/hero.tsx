@@ -9,49 +9,59 @@ import { cn } from "@/src/lib/utils";
 
 export const Hero = () => {
   return (
-   <section className="relative w-screen h-[130vh] lg:h-[90vh] pt-16  lg:pt-0 overflow-hidden border-b border-neutral-200 flex items-center justify-center">
+   <section className="relative w-screen h-[130vh] lg:h-[90vh]  lg:pt-0 mt-10 overflow-hidden border-b border-neutral-200 flex items-center justify-center  "
+   >
+     <Image
+    src="https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg"
+    alt=""
+    fill
+    priority
+    className="
+      object-cover
+      object-[58%_center]
+      scale-[1.03]
+      brightness-[0.72]
+      contrast-[1.05]
+      saturate-[0.75]
+    "
+  />
+
+  {/* Editorial shadow */}
+  <div
+    className="
+      absolute
+      inset-0
+      bg-[linear-gradient(90deg,rgba(0,0,0,0.68)_0%,rgba(0,0,0,0.48)_32%,rgba(0,0,0,0.12)_68%,rgba(0,0,0,0.04)_100%)]
+    "
+  />
+
+  {/* Very subtle overall tone */}
+  <div
+    className="
+      absolute
+      inset-0
+      bg-black/[0.06]
+    "
+  />
 
       
       <Container className="flex items-center justify-center h-full relative px-10">        
-        <Gridline />
+        {/* <Gridline /> */}
         <div className="relative w-full h-full flex flex-col lg:flex-row items-center justify-center gap-15 lg:justify-between">          
 
           <motion.div
             initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="flex flex-col items-start justify-center w-full z-10 gap-7"
           >
-            <motion.div
-              className="relative w-65 p-[1.5px] group z-10 overflow-hidden h-10 rounded-xl cursor-pointer hidden"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-            > 
-              <div className="text-black bg-neutral-200 z-20 flex items-center justify-center gap-3 h-full rounded-xl tracking-tight font-mono ">
-                <motion.span
-                  whileHover={{ rotate: 360, scale: 1.2 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <IconFlameFilled className="size-5 transition-all text-orange-500" />
-                </motion.span>
-                Find your style
-                <motion.span
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <IconArrowRight className="size-3 transition-all" />
-                </motion.span>
-              </div>
-              <div className="absolute inset-0 -z-10 scale-[12] bg-[conic-gradient(at_center,transparent,var(--color-emerald-500),10%,transparent_5%)] animate-[spin_6s_linear_infinite]"></div>
-            </motion.div>
-
+          
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Heading className="text-neutral-700 tracking-tight lg:text-7xl">
+              <Heading className="text-gray-200 tracking-tight lg:text-7xl ">
                 Timeless pieces for <br /> the modern wardrobe
               </Heading>
             </motion.div>
@@ -59,10 +69,10 @@ export const Hero = () => {
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <SubHeading className="-mt-5 lg:w-140">
+              <SubHeading className="-mt-5 lg:w-140 text-gray-400">
                 Premium fashion for those who believe that how you dress is < br className="hidden lg:visible"/>how you meet the world. Timeless pieces, honest prices.
                 
               </SubHeading>
@@ -70,8 +80,7 @@ export const Hero = () => {
 
             <motion.div
               className="flex items-center justify-center gap-4 px-4 md:px-0"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <div
@@ -79,7 +88,7 @@ export const Hero = () => {
               >
                 <Link
                   href="/shop"
-                  className="text-neutral-100 bg-neutral-900 shadow-box-2 border border-neutral-900 text-sm md:text-lg px-8 py-2 rounded-md font-semibold cursor-pointer  inline-block font-inter"
+                  className="text-gray-100 bg-gray-900 shadow-box-2 border border-gray-900 text-sm md:text-lg px-8 py-2 rounded-md font-semibold cursor-pointer  inline-block font-cormorantGaramond"
                 >
                   Shop Now
                 </Link>
@@ -90,7 +99,7 @@ export const Hero = () => {
               >
                 <Link
                   href="/new-arrivals"
-                  className="text-neutral-950 shadow-box bg-neutral-100 text-sm md:text-lg  px-4 py-2 rounded-md font-semibold cursor-pointer inline-block font-inter w-40 text-center"
+                  className="text-neutral-950 shadow-box bg-neutral-100 text-sm md:text-lg  px-4 py-2 rounded-md font-semibold cursor-pointer inline-block font-cormorantGaramond w-40 text-center"
                 >
                   New Arrivals
                 </Link>
@@ -99,43 +108,7 @@ export const Hero = () => {
           </motion.div>
 
           {/* ── Right image section ── */}
-          <div className="relative flex flex-col gap-1 items-center justify-center [--pattern-fg:var(--color-neutral-900)]/10 w-full lg:w-auto">
-            {/* ← shrink on mobile/tablet */}
-            <div
-              className={cn(
-                "w-72 h-72 md:w-96 md:h-96 lg:w-120 lg:h-120 rounded-md overflow-hidden relative border-2 border-dashed border-neutral-200",
-                "bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed",
-              )}
-            ></div>
-            <div
-              className={cn(
-                "w-72 h-72 md:w-96 md:h-96 lg:w-120 lg:h-120 rounded-md overflow-hidden absolute translate-x-4 translate-y-4 md:translate-x-5 md:translate-y-5",
-                "hover:translate-0 transition-all duration-400 ease-in-out",
-              )}
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, rotateY: -15 }}
-                whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
-                whileHover={{ scale: 1.02, rotateY: 5 }}
-                transition={{ duration: 0.6 }}
-                className="w-72 h-72 md:w-96 md:h-96 lg:w-120 lg:h-120 rounded-md overflow-hidden relative"
-                style={{ perspective: "1000px" }}
-              >
-                <Image
-                  src="https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg"
-                  alt="shop"
-                  fill
-                  className="object-cover grayscale-25 "
-                />
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"
-                />
-              </motion.div>
-            </div>
-          </div>
+
         </div>
       </Container>
     </section>
@@ -144,7 +117,7 @@ export const Hero = () => {
 
 export const Gridline = () => {
   return (
-    <div className="pointer-events-none absolute grid grid-cols-4 gap-12 inset-0 h-900 scale-[1.2] -rotate-45 translate-x-100 -translate-y-300 mask-t-from-99% mask-b-from-95% z-0 overflow-hidden select-none">
+    <div className="pointer-events-none absolute grid grid-cols-3 md:grid-cols-4 gap-12 inset-0 h-900 scale-[1.2] -rotate-45 translate-x-100 -translate-y-270 md:translate-x-100 md:-translate-y-300 mask-t-from-99% mask-b-from-95% z-0 overflow-hidden select-none">
       
         <div className="border border-dashed border-neutral-300 "></div>
         <div className="border border-dashed border-neutral-300 bg-linear-to-b from-transparent via-neutral-50 to-transparent mask-b-from-70% ma "></div>
