@@ -3,6 +3,7 @@
 import { Container } from "../ui/container";
 import { motion } from "framer-motion";
 import { cn } from "@/src/lib/utils";
+import FabricShader from "../ui/FabricShader";
 
 const EDGE_ITEMS = [
   {
@@ -40,7 +41,8 @@ const WhyUsSection = ({
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={cn(
         "flex flex-col items-start justify-start",
@@ -52,11 +54,11 @@ const WhyUsSection = ({
         <div className="text-[#ba8420] font-medium text-[18px] tracking-[0.15em]">
           0{no}
         </div>
-        <h3 className="font-inter text-balance font-medium text-xl text-neutral-800 tracking-tight">
+        <h3 className="text-balance font-semibold text-xl text-neutral-900 tracking-tight">
           {heading}
         </h3>
       </div>
-      <p className="font-inter text-balance tracking-tight text-[16px] md:text-[18px] text-neutral-500 font-normal leading-relaxed  lg:w-140">
+      <p className=" text-balance tracking-tight text-[16px] md:text-[18px] text-neutral-700 font-normal leading-relaxed  lg:w-140">
         {subHeading}
       </p>
     </motion.div>
@@ -66,22 +68,40 @@ const WhyUsSection = ({
 const Left = () => {
   return (
     <div className="w-full lg:flex-1 flex flex-col gap-5">
-      <div className="relative overflow-hidden rounded-lg bg-[#1C1C1C] px-10 py-20">
-        <div className="absolute -bottom-8 -right-8 w-48 h-48 rounded-full border border-[#C9A96E]/10" />
-        <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-full border border-[#C9A96E]/15" />
+<div
+  className="
+    relative
+    overflow-hidden
+    rounded-lg
+    px-10
+    py-20
+    isolate
+  "
+>
+  <FabricShader />
 
+  {/* Dark overlay */}
+  <div
+    className="
+      absolute
+      inset-0
+      z-[1]
+      bg-black/10
+      pointer-events-none
+    "
+  />
         <div className="relative z-10">
-          <span className="text-[10px] tracking-[0.3em] uppercase font-inter text-[#C9A96E] mb-5 block">
+          <span className="text-[10px] tracking-[0.3em] uppercase  text-neutral-100  mb-5 block">
             Our Promise
           </span>
-          <h3 className="font-cormorantGaramond font-normal text-4xl lg:text-5xl text-[#F5F0E8] tracking-tight mb-5 text-balance">
+          <h3 className="font-cormorantGaramond font-normal text-4xl lg:text-5xl text-neutral-50 tracking-tight mb-5 text-balance">
             Dressed for life, not just the season.
           </h3>
-          <p className="text-[#A89880] max-w-sm leading-normal font-inter text-[16px] md:text-[18px] font-light">
+          <p className="text-neutral-200 max-w-sm leading-normal  text-[16px] md:text-[18px] font-light">
             We source the world's finest textiles so every piece earns its place
             in your wardrobe — year after year.
           </p>
-          <div className="w-40 h-px bg-[#b28531] mt-8" />
+          <div className="w-40 h-px bg-neutral-300 mt-8" />
         </div>
       </div>
 
@@ -93,10 +113,10 @@ const Left = () => {
           className="rounded-lg border border-neutral-200 bg-white p-8
   transition-all duration-500 hover:border-[#C9A96E]/50 group"
         >
-          <h3 className="font-inter font-medium text-xl text-neutral-800 tracking-tight text-balance mb-2">
+          <h3 className="font-semibold text-xl text-neutral-900 tracking-tight text-balance mb-2">
             Modern Curation
           </h3>
-          <p className="text-[16px] md:text-[18px] font-inter text-neutral-500 leading-relaxed">
+          <p className="text-[16px] md:text-[17px] text-neutral-700 leading-relaxed">
             Accessible luxury direct to consumer craftsmanship.
           </p>
         </motion.div>
@@ -108,10 +128,10 @@ const Left = () => {
           className="rounded-lg border border-neutral-200 bg-white p-8
   transition-all duration-500 hover:border-[#C9A96E]/50 group"
         >
-          <h3 className="font-inter font-medium text-xl text-neutral-800 tracking-tight text-balance mb-2">
+          <h3 className="font-semibold text-xl text-neutral-900 tracking-tight text-balance mb-2">
             Ethical Craftsmanship
           </h3>
-          <p className="text-[16px] md:text-[18px] font-inter text-neutral-500 leading-relaxed mt-2">
+          <p className="text-[16px] md:text-[17px] text-neutral-700 leading-relaxed mt-2">
             Ethical labor and transparent pricing in every single thread.
           </p>
         </motion.div>
@@ -127,14 +147,16 @@ export const Right = () => {
         <div className="flex items-center gap-4 mb-0">
           <motion.div
             initial={{ scaleY: 0 }}
-            animate={{ scaleY: 1 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="w-0.5 h-12 bg-[#C9A96E] shrink-0 origin-top"
           />
 
           <motion.div
             initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <span className="text-[10px] tracking-[0.25em] uppercase font-inter text-neutral-500 block mb-2">
@@ -151,7 +173,8 @@ export const Right = () => {
             <motion.div
               key={heading}
               initial={{ opacity: 0, y: 15, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true, amount: 0.5 }}
               transition={{
                 duration: 0.5,
                 delay: index * 0.15,

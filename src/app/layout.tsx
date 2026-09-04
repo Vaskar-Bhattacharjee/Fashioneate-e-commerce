@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Quicksand, Cormorant_Garamond, Roboto, Inter, Kumbh_Sans } from "next/font/google";
+import { Quicksand, Cormorant_Garamond } from "next/font/google";
 import "@/src/app/globals.css";
 import { Navbar } from "@/src/components/ui/navbar";
 import { ThemeProvider } from "../components/ui/theme-provider";
@@ -11,23 +11,12 @@ const quicksand = Quicksand({
   variable: "--font-quicksand",
   subsets: ["latin"],
 });
-const kumbh = Kumbh_Sans({
-  variable: "--font-kumbh-sans",
-  subsets: ["latin"],
-});
+
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
   subsets: ["latin"],
 });
 
-const roboto = Roboto({
-  variable: "--font-roboto",
-  subsets: ["latin"],
-});
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
 export const metadata: Metadata = {
   title: "Fashioneate",
   description:
@@ -45,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${quicksand.variable} ${cormorantGaramond.variable} ${roboto.variable} ${kumbh.variable} ${inter.variable} antialiased`}
+        className={`${quicksand.variable} ${cormorantGaramond.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"

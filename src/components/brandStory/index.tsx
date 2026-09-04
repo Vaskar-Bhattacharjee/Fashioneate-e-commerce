@@ -33,7 +33,7 @@ const wordVariants = {
 
 export const BrandStory = () => {
   return (
-    <section className="relative bg-[#1C1C1C] w-full overflow-hidden">
+    <section className="relative bg-[#1C1C1C] w-full max-w-[1600px] overflow-hidden">
       <Container className="w-full lg:max-w-7xl flex flex-col lg:flex-row justify-center items-stretch min-h-[600px]">
 
         <div className="relative w-full lg:w-[50%] min-h-125 lg:min-h-full overflow-hidden">

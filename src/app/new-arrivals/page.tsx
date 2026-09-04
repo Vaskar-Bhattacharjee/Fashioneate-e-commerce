@@ -54,7 +54,7 @@ const NewArrivals = () => {
       try {
         const res = await axios.get("api/product/new-arrivals");
         setProducts(res.data)
-            
+
       } catch (error) {
         console.error("Error fetching new arrivals:", error);
       }
@@ -64,8 +64,8 @@ const NewArrivals = () => {
 
 
 
-  },[]);
-  const displayedProducts = [...products ]
+  }, []);
+  const displayedProducts = [...products]
     .filter((p) => (category === "All" ? true : p.category === category))
     .sort((a, b) => {
       if (sortBy === "Price: High to Low") return b.newprice - a.newprice;
@@ -111,7 +111,7 @@ const NewArrivals = () => {
                     sortname="Category"
                     items={[
                       { label: "All" },
-                      { label: "Women's Fashion"  },
+                      { label: "Women's Fashion" },
                       { label: "Men's Fashion" },
                       { label: "Kid's Fashion" }
                     ]}
@@ -182,19 +182,19 @@ export const NewArrivalsCard = ({
             <span className="text-lg font-semibold tracking-tight text-neutral-600 ">
               $ {newprice}
             </span>
-<div
-  onClick={(e) => {
-    e.preventDefault();
-    onAddToCart();
-  }}
-  className="flex justify-center items-center gap-2 z-10 group shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200 px-2 py-1 rounded-md bg-neutral-50 hover:bg-neutral-100 cursor-pointer
+            <div
+              onClick={(e) => {
+                e.preventDefault();
+                onAddToCart();
+              }}
+              className="flex justify-center items-center gap-2 z-10 group shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200 px-2 py-1 rounded-md bg-neutral-50 hover:bg-neutral-100 cursor-pointer
   active:scale-95 transition-transform duration-150 w-fit h-fit"
->
-  <p className="text-sm font-semibold tracking-tight text-neutral-600">
-    Add to Cart
-  </p>
-  <IconShoppingBagCheck className="bg-transparent text-neutral-900" />
-</div>
+            >
+              <p className="text-lg font-semibold font-cormorantGaramond tracking-tight text-neutral-800">
+                Add to Cart
+              </p>
+              <IconShoppingBagCheck className="bg-transparent text-neutral-900" />
+            </div>
           </div>
         </div>
       </motion.div>

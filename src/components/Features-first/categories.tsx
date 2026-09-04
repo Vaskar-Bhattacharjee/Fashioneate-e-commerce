@@ -5,8 +5,7 @@ import { Container } from "../ui/container";
 import { IconCrop11Filled } from "@tabler/icons-react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
 
 const CATEGORIES = [
   {
@@ -71,15 +70,32 @@ const CategoryCard = ({
 }) => {
   const [index, setIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const hasStaggeredRef = useRef(false);
 
   useEffect(() => {
     if (isHovered) return;
 
-    const interval = setInterval(() => {
-      setIndex((current) => (current + 1) % images.length);
-    }, 5000);
+    let intervalId: ReturnType<typeof setInterval>;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
-    return () => clearInterval(interval);
+    const begin = () => {
+      intervalId = setInterval(() => {
+        setIndex((current) => (current + 1) % images.length);
+      }, 5000);
+    };
+
+    if (hasStaggeredRef.current) {
+      begin();
+    } else {
+      hasStaggeredRef.current = true;
+      const delay = Math.random() * 2000 + 500;
+      timeoutId = setTimeout(begin, delay);
+    }
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+    };
   }, [images.length, isHovered]);
 
   return (
@@ -269,7 +285,7 @@ export const Categories = () => {
           Curated styles for every occasion
         </SubHeading>
 
-<div className="w-full mt-15 lg:mt-25 flex flex-col gap-6 md:flex-row md:gap-10">
+<div className="w-full mt-15 lg:mt-25 flex flex-col gap-4 md:flex-row md:gap-5">
   <CategoryCard {...wedding} className="w-90 h-72 md:w-1/2 md:h-140" />
 
   <div className="w-full flex flex-col gap-4 md:w-1/2 md:h-140 md:grid md:grid-rows-2 md:gap-6">

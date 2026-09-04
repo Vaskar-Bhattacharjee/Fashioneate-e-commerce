@@ -27,6 +27,7 @@ interface ProductProps {
 export const NewArrivals = () => {
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeCard, setActiveCard] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -98,61 +99,113 @@ return (
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
             className="mt-8 md:mt-12 w-full px-4 md:px-0 md:w-4xl lg:w-5xl
-              flex flex-col lg:flex-row gap-4 lg:gap-6"  
+              flex flex-col lg:flex-row gap-4 lg:gap-6"
+            onMouseLeave={() => setActiveCard(null)}
           >
-            {/* Card 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="flex-1 min-w-0"  // ← flex-1 + min-w-0 prevents overflow
-            >
-              <NewArrivalsItemCard
-                imgSrc={displayedProducts[0].image}
-                productName={displayedProducts[0].name}
-                price={displayedProducts[0].newprice}
-                id={displayedProducts[0]._id}
-                className="h-64 md:h-80 lg:h-96"
-              />
-            </motion.div>
+            {[0, 1, 2].map((index) => {
+              const product = displayedProducts[index];
 
-            {displayedProducts[1] && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="flex-1 min-w-0"
-              >
-                <NewArrivalsItemCard
-                  imgSrc={displayedProducts[1].image}
-                  productName={displayedProducts[1].name}
-                  price={displayedProducts[1].newprice}
-                  id={displayedProducts[1]._id}
-                  className="h-64 md:h-80 lg:h-96"
-                />
-              </motion.div>
-            )}
+              if (!product) return null;
 
-            {displayedProducts[2] && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                className="flex-1 min-w-0"
-              >
-                <NewArrivalsItemCard
-                  imgSrc={displayedProducts[2].image}
-                  productName={displayedProducts[2].name}
-                  price={displayedProducts[2].newprice}
-                  id={displayedProducts[2]._id}
-                  className="h-64 md:h-80 lg:h-96"
-                />
-              </motion.div>
-            )}
+              const isActive = activeCard === index;
+              const hasActive = activeCard !== null;
+
+              return (
+                <motion.div
+                  key={product._id}
+                  layout
+                  onMouseEnter={() => setActiveCard(index)}
+                  animate={{
+                    flex: isActive
+                      ? 1.05
+                      : hasActive
+                        ? 0.9
+                        : 1.1,
+                  }}
+                  transition={{
+                    layout: {
+                      type: "spring",
+                      stiffness: 180,
+                      damping: 24,
+                    },
+                    flex: {
+                      type: "spring",
+                      stiffness: 180,
+                      damping: 24,
+                    },
+                  }}
+                  className="relative min-w-0"
+                >
+                  <motion.div
+                    animate={{
+                      y: isActive ? -8 : 0,
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 220,
+                      damping: 20,
+                    }}
+                    className="relative h-64 md:h-80 lg:h-96"
+                  >
+                    <NewArrivalsItemCard
+                      imgSrc={product.image}
+                      productName={product.name}
+                      price={product.newprice}
+                      id={product._id}
+                      className="h-full"
+                    />
+
+                    {/* Active card atmosphere */}
+                    <motion.div
+                      initial={false}
+                      animate={{
+                        opacity: isActive ? 1 : 0,
+                      }}
+                      transition={{ duration: 0.35 }}
+                      className="pointer-events-none absolute inset-0 rounded-md
+                        bg-gradient-to-t
+                        from-black/15
+                        via-transparent
+                        to-white/10"
+                    />
+
+                    {/* Editorial shine */}
+                    <motion.div
+                      initial={{ x: "-120%" }}
+                      animate={{
+                        x: isActive ? "120%" : "-120%",
+                      }}
+                      transition={{
+                        duration: 0.9,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="pointer-events-none absolute inset-y-0
+                        w-1/3
+                        skew-x-[-18deg]
+                        bg-gradient-to-r
+                        from-transparent
+                        via-white/20
+                        to-transparent"
+                    />
+
+                    {/* Focus marker */}
+                    <motion.div
+                      initial={false}
+                      animate={{
+                        width: isActive ? "100%" : "0%",
+                        opacity: isActive ? 1 : 0,
+                      }}
+                      transition={{
+                        duration: 0.45,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="pointer-events-none absolute bottom-0 left-0 h-[2px] bg-white"
+                    />
+                  </motion.div>
+                </motion.div>
+              );
+            })}
           </motion.div>
 
           <div className="mt-8 md:mt-12 flex items-center justify-center">

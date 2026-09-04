@@ -9,7 +9,7 @@ import { cn } from "@/src/lib/utils";
 
 export const Hero = () => {
   return (
-   <section className="relative w-screen h-[130vh] lg:h-[90vh]  lg:pt-0 mt-10 overflow-hidden border-b border-neutral-200 flex items-center justify-center  "
+   <section className="relative w-full max-w-[1600px] mx-auto h-[130vh] lg:h-[90vh] lg:max-h-[860px] lg:pt-0 mt-10 overflow-hidden border-b border-neutral-200 flex items-center justify-center"
    >
      <Image
     src="https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg"

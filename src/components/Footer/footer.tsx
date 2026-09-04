@@ -15,7 +15,9 @@ export const Footer = () => {
   };
 
   return (
-    <Container className="bg-neutral-900 flex flex-col justify-center items-center rounded-t-3xl mt-20">
+
+    <section className="w-full">
+    <Container className="bg-neutral-900 flex flex-col justify-center items-center rounded-t-3xl mt-20 w-full lg:max-w-[1600px]">
       
       <div
         className={cn(
@@ -92,6 +94,7 @@ export const Footer = () => {
       </div>
 
     </Container>
+    </section>
   );
 };
 

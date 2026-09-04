@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { Container } from "../ui/container";
 import { SectionHeader, SectionHeading } from "../ui/section-header";
-import { Heading, SubHeading } from "../ui/header";
 export const FAQ_ITEMS = [
   {
     question: "How long does shipping typically take?",
@@ -42,7 +41,6 @@ export const FAQs = () => {
   return (
     <Container className="pt-20 lg:pt-32">
      <SectionHeader
-        
         Subheading="Need help? We've got answers"
       />
       <SectionHeading
@@ -56,7 +54,8 @@ export const FAQs = () => {
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="border-b border-neutral-300 pb-6"
             >

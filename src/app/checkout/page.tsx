@@ -54,7 +54,6 @@ const onFormSubmit = async (data: CheckoutFormValues) => {
     if (response.status === 200) {
       const result = response.data;
 
-      // 3. Handle the Redirection
       if (data.paymentMethod === "Online" && result.checkoutUrl) {
         window.location.href = result.checkoutUrl;
       } else {

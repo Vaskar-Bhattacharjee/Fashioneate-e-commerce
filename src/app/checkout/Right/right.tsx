@@ -69,7 +69,7 @@ register, watch, cartItems, loading
               </svg>
             </div>
             <div>
-              <h2 className="font-bold text-neutral-800 font-kumbh">Order Summary</h2>
+              <h2 className="font-bold text-neutral-800 font-quicksand">Order Summary</h2>
               <p className="text-xs text-neutral-400 mt-0.5">
                 {cartItems.length} item{cartItems.length !== 1 ? "s" : ""} in your cart
               </p>
@@ -79,7 +79,7 @@ register, watch, cartItems, loading
           {subtotal < FREE_SHIPPING_THRESHOLD && (
             <div className="text-right hidden sm:block">
               <p className="text-[10px] text-neutral-400">
-                Add <span className="text-green-600 font-bold">৳{(FREE_SHIPPING_THRESHOLD - subtotal).toLocaleString()}</span> for free shipping
+                Add <span className="text-green-600 font-bold">${(FREE_SHIPPING_THRESHOLD - subtotal).toLocaleString()}</span> for free shipping
               </p>
               <div className="mt-1 h-1 w-28 bg-neutral-100 rounded-full overflow-hidden">
                 <div
@@ -137,14 +137,14 @@ register, watch, cartItems, loading
                     )}
                   </div>
                   <p className="text-xs text-neutral-400 mt-1">
-                    ৳{item.price.toLocaleString()} × {item.quantity}
+                    ${item.price.toLocaleString()} × {item.quantity}
                   </p>
                 </div>
 
                 {/* Line total */}
                 <div className="shrink-0 text-right">
                   <p className="text-sm font-bold text-neutral-800">
-                    ৳{(item.price * item.quantity).toLocaleString()}
+                    ${(item.price * item.quantity).toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -222,12 +222,12 @@ register, watch, cartItems, loading
         <div className="px-6 py-4 border-t border-neutral-100 space-y-2.5">
           <div className="flex justify-between text-sm text-neutral-500">
             <span>Subtotal</span>
-            <span className="font-semibold text-neutral-700">৳{subtotal.toLocaleString()}</span>
+            <span className="font-semibold text-neutral-700">${subtotal.toLocaleString()}</span>
           </div>
           <div className="flex justify-between text-sm text-neutral-500">
             <span>Shipping</span>
             <span className={`font-semibold ${shippingFee === 0 ? "text-emerald-600" : "text-neutral-700"}`}>
-              {shippingFee === 0 ? "Free" : `৳${shippingFee}`}
+              {shippingFee === 0 ? "Free" : `$${shippingFee}`}
             </span>
           </div>
           {promoApplied && (
@@ -238,7 +238,7 @@ register, watch, cartItems, loading
                 </svg>
                 Promo (SAVE10)
               </span>
-              <span className="font-semibold">− ৳{discount.toLocaleString()}</span>
+              <span className="font-semibold">− ${discount.toLocaleString()}</span>
             </div>
           )}
 
@@ -247,9 +247,9 @@ register, watch, cartItems, loading
             <span className=" font-bold text-neutral-800 font-kumbh">Total</span>
             <div className="text-right">
               <span className="text-2xl font-bold text-neutral-900 font-kumbh">
-                ৳{totalAmount.toLocaleString()}
+                ${totalAmount.toLocaleString()}
               </span>
-              <p className="text-[10px] text-neutral-400 tracking-widest uppercase">BDT · Incl. tax</p>
+              <p className="text-[10px] text-neutral-400 tracking-widest uppercase">USD · Incl. tax</p>
             </div>
           </div>
         </div>
@@ -402,7 +402,7 @@ register, watch, cartItems, loading
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
-            Proceed to Payment · ৳{totalAmount.toLocaleString()}
+            Proceed to Payment · ${totalAmount.toLocaleString()}
           </>
         ) : (
           <>

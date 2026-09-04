@@ -21,7 +21,7 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-bold text-neutral-800 tracking-wide uppercase font-kumbh">
+      <label className="text-sm font-bold text-neutral-800 tracking-wide uppercase font-quicksand">
         {label}
         {required && <span className="text-rose-500 ml-0.5">*</span>}
       </label>
@@ -115,8 +115,8 @@ export  const Left = ({ register, errors }: LeftProps) => {
           </svg>
         </div>
         <div>
-          <h1 className="text-4xl font-semibold text-neutral-800 ">Shipping Address</h1>
-          <p className="text-md text-neutral-700 mt-0.5 font-semibold">Where should we deliver your order?</p>
+          <h1 className="text-4xl font-semibold text-neutral-800 font-cormorantGaramond ">Shipping Address</h1>
+          <p className="text-md text-neutral-700 mt-0.5 font-semibold font-quicksand">Where should we deliver your order?</p>
         </div>
       </div>
 
