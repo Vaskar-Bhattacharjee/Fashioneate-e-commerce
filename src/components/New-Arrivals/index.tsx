@@ -137,15 +137,8 @@ return (
                   }}
                   className="relative min-w-0"
                 >
-                  <motion.div
-                    animate={{
-                      y: isActive ? -8 : 0,
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 220,
-                      damping: 20,
-                    }}
+                  <div
+                    
                     className="relative h-64 md:h-80 lg:h-96"
                   >
                     <NewArrivalsItemCard
@@ -190,7 +183,7 @@ return (
                     />
 
                     {/* Focus marker */}
-                    <motion.div
+                    {/* <motion.div
                       initial={false}
                       animate={{
                         width: isActive ? "100%" : "0%",
@@ -201,8 +194,8 @@ return (
                         ease: [0.22, 1, 0.36, 1],
                       }}
                       className="pointer-events-none absolute bottom-0 left-0 h-[2px] bg-white"
-                    />
-                  </motion.div>
+                    /> */}
+                  </div>
                 </motion.div>
               );
             })}

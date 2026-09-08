@@ -51,14 +51,14 @@ const WhyUsSection = ({
       )}
     >
       <div className="flex items-center gap-3 mb-3">
-        <div className="text-[#ba8420] font-medium text-[18px] tracking-[0.15em]">
-          0{no}
+        <div className="text-neutral-900 font-semibold text-[18px] tracking-[0.05em]">
+          {no}.
         </div>
         <h3 className="text-balance font-semibold text-xl text-neutral-900 tracking-tight">
           {heading}
         </h3>
       </div>
-      <p className=" text-balance tracking-tight text-[16px] md:text-[18px] text-neutral-700 font-normal leading-relaxed  lg:w-140">
+      <p className=" text-balance tracking-tight text-[16px] md:text-[18px] text-neutral-500 font-medium leading-relaxed  lg:w-140">
         {subHeading}
       </p>
     </motion.div>
@@ -116,7 +116,7 @@ const Left = () => {
           <h3 className="font-semibold text-xl text-neutral-900 tracking-tight text-balance mb-2">
             Modern Curation
           </h3>
-          <p className="text-[16px] md:text-[17px] text-neutral-700 leading-relaxed">
+          <p className="text-[16px] md:text-[17px] text-neutral-500 font-medium leading-relaxed">
             Accessible luxury direct to consumer craftsmanship.
           </p>
         </motion.div>
@@ -131,7 +131,7 @@ const Left = () => {
           <h3 className="font-semibold text-xl text-neutral-900 tracking-tight text-balance mb-2">
             Ethical Craftsmanship
           </h3>
-          <p className="text-[16px] md:text-[17px] text-neutral-700 leading-relaxed mt-2">
+          <p className="text-[16px] md:text-[17px] text-neutral-500 font-medium leading-relaxed mt-2">
             Ethical labor and transparent pricing in every single thread.
           </p>
         </motion.div>

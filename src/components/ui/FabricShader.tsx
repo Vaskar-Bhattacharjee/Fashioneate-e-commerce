@@ -3,38 +3,21 @@
 import { useEffect, useRef } from "react";
 import { Renderer, Program, Mesh, Plane, Texture } from "ogl";
 
-const vertexShader = `
-  attribute vec2 uv;
-  attribute vec2 position;
+interface FabricShaderProps {
+  src?: string;
+  className?: string;
+}
 
-  uniform float uTime;
-  uniform vec2 uMouse;
+const vertexShader = `
+  attribute vec3 position;
+  attribute vec2 uv;
 
   varying vec2 vUv;
 
   void main() {
     vUv = uv;
 
-    vec3 pos = vec3(position, 0.0);
-
-    // Very subtle physical movement
-    float wave =
-      sin(position.x * 3.0 + uTime * 0.35) *
-      cos(position.y * 2.5 + uTime * 0.25);
-
-    pos.z += wave * 0.015;
-
-    // Slight cursor-driven movement
-    float mouseInfluence =
-      1.0 - smoothstep(
-        0.0,
-        1.2,
-        distance(position, uMouse)
-      );
-
-    pos.z += mouseInfluence * 0.025;
-
-    gl_Position = vec4(pos, 1.0);
+    gl_Position = vec4(position, 1.0);
   }
 `;
 
@@ -42,176 +25,384 @@ const fragmentShader = `
   precision highp float;
 
   uniform sampler2D uTexture;
+
   uniform vec2 uMouse;
   uniform vec2 uResolution;
+  uniform vec2 uImageResolution;
+
   uniform float uTime;
 
   varying vec2 vUv;
 
+
+  // =====================================================
+  // BACKGROUND SIZE: COVER
+  // =====================================================
+
+  vec2 coverUV(
+    vec2 uv,
+    vec2 screen,
+    vec2 image
+  ) {
+
+    float screenRatio =
+      screen.x / screen.y;
+
+    float imageRatio =
+      image.x / image.y;
+
+    vec2 result = uv;
+
+    if (screenRatio > imageRatio) {
+
+      float scale =
+        imageRatio / screenRatio;
+
+      result.y =
+        (uv.y - 0.5) * scale + 0.5;
+
+    } else {
+
+      float scale =
+        screenRatio / imageRatio;
+
+      result.x =
+        (uv.x - 0.5) * scale + 0.5;
+    }
+
+    return result;
+  }
+
+
   void main() {
 
-    vec2 uv = vUv;
+    // ===================================================
+    // ORIGINAL IMAGE POSITION
+    // ===================================================
 
-    // --------------------------------
-    // Cursor position in UV space
-    // --------------------------------
+    vec2 uv = coverUV(
+      vUv,
+      uResolution,
+      uImageResolution
+    );
 
-    vec2 mouse = uMouse;
+
+    // ===================================================
+    // CURSOR SPACE
+    // ===================================================
+
+    vec2 aspect =
+      vec2(
+        uResolution.x / uResolution.y,
+        1.0
+      );
+
+    vec2 mouseDelta =
+      (vUv - uMouse) * aspect;
 
     float distanceFromMouse =
-      distance(uv, mouse);
+      length(mouseDelta);
 
-    // --------------------------------
-    // Soft fabric displacement
-    // --------------------------------
+
+    // ===================================================
+    // DISTORTION CIRCLE SIZE
+    //
+    // Increase this number for a larger area.
+    // ===================================================
+
+    float radius = 1.1;
 
     float influence =
       1.0 -
       smoothstep(
         0.0,
-        0.45,
+        radius,
         distanceFromMouse
       );
 
-    vec2 direction =
-      normalize(uv - mouse + 0.0001);
 
-    // Slow organic movement
+    // ===================================================
+    // LARGE SLOW FABRIC WAVE
+    // ===================================================
+
     float wave =
       sin(
-        distanceFromMouse * 18.0 -
-        uTime * 1.2
+        distanceFromMouse * 8.0
+        - uTime * 0.75
       );
 
-    float displacement =
-      influence *
-      wave *
-      0.012;
 
-    uv += direction * displacement;
+    float secondaryWave =
+      sin(
+        distanceFromMouse * 5.0
+        - uTime * 0.42
+      );
 
-    // --------------------------------
-    // Very subtle cursor parallax
-    // --------------------------------
 
-    uv.x += (mouse.x - 0.5) * 0.008;
-    uv.y += (mouse.y - 0.5) * 0.008;
+    float combinedWave =
+      wave * 0.65 +
+      secondaryWave * 0.35;
 
-    // --------------------------------
-    // Texture
-    // --------------------------------
 
-    vec4 textureColor =
-      texture2D(uTexture, uv);
+    // ===================================================
+    // SOFT CENTER
+    // ===================================================
 
-    // --------------------------------
-    // Soft light following cursor
-    // --------------------------------
-
-    float light =
-      1.0 -
+    float center =
       smoothstep(
         0.0,
-        0.65,
+        0.025,
         distanceFromMouse
       );
 
-    textureColor.rgb +=
-      light * 0.025;
+    combinedWave *= center;
 
-    // Keep everything monochrome
-    float luminance =
-      dot(
-        textureColor.rgb,
-        vec3(0.299, 0.587, 0.114)
+
+    // ===================================================
+    // DIRECTION FROM CURSOR
+    // ===================================================
+
+    vec2 direction =
+      normalize(
+        mouseDelta +
+        vec2(0.00001)
       );
 
-    textureColor.rgb =
-      mix(
-        textureColor.rgb,
-        vec3(luminance),
-        0.25
+
+    // ===================================================
+    // MAIN FABRIC DISTORTION
+    // ===================================================
+
+    float distortion =
+      combinedWave *
+      influence *
+      0.012;
+
+
+    uv +=
+      direction *
+      distortion;
+
+
+    // ===================================================
+    // SECONDARY CLOTH MOVEMENT
+    // ===================================================
+
+    vec2 perpendicular =
+      vec2(
+        -direction.y,
+        direction.x
       );
+
+
+    float clothWave =
+      sin(
+        distanceFromMouse * 12.0
+        - uTime * 0.32
+      );
+
+
+    uv +=
+      perpendicular *
+      clothWave *
+      influence *
+      0.0025;
+
+
+    // ===================================================
+    // SAMPLE FABRIC
+    // ===================================================
+
+    vec4 color =
+      texture2D(
+        uTexture,
+        uv
+      );
+
+
+    // ===================================================
+    // SUBTLE LIGHT RESPONSE
+    // ===================================================
+
+    float light =
+      exp(
+        -distanceFromMouse * 8.0
+      );
+
+    color.rgb +=
+      light *
+      0.012;
+
+
+    // ===================================================
+    // OUTPUT
+    // ===================================================
 
     gl_FragColor =
-      vec4(textureColor.rgb, 1.0);
+      vec4(
+        color.rgb,
+        1.0
+      );
   }
 `;
 
-export default function FabricShader() {
+
+export default function FabricShader({
+  src = "/background.png",
+  className = "",
+}: FabricShaderProps) {
+
   const containerRef =
     useRef<HTMLDivElement>(null);
 
-  const mouseRef =
-    useRef({ x: 0.5, y: 0.5 });
-
-  const targetMouseRef =
-    useRef({ x: 0.5, y: 0.5 });
 
   useEffect(() => {
-    if (!containerRef.current) return;
 
     const container =
       containerRef.current;
 
-    const renderer = new Renderer({
-      alpha: false,
-      antialias: true,
-      dpr: Math.min(window.devicePixelRatio, 2),
-    });
+    if (!container) {
+      return;
+    }
 
-    const gl = renderer.gl;
 
-    gl.canvas.style.width = "100%";
-    gl.canvas.style.height = "100%";
-    gl.canvas.style.display = "block";
+    // ===================================================
+    // RENDERER
+    // ===================================================
 
-    container.appendChild(gl.canvas);
+    const renderer =
+      new Renderer({
+        alpha: false,
+        antialias: true,
+        dpr: Math.min(
+          window.devicePixelRatio,
+          2
+        ),
+      });
 
-    const texture = new Texture(gl, {
-      generateMipmaps: true,
-    });
 
-    const image = new Image();
+    const gl =
+      renderer.gl;
 
-    image.src = "/background.png";
 
-    image.onload = () => {
-      texture.image = image;
-    };
+    gl.canvas.style.width =
+      "100%";
 
-    const geometry = new Plane(gl, {
-      width: 2,
-      height: 2,
-      widthSegments: 32,
-      heightSegments: 32,
-    });
+    gl.canvas.style.height =
+      "100%";
 
-    const program = new Program(gl, {
-      vertex: vertexShader,
-      fragment: fragmentShader,
+    gl.canvas.style.display =
+      "block";
 
-      uniforms: {
-        uTexture: {
-          value: texture,
+
+    container.appendChild(
+      gl.canvas
+    );
+
+
+    // ===================================================
+    // TEXTURE
+    // ===================================================
+
+    const texture =
+      new Texture(gl);
+
+
+    const image =
+      new Image();
+
+    image.src =
+      src;
+
+
+    image.onload =
+      () => {
+
+        texture.image =
+          image;
+
+        program.uniforms
+          .uImageResolution
+          .value = [
+            image.naturalWidth,
+            image.naturalHeight,
+          ];
+      };
+
+
+    image.onerror =
+      () => {
+
+        console.error(
+          `[FabricShader] Failed to load image: ${src}`
+        );
+
+      };
+
+
+    // ===================================================
+    // PLANE
+    // ===================================================
+
+    const geometry =
+      new Plane(gl, {
+        width: 2,
+        height: 2,
+      });
+
+
+    // ===================================================
+    // PROGRAM
+    // ===================================================
+
+    const program =
+      new Program(gl, {
+
+        vertex:
+          vertexShader,
+
+        fragment:
+          fragmentShader,
+
+        uniforms: {
+
+          uTexture: {
+            value:
+              texture,
+          },
+
+          uMouse: {
+            value: [
+              -10,
+              -10,
+            ],
+          },
+
+          uResolution: {
+            value: [
+              1,
+              1,
+            ],
+          },
+
+          uImageResolution: {
+            value: [
+              1,
+              1,
+            ],
+          },
+
+          uTime: {
+            value: 0,
+          },
+
         },
+      });
 
-        uMouse: {
-          value: [0.5, 0.5],
-        },
 
-        uResolution: {
-          value: [
-            container.clientWidth,
-            container.clientHeight,
-          ],
-        },
-
-        uTime: {
-          value: 0,
-        },
-      },
-    });
+    // ===================================================
+    // MESH
+    // ===================================================
 
     const mesh =
       new Mesh(gl, {
@@ -219,134 +410,238 @@ export default function FabricShader() {
         program,
       });
 
-    const resize = () => {
-      const width =
-        container.clientWidth;
 
-      const height =
-        container.clientHeight;
+    // ===================================================
+    // MOUSE TRACKING
+    //
+    // Window tracking means the text/overlay doesn't
+    // interfere with the cursor interaction.
+    // ===================================================
 
-      renderer.setSize(
-        width,
-        height
-      );
+    let mouseX =
+      -10;
 
-      program.uniforms.uResolution.value =
-        [width, height];
-    };
+    let mouseY =
+      -10;
+
+    let mouseActive =
+      false;
+
+
+    const updateMouse =
+      (event: MouseEvent) => {
+
+        const rect =
+          container.getBoundingClientRect();
+
+
+        const inside =
+          event.clientX >= rect.left &&
+          event.clientX <= rect.right &&
+          event.clientY >= rect.top &&
+          event.clientY <= rect.bottom;
+
+
+        if (!inside) {
+
+          mouseActive =
+            false;
+
+          return;
+        }
+
+
+        mouseActive =
+          true;
+
+
+        mouseX =
+          (event.clientX -
+            rect.left) /
+          rect.width;
+
+
+        mouseY =
+          1 -
+          (
+            (event.clientY -
+              rect.top) /
+            rect.height
+          );
+
+      };
+
+
+    window.addEventListener(
+      "mousemove",
+      updateMouse,
+      {
+        passive: true,
+      }
+    );
+
+
+    // ===================================================
+    // RESIZE
+    // ===================================================
+
+    const resize =
+      () => {
+
+        const width =
+          container.clientWidth;
+
+        const height =
+          container.clientHeight;
+
+
+        if (
+          width === 0 ||
+          height === 0
+        ) {
+          return;
+        }
+
+
+        renderer.setSize(
+          width,
+          height
+        );
+
+
+        program.uniforms
+          .uResolution
+          .value = [
+            width,
+            height,
+          ];
+
+      };
+
 
     resize();
 
-    window.addEventListener(
-      "resize",
-      resize
+
+    const resizeObserver =
+      new ResizeObserver(
+        resize
+      );
+
+
+    resizeObserver.observe(
+      container
     );
 
-    const handleMouseMove = (
-      event: MouseEvent
-    ) => {
-      const rect =
-        container.getBoundingClientRect();
 
-      const x =
-        (event.clientX - rect.left) /
-        rect.width;
+    // ===================================================
+    // ANIMATION LOOP
+    // ===================================================
 
-      const y =
-        (event.clientY - rect.top) /
-        rect.height;
+    let animationFrame =
+      0;
 
-      targetMouseRef.current.x = x;
 
-      targetMouseRef.current.y = 1 - y;
-    };
+    const render =
+      (time: number) => {
 
-    const handleMouseLeave = () => {
-      targetMouseRef.current.x = 0.5;
-      targetMouseRef.current.y = 0.5;
-    };
+        animationFrame =
+          requestAnimationFrame(
+            render
+          );
 
-    container.addEventListener(
-      "mousemove",
-      handleMouseMove
-    );
 
-    container.addEventListener(
-      "mouseleave",
-      handleMouseLeave
-    );
+        if (mouseActive) {
 
-    let animationFrame = 0;
+          program.uniforms
+            .uMouse
+            .value = [
+              mouseX,
+              mouseY,
+            ];
 
-    const animate = (time: number) => {
-      animationFrame =
-        requestAnimationFrame(animate);
+        } else {
 
-      const mouse =
-        mouseRef.current;
+          program.uniforms
+            .uMouse
+            .value = [
+              -10,
+              -10,
+            ];
 
-      const target =
-        targetMouseRef.current;
+        }
 
-      // Smooth cursor interpolation
-      mouse.x +=
-        (target.x - mouse.x) *
-        0.055;
 
-      mouse.y +=
-        (target.y - mouse.y) *
-        0.055;
+        program.uniforms
+          .uTime
+          .value =
+          time * 0.001;
 
-      program.uniforms.uMouse.value =
-        [mouse.x, mouse.y];
 
-      program.uniforms.uTime.value =
-        time * 0.001;
+        renderer.render({
+          scene:
+            mesh,
+        });
 
-      renderer.render({
-        scene: mesh,
-      });
-    };
+      };
+
 
     animationFrame =
-      requestAnimationFrame(animate);
+      requestAnimationFrame(
+        render
+      );
+
+
+    // ===================================================
+    // CLEANUP
+    // ===================================================
 
     return () => {
+
       cancelAnimationFrame(
         animationFrame
       );
 
+
       window.removeEventListener(
-        "resize",
-        resize
-      );
-
-      container.removeEventListener(
         "mousemove",
-        handleMouseMove
+        updateMouse
       );
 
-      container.removeEventListener(
-        "mouseleave",
-        handleMouseLeave
-      );
+
+      resizeObserver.disconnect();
+
+
+      if (
+        gl.canvas.parentNode ===
+        container
+      ) {
+
+        container.removeChild(
+          gl.canvas
+        );
+
+      }
+
 
       gl.getExtension(
         "WEBGL_lose_context"
       )?.loseContext();
 
-      if (gl.canvas.parentNode) {
-        gl.canvas.parentNode.removeChild(
-          gl.canvas
-        );
-      }
     };
-  }, []);
+
+  }, [src]);
+
 
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0"
+      className={`
+        absolute
+        inset-0
+        pointer-events-none
+        ${className}
+      `}
+      aria-hidden="true"
     />
   );
 }
